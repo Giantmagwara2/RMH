@@ -1,5 +1,5 @@
 // src/constants/blogData.js
-const blogData = [
+export const blogPosts = [
   {
     id: 1,
     title: "AI Simulated Behavior: Changing the Future",
@@ -34,5 +34,3 @@ const blogData = [
   },
   // Add more blog posts here following the same structure
 ];
-
-export default blogData;

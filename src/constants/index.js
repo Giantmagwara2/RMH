@@ -54,3 +54,16 @@ export const projectsData = [
   },
   // …add more projects here
 ];
+
+/**
+ * Define your application routes here.
+ */
+export const ROUTES = {
+  HOME: '/',
+  ABOUT: '/about-us',
+  SERVICES: '/services',
+  PORTFOLIO: '/portfolio',
+  BLOG: '/blog',
+  CONTACT: '/contact',
+  // Add other routes as needed
+};
