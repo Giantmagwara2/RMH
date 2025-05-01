@@ -1,0 +1,110 @@
+/* App.css */
+
+/* Reset some default browser styles */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html,
+body {
+  font-family: 'DM Sans', sans-serif; /* Apply a default body font */
+  line-height: 1.6;
+  scroll-behavior: smooth; /* Enable smooth scrolling for anchor links */
+}
+
+#root {
+  /* Removed max-width and margin-auto to allow full-width backgrounds if needed */
+  /* Removed text-align: center; as it might interfere with layout */
+  padding: 0; /* Adjust global padding as needed within components */
+}
+
+/* Example styling for a logo (if you have one and want to style it directly) */
+.logo {
+  height: auto; /* Adjust as needed */
+  width: auto; /* Adjust as needed */
+  max-height: 6em;
+  padding: 0.5em; /* Adjust padding */
+  will-change: filter;
+  transition: filter 300ms ease-in-out; /* Add ease-in-out for smoother transition */
+}
+
+.logo:hover {
+  filter: drop-shadow(0 0 1em #3490dc80); /* Use brand electric blue with some transparency */
+}
+
+/* Specific styling for a React logo (if applicable) */
+.logo.react:hover {
+  filter: drop-shadow(0 0 1em #61dafbaa);
+}
+
+/* Example animation (you might not need this for your static logo) */
+@keyframes logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* Conditional animation based on user preference (you might not need this) */
+@media (prefers-reduced-motion: no-preference) {
+  /* Example targeting a specific logo if you have multiple */
+  /* a:nth-of-type(2) .logo {
+    animation: logo-spin infinite 20s linear;
+  } */
+}
+
+/* Basic styling for a card component (you're likely using Tailwind for this) */
+.card {
+  /* Remove default padding as you'll likely use Tailwind's p- classes */
+}
+
+/* Styling for documentation link (adjust as needed) */
+.read-the-docs {
+  color: #a0aec0; /* A softer gray from Tailwind's palette */
+  font-size: 0.875rem; /* Slightly smaller font size */
+  margin-top: 1rem; /* Add some top margin */
+}
+
+/* Global styles using Tailwind directives (optional, but can be useful) */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Example of a global style for links */
+a {
+  color: inherit; /* Inherit text color */
+  text-decoration: none; /* Remove default underlines */
+  transition: color 150ms ease-in-out; /* Add a subtle color transition */
+}
+
+a:hover {
+  color: #3490dc; /* Use brand electric blue on hover */
+}
+
+/* You might want to add global styles for typography using Tailwind's @layer */
+@layer base {
+  h1 {
+    @apply font-display text-4xl font-bold text-midnight-blue;
+  }
+  h2 {
+    @apply font-display text-3xl font-semibold text-midnight-blue;
+  }
+  h3 {
+    @apply font-display text-2xl font-semibold text-midnight-blue;
+  }
+  /* Add more global typography styles as needed */
+}
+
+/* You can also define global component styles */
+@layer components {
+  .btn-primary {
+    @apply bg-electric-blue text-soft-white font-semibold py-2 px-4 rounded-md shadow-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-colors duration-300;
+  }
+  /* Add more global component styles */
+}
