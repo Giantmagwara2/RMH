@@ -4,7 +4,7 @@ import { useParams, Link } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
 import PageWrapper from '../Layout/PageWrapper';
 import Section from '../Section/Section.jsx'; // Updated import to Section
-import { blogPosts } from '../../constants/blogData';
+import { blogPosts } from '../../constants/BlogData.js'; // Corrected import to BlogData.js
 import { ROUTES } from '../../constants/index'; // Correct import path for ROUTES
 
 const BlogPostPage = () => {
