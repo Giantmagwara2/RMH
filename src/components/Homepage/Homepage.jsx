@@ -2,7 +2,9 @@
 import React, { useState, useEffect, useRef, useCallback, useMemo } from 'react';
 import { Link } from 'react-router-dom';
 import useAIBehavior from '../../hooks/useAIBehavior';
-import { allServices, testimonialsData, PROJECTS, ROUTES } from '../../constants'; // Import constants and ROUTES
+import { PROJECTS, ROUTES } from '../../constants/index'; // Import from index.js
+import { allServices } from '../../constants/allServices'; // Import from allServices.js
+import { testimonialsData } from '../../constants/testimonialsData'; // Import from testimonialsData.js
 import HomepageSection from '../Section/Section'; // Import reusable component
 import PageWrapper from '../Layout/PageWrapper'; // Import PageWrapper
 import ServicesSection from './ServicesSection';

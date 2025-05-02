@@ -1,7 +1,7 @@
 // src/components/Homepage/ServicesSection.jsx
 import React from 'react';
 import { Link } from 'react-router-dom';
-import HomepageSection from '../../HomepageSection';
+import Section from '../Section/Section';
 import { ROUTES } from '../../constants';
 
 const cardBaseStyles = "bg-white dark:bg-midnight-blue rounded-lg shadow-card p-6 transition transform hover:-translate-y-1 cursor-pointer group";

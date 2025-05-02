@@ -3,9 +3,9 @@ import React from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
 import PageWrapper from '../Layout/PageWrapper';
-import Section from '../Section'; // Updated import
+import Section from '../Section/Section.jsx'; // Updated import to Section
 import { blogPosts } from '../../constants/blogData';
-import { ROUTES } from '../../constants'; // Assuming ROUTES is directly in ../../constants
+import { ROUTES } from '../../constants/index'; // Correct import path for ROUTES
 
 const BlogPostPage = () => {
   const { slug } = useParams();

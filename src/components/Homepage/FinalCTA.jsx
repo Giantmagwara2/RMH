@@ -1,6 +1,6 @@
 // src/components/Homepage/FinalCTA.jsx
 import React from 'react';
-import HomepageSection from '../../HomepageSection';
+import Section from '../Section/Section';
 
 const FinalCTA = ({ ctaHeadline, ctaSupportingText, ctaButtonText, trackCtaClick }) => {
   return (

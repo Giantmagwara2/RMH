@@ -3,7 +3,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import PageWrapper from '../Layout/PageWrapper';
 import Section from '../Section/Section'; // Renamed import to Section
-import { ROUTES } from '../../constants';
+import { ROUTES } from '../../constants/index'; // Correct import path for ROUTES
 
 const teamCardBaseStyles = "group text-center p-4 transition-shadow duration-300 rounded-md bg-white dark:bg-dark-bg";
 

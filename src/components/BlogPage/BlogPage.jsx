@@ -2,10 +2,10 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import PageWrapper from '../Layout/PageWrapper';
-import Section from '../Section'; // Updated import
+import Section from '../Section/Section.jsx'; // Updated import to Section
 import { useQuery } from '@tanstack/react-query';
 import { fetchBlogPosts } from '../../api'; // Ensure this path is correct
-import { ROUTES } from '../../constants'; // Assuming ROUTES is defined here
+import { ROUTES } from '../../constants/index'; // Correct import path for ROUTES
 
 const BlogPage = () => {
   const { data: posts, isLoading, isError, error } = useQuery(

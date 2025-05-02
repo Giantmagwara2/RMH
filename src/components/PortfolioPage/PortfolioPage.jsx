@@ -1,10 +1,10 @@
 // /src/pages/PortfolioPage.jsx
 import React, { useState } from 'react';
-import CategoryFilter from '../components/ui/CategoryFilter';
-import { HomepageSection } from '../components/ui/Sections';
-import { ProjectCard } from '../components/ui/ProjectCard';
-import { useFetchProjects } from '../hooks/useFetchProjects';
-import useDebouncedCallback from '../hooks/useDebouncedCallback';
+import CategoryFilter from '../ui/CategoryFilter.jsx';
+import Section from '../Section/Section.jsx'; // Corrected import to Section
+import ProjectCard from '../ui/ProjectCard.jsx';
+import useFetchProjects from '../../hooks/useFetchProjects.js';
+import useDebouncedCallback from '../../hooks/useDebouncedCallback';
 
 const PortfolioPage = () => {
   const [category, setCategory] = useState('All');
@@ -21,13 +21,13 @@ const PortfolioPage = () => {
   return (
     <div>
       {/* Filter Section */}
-      <HomepageSection className="pt-section pb-0">
+      <Section className="pt-section pb-0"> {/* Changed HomepageSection to Section */}
         <CategoryFilter
           categories={categories}
           onCategoryChange={debouncedCategory}
           isFetching={isFetching}
         />
-      </HomepageSection>
+      </Section>
 
       {/* Projects Section */}
       <div className="container mx-auto px-4">

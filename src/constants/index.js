@@ -1,12 +1,7 @@
-import {
-  ReactComponent as WebDesignIconSvg
-} from '../assets/icons/web-design.svg';
-import {
-  ReactComponent as BrandingIconSvg
-} from '../assets/icons/branding.svg';
-import {
-  ReactComponent as MarketingIconSvg
-} from '../assets/icons/marketing.svg';
+// src/constants/index.js
+import webDesignIconSvg from '@/assets/icons/web-design.svg';
+import brandingIconSvg from '@/assets/icons/branding.svg';
+import marketingIconSvg from '@/assets/icons/marketing.svg';
 
 /**
  * Icon lookup table.
@@ -15,9 +10,9 @@ import {
  * const Icon = serviceIcons[service.iconKey];
  */
 export const serviceIcons = {
-  webDesign: WebDesignIconSvg,
-  branding: BrandingIconSvg,
-  digitalMarketing: MarketingIconSvg,
+  webDesign: webDesignIconSvg,
+  branding: brandingIconSvg,
+  digitalMarketing: marketingIconSvg,
 };
 
 /**
@@ -67,3 +62,5 @@ export const ROUTES = {
   CONTACT: '/contact',
   // Add other routes as needed
 };
+
+export const PROJECTS = projectsData;

@@ -1,6 +1,6 @@
 // src/hooks/useFetchProjects.js
 import { useState, useEffect } from 'react';
-import { PROJECTS } from '../../constants'; // Keep this for now
+import { PROJECTS } from '@/constants/index.js'; // Keep this for now
 
 // Assume this is the base URL of your future API
 const API_BASE_URL = '/api'; // Placeholder
