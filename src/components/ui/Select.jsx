@@ -9,6 +9,9 @@ const Select = ({
   placeholder = 'Select an option',
   error,
   disabled,
+  required = false,
+  'aria-label': ariaLabel,
+  'aria-describedby': ariaDescribedby,
 }) => {
   const borderColor = error ? 'border-red-500' : 'border-neutrals-border';
   const textColor = disabled ? 'text-text-secondary' : 'text-text-primary';
@@ -27,6 +30,9 @@ const Select = ({
         onChange={onChange}
         disabled={disabled}
         className={`px-space-sm py-space-xs rounded-md border ${borderColor} ${textColor} bg-white focus:outline-none focus:ring-2 focus:ring-brand-base transition`}
+        aria-label={ariaLabel}
+        aria-describedby={ariaDescribedby}
+        required={required}
       >
         <option value="" disabled>{placeholder}</option>
         {options.map((opt) => (

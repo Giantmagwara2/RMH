@@ -13,6 +13,10 @@ export const Textarea = ({
   disabled = false,
   error = '',
   name,
+  required = false,
+  'aria-label': ariaLabel,
+  'aria-describedby': ariaDescribedby,
+  maxLength,
 }) => {
   const baseStyle = 'w-full px-space-md py-space-sm border rounded-md text-base transition duration-300';
   const borderColor = error
@@ -36,6 +40,10 @@ export const Textarea = ({
         disabled={disabled}
         rows={rows}
         className={clsx(baseStyle, borderColor, textColor, 'resize-none')}
+        required={required}
+        aria-label={ariaLabel}
+        aria-describedby={ariaDescribedby}
+        maxLength={maxLength}
       />
       {error && <span className="text-sm text-error-text">{error}</span>}
     </div>
@@ -52,4 +60,8 @@ Textarea.propTypes = {
   rows: PropTypes.number,
   disabled: PropTypes.bool,
   error: PropTypes.string,
+  required: PropTypes.bool,
+  'aria-label': PropTypes.string,
+  'aria-describedby': PropTypes.string,
+  maxLength: PropTypes.number,
 };

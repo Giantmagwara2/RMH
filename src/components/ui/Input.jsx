@@ -14,6 +14,9 @@ const Input = React.forwardRef(({
   error = false,
   disabled = false,
   className = '',
+  required = false,
+  'aria-label': ariaLabel,
+  'aria-describedby': ariaDescribedby,
   ...props
 }, ref) => {
   const borderColor = error ? 'border-error' : 'border-neutrals-border';
@@ -43,6 +46,9 @@ const Input = React.forwardRef(({
           transition-colors duration-default
         `}
         {...props}
+        required={required}
+        aria-label={ariaLabel}
+        aria-describedby={ariaDescribedby}
       />
       {helperText && (
         <p className={`mt-1 text-sm ${error ? 'text-error' : 'text-text-secondary'}`}>
