@@ -31,7 +31,7 @@ mode = "sequential"
 
 [[workflows.workflow.tasks]]
 task = "shell.exec"
-args = "yarn test"
+args = "yarn jest"
 
 [[ports]]
 localPort = 5000
