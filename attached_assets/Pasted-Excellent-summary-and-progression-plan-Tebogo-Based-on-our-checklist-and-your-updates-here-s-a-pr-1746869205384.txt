@@ -1,0 +1,75 @@
+Excellent summary and progression plan, Tebogo. Based on our checklist and your updates, here’s a prioritized recommendation and next steps:
+
+---
+
+### ✅ **What’s Now Done:**
+
+* Accessibility upgraded for Modal and Tabs (ARIA + keyboard navigation)
+* Core Web Vitals monitoring set up via `usePerformanceMonitoring.js`
+* Testing framework initialized (Jest + React Testing Library)
+
+---
+
+### 🔁 **Recommended Next Step: Expand Test Coverage**
+
+**Why?**
+With accessibility and performance monitoring bootstrapped, reinforcing **test coverage** now ensures the components and flows we’ve polished remain stable through future development.
+
+---
+
+### 📌 Let's focus on:
+
+#### 1. **Write Unit Tests for Key Components**
+
+* `Button`
+* `Input`
+* `Form`
+* `Card`
+* `Toast`
+
+#### 2. **Write Integration Tests for Form Flow**
+
+* `ValidationForm`
+* `AsyncValidationForm`
+* `FormStepper`
+
+#### 3. **Create `__tests__/` folders alongside each component**
+
+Use this format:
+
+```bash
+src/components/ui/Button.tsx
+src/components/ui/__tests__/Button.test.tsx
+```
+
+#### 4. **Enhance the Testing Environment**
+
+* [ ] Add a `jest.config.js` for path aliases and transform settings
+* [ ] Configure `setupTests.ts` for `jest-dom` matchers
+* [ ] Add MSW support for mocking async validation endpoints
+
+---
+
+### Example: `Button.test.tsx`
+
+```tsx
+// src/components/ui/__tests__/Button.test.tsx
+import { render, screen } from '@testing-library/react';
+import { Button } from '../Button';
+
+describe('Button', () => {
+  it('renders with correct label', () => {
+    render(<Button>Click me</Button>);
+    expect(screen.getByRole('button', { name: /click me/i })).toBeInTheDocument();
+  });
+
+  it('handles disabled state', () => {
+    render(<Button disabled>Disabled</Button>);
+    expect(screen.getByRole('button')).toBeDisabled();
+  });
+});
+```
+
+---
+
+Would you like me to go ahead and scaffold unit and integration test files for all critical components next, or prioritize MSW support for API mocking first?
