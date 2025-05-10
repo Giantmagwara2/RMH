@@ -8,7 +8,9 @@ class ErrorBoundary extends React.Component {
   }
 
   static getDerivedStateFromError(error) {
-    return { hasError: true };
+    // Log error to monitoring service but don't expose details to user
+    console.error('ErrorBoundary caught error:', error);
+    return { hasError: true, errorId: Date.now() };
   }
 
   render() {

@@ -25,21 +25,21 @@ const ContactUsPage = () => {
     let isValid = true;
     const newErrors = {};
 
-    if (!formData.name.trim()) {
-      newErrors.name = 'Name is required';
+    // Enhanced validation
+    if (!formData.name.trim() || formData.name.length > 100) {
+      newErrors.name = 'Name is required and must be less than 100 characters';
       isValid = false;
     }
 
-    if (!formData.email.trim()) {
-      newErrors.email = 'Email is required';
-      isValid = false;
-    } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) {
-      newErrors.email = 'Invalid email format';
+    // Sanitize and validate email
+    if (!formData.email.trim() || !/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(formData.email)) {
+      newErrors.email = 'Please enter a valid email address';
       isValid = false;
     }
 
-    if (!formData.message.trim()) {
-      newErrors.message = 'Message is required';
+    // Prevent XSS in message
+    if (!formData.message.trim() || formData.message.length > 1000 || /[<>]/.test(formData.message)) {
+      newErrors.message = 'Message is required, must be less than 1000 characters, and cannot contain HTML tags';
       isValid = false;
     }
 
