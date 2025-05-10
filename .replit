@@ -24,6 +24,15 @@ args = "yarn install"
 task = "shell.exec"
 args = "yarn dev"
 
+[[workflows.workflow]]
+name = "Test"
+author = 42501159
+mode = "sequential"
+
+[[workflows.workflow.tasks]]
+task = "shell.exec"
+args = "yarn test"
+
 [[ports]]
 localPort = 5000
 externalPort = 80

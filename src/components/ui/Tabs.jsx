@@ -15,15 +15,15 @@ const Tabs = ({ children, defaultActiveTab = 0 }) => {
   const [activeTab, setActiveTab] = useState(defaultActiveTab);
 
   return (
-    <div>
-      <div className="flex space-x-space-md">
+    <div className="border-b border-gray-200" role="tablist">
+      <nav className="-mb-px flex space-x-8" aria-label="Tabs navigation">
         {React.Children.map(children, (child, index) =>
           React.cloneElement(child, {
             isActive: index === activeTab,
             onClick: () => setActiveTab(index),
           })
         )}
-      </div>
+      </nav>
       <div className="mt-space-lg">{children[activeTab]?.props.children}</div>
     </div>
   );
