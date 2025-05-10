@@ -1,67 +1,67 @@
-// /src/hooks/useForm.js
-import { useState } from 'react';
 
-export const useForm = (initialValues = {}, validationSchema = {}, onSubmit) => {
-  const [values, setValues] = useState(initialValues);
+import { useState, useCallback, useRef } from 'react';
+import { useDebounce } from './useDebounce';
+
+export const useForm = ({ onSubmit, asyncValidate, validateOnChange = false }) => {
+  const [values, setValues] = useState({});
   const [errors, setErrors] = useState({});
   const [isSubmitting, setIsSubmitting] = useState(false);
-
-  const handleChange = (event) => {
-    const { name, value } = event.target;
-    setValues((prevValues) => ({ ...prevValues, [name]: value }));
-  };
-
-  const validate = (currentValues) => {
-    const newErrors = {};
-    if (validationSchema) {
-      for (const key in validationSchema) {
-        const rules = validationSchema[key];
-        for (const rule in rules) {
-          const ruleValue = rules[rule];
-          switch (rule) {
-            case 'required':
-              if (!currentValues[key]?.trim()) {
-                newErrors[key] = newErrors[key] || ruleValue;
-              }
-              break;
-            case 'email':
-              if (ruleValue && currentValues[key] && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(currentValues[key])) {
-                newErrors[key] = newErrors[key] || ruleValue;
-              }
-              break;
-            case 'minLength':
-              if (ruleValue && currentValues[key]?.length < ruleValue) {
-                newErrors[key] = newErrors[key] || `Must be at least ${ruleValue} characters`;
-              }
-              break;
-            // Add more validation rules as needed
-            default:
-              break;
-          }
-        }
-      }
+  const [isValidating, setIsValidating] = useState({});
+  const [isDirty, setIsDirty] = useState(false);
+  
+  const debouncedValidation = useDebounce(async (name, value) => {
+    if (!asyncValidate) return;
+    
+    setIsValidating(prev => ({ ...prev, [name]: true }));
+    try {
+      const fieldError = await asyncValidate(name, value);
+      setErrors(prev => ({ ...prev, [name]: fieldError }));
+    } catch (error) {
+      setErrors(prev => ({ ...prev, [name]: error.message }));
+    } finally {
+      setIsValidating(prev => ({ ...prev, [name]: false }));
     }
-    return newErrors;
-  };
+  }, 400);
 
-  const handleSubmit = async (event) => {
-    event.preventDefault();
+  const handleChange = useCallback((e) => {
+    const { name, value } = e.target;
+    setValues(prev => ({ ...prev, [name]: value }));
+    setIsDirty(true);
+    
+    if (validateOnChange) {
+      debouncedValidation(name, value);
+    }
+  }, [validateOnChange, debouncedValidation]);
+
+  const setFieldError = useCallback((field, error) => {
+    setErrors(prev => ({ ...prev, [field]: error }));
+  }, []);
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
     setIsSubmitting(true);
-    const validationErrors = validate(values);
-    setErrors(validationErrors);
-    if (Object.keys(validationErrors).length === 0 && onSubmit) {
+    
+    try {
       await onSubmit(values);
+      setErrors({});
+      setIsDirty(false);
+    } catch (error) {
+      if (error.fieldErrors) {
+        setErrors(error.fieldErrors);
+      }
+    } finally {
+      setIsSubmitting(false);
     }
-    setIsSubmitting(false);
   };
 
   return {
     values,
     errors,
     isSubmitting,
+    isDirty,
+    isValidating,
     handleChange,
     handleSubmit,
-    setValues,
-    setErrors, // Exposing setErrors for manual error setting if needed
+    setFieldError
   };
 };

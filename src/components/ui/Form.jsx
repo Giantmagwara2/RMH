@@ -1,52 +1,48 @@
-// /src/components/ui/Form.jsx
-import React from 'react';
-import PropTypes from 'prop-types';
-import clsx from 'clsx';
 
-export const Form = ({
-  children,
-  onSubmit,
-  onReset,
-  gap = 'md',
-  direction = 'vertical',
-  align = 'start',
-  className,
-  noValidate = true,
-  ...props
+import React from 'react';
+import { useForm } from '../../hooks/useForm';
+
+const Form = ({ 
+  onSubmit, 
+  children, 
+  className = '', 
+  validateOnChange = false,
+  asyncValidate
 }) => {
-  const directionClass = direction === 'horizontal' ? 'flex-row' : 'flex-col';
-  const alignClass = {
-    start: 'items-start',
-    center: 'items-center',
-    end: 'items-end',
-  }[align];
+  const {
+    values,
+    errors,
+    isSubmitting,
+    isDirty,
+    isValidating,
+    handleChange,
+    handleSubmit,
+    setFieldError
+  } = useForm({
+    onSubmit,
+    asyncValidate,
+    validateOnChange
+  });
 
   return (
-    <form
-      onSubmit={onSubmit}
-      onReset={onReset}
-      noValidate={noValidate}
-      className={clsx(
-        'flex',
-        directionClass,
-        alignClass,
-        `gap-${gap}`,
-        className
-      )}
-      {...props}
+    <form 
+      onSubmit={handleSubmit}
+      className={`space-y-4 ${className} ${isSubmitting ? 'opacity-70 pointer-events-none' : ''}`}
+      noValidate
     >
-      {children}
+      {React.Children.map(children, child => {
+        if (!React.isValidElement(child)) return child;
+
+        return React.cloneElement(child, {
+          onChange: handleChange,
+          error: errors[child.props.name],
+          value: values[child.props.name] || '',
+          isValidating: isValidating[child.props.name],
+          setFieldError: (error) => setFieldError(child.props.name, error)
+        });
+      })}
     </form>
   );
 };
 
-Form.propTypes = {
-  children: PropTypes.node.isRequired,
-  onSubmit: PropTypes.func,
-  onReset: PropTypes.func,
-  gap: PropTypes.string,
-  direction: PropTypes.oneOf(['vertical', 'horizontal']),
-  align: PropTypes.oneOf(['start', 'center', 'end']),
-  className: PropTypes.string,
-  noValidate: PropTypes.bool,
-};
+export default Form;
