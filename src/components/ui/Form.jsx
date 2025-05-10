@@ -7,7 +7,10 @@ const Form = ({
   children, 
   className = '', 
   validateOnChange = false,
-  asyncValidate
+  asyncValidate,
+  'aria-label': ariaLabel,
+  role = 'form',
+  noValidate = true
 }) => {
   const {
     values,
@@ -28,8 +31,16 @@ const Form = ({
     <form 
       onSubmit={handleSubmit}
       className={`space-y-4 ${className} ${isSubmitting ? 'opacity-70 pointer-events-none' : ''}`}
-      noValidate
+      noValidate={noValidate}
+      role={role}
+      aria-label={ariaLabel}
+      aria-busy={isSubmitting}
     >
+      {isSubmitting && (
+        <div className="sr-only" role="status" aria-live="polite">
+          Form is submitting...
+        </div>
+      )}
       {React.Children.map(children, child => {
         if (!React.isValidElement(child)) return child;
 

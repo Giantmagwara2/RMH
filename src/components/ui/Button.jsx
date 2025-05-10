@@ -30,11 +30,16 @@ const SIZE_CLASSES = {
 const Button = React.forwardRef(
   (
     {
+      children,
+      className,
+      type = 'button',
+      disabled,
+      'aria-label': ariaLabel,
+      'aria-expanded': ariaExpanded,
+      'aria-pressed': ariaPressed,
+      'aria-busy': ariaBusy,
       variant = 'primary',
       size = 'md',
-      disabled = false,
-      className = '',
-      children,
       loading = false,
       onClick,
       ...props
@@ -68,6 +73,10 @@ const Button = React.forwardRef(
   dark:shadow-none
 `}
         onClick={loading ? undefined : onClick}
+        aria-label={ariaLabel}
+        aria-expanded={ariaExpanded}
+        aria-pressed={ariaPressed}
+        aria-busy={ariaBusy}
         {...props}
       >
         {loading && (

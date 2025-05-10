@@ -1,40 +1,66 @@
+
 import React from 'react';
-import PropTypes from 'prop-types';
 import clsx from 'clsx';
 
-export const FormField = ({
-  id,
+const FormField = ({
   label,
-  children,
-  helperText,
   error,
-  required = false,
+  children,
+  required,
+  helpText,
+  className,
+  id,
 }) => {
-  const helperId = helperText ? `${id}-helper` : undefined;
-  const errorId = error ? `${id}-error` : undefined;
-
-  const childWithProps = React.cloneElement(children, {
-    id,
-    'aria-describedby': error ? errorId : helperId,
-    'aria-invalid': !!error,
-  });
+  const fieldId = id || Math.random().toString(36).substring(2);
+  const errorId = `${fieldId}-error`;
+  const helpTextId = `${fieldId}-help`;
 
   return (
-    <div className="flex flex-col space-y-space-xs">
+    <div className={clsx('form-field', className)}>
       {label && (
-        <label htmlFor={id} className="text-sm font-medium text-text-secondary">
+        <label 
+          htmlFor={fieldId}
+          className="block text-sm font-medium text-gray-700 dark:text-gray-200 mb-1"
+        >
           {label}
-          {required && <span className="ml-1 text-error-text">*</span>}
+          {required && (
+            <span className="text-red-500 ml-1" aria-hidden="true">*</span>
+          )}
         </label>
       )}
-      {childWithProps}
-      {helperText && !error && (
-        <p id={helperId} className="text-sm text-text-tertiary">
-          {helperText}
+      
+      <div className="relative">
+        {React.Children.map(children, child => {
+          if (!React.isValidElement(child)) return child;
+          
+          return React.cloneElement(child, {
+            id: fieldId,
+            'aria-invalid': error ? 'true' : 'false',
+            'aria-required': required,
+            'aria-describedby': clsx(
+              error && errorId,
+              helpText && helpTextId
+            ),
+            ...child.props
+          });
+        })}
+      </div>
+
+      {helpText && (
+        <p 
+          id={helpTextId}
+          className="mt-1 text-sm text-gray-500 dark:text-gray-400"
+        >
+          {helpText}
         </p>
       )}
+
       {error && (
-        <p id={errorId} className="text-sm text-error-text">
+        <p 
+          id={errorId}
+          className="mt-1 text-sm text-red-600 dark:text-red-400"
+          role="alert"
+        >
           {error}
         </p>
       )}
@@ -42,11 +68,4 @@ export const FormField = ({
   );
 };
 
-FormField.propTypes = {
-  id: PropTypes.string.isRequired,
-  label: PropTypes.string,
-  children: PropTypes.element.isRequired,
-  helperText: PropTypes.string,
-  error: PropTypes.string,
-  required: PropTypes.bool,
-};
+export default FormField;
