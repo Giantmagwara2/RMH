@@ -1,0 +1,51 @@
+**Investigating server configuration**
+
+I’m trying to figure out the correct config for Vite and webpack dev servers. It seems like Vite uses “fs.allow” and “server.origin” rather than “allowedHosts,” which is specific to webpack. But there's an error mentioning “server.allowedHosts,” which is throwing me off because it doesn’t match Vite’s usual setup. I think I need to dig into the docs more to figure out exactly how Vite handles this, and I wonder if “server.host” might also be involved in the issue. Let's search for more info.
+
+
+Thought for 22 seconds
+
+
+Here’s a concise “About” description you can drop into your Replit README (or any project metadata) to capture the essence of RocVille Media House and this prototype:
+
+> **RocVille Media House** is a full-service creative studio specializing in branding, web design & development, and digital marketing. Our mission is to help businesses build memorable brands and digital experiences that drive growth and engagement.
+>
+> This prototype (“RocVille Magic”) showcases our front-end design system and component library built with **React**, **Vite**, and **Tailwind CSS (v4)**. It demonstrates key features including:
+>
+> * A fully responsive **portfolio** page with category filters, lazy-loaded images, and pagination
+> * A dynamic **Homepage** with AI-driven personalization hooks, AOS scroll animations, and A/B tested CTAs
+> * A robust **form framework** (inputs, selects, textareas, fieldsets, steppers) powered by a custom `useForm` hook and **Zod** validation
+> * A comprehensive **UI component library** (buttons, cards, modals, tooltips, toasts, tabs, accordions, etc.) with Storybook documentation
+> * A flexible **layout system** (Grid, Stack, FlexRow, Container) and theme support (light/dark) via CSS variables and Tailwind tokens
+
+> ## How to Run
+>
+> 1. **Clone** this repo.
+> 2. Install dependencies with `yarn`.
+> 3. Start the dev server:
+>
+>    ```bash
+>    yarn install
+>    yarn dev
+>    ```
+> 4. Open [http://localhost:5173](http://localhost:5173) in your browser.
+> 5. To explore the component library, run:
+>
+>    ```bash
+>    yarn storybook
+>    ```
+
+> ## Vite Config Tip
+>
+> If you’re using a custom hostname or proxy (e.g. via Replit), you may see errors about “host not allowed.” Just add your hostname under `server.allowedHosts` in `vite.config.js`:
+>
+> ```js
+> // vite.config.js
+> export default {
+>   server: {
+>     allowedHosts: ['6341468d-e87e-448e-80ed-24511e66510e-00-1bvxiaa3e8cey.janeway.replit.dev'],
+>   },
+> };
+> ```
+
+Feel free to tweak this to suit your needs—swap in your actual Replit URL, update any port numbers, or refine the service descriptions. Good luck spinning up “the beast” on Replit!
