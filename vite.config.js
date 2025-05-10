@@ -11,7 +11,8 @@ export default defineConfig({
     hmr: {
       clientPort: 443,
       host: '0.0.0.0'
-    }
+    },
+    allowedHosts: ['6341468d-e87e-448e-80ed-24511e66510e-00-1bvxiaa3e8cey.janeway.replit.dev']
   },
   resolve: {
     alias: {
