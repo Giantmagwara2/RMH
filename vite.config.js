@@ -1,34 +1,39 @@
-
-import { defineConfig } from 'vite'
-import react from '@vitejs/plugin-react-swc'
-import path from 'path'
+// vite.config.js
+import { defineConfig } from "vite";
+import react from "@vitejs/plugin-react-swc";
+import path from "path";
 
 export default defineConfig({
   plugins: [react()],
   server: {
-    host: '0.0.0.0',
+    host: "0.0.0.0",
     port: 5000,
     hmr: {
       clientPort: 443,
-      host: '0.0.0.0',
-      protocol: 'wss'
-    }
+      host: "0.0.0.0",
+      protocol: "wss",
+    },
+    allowedHosts: [
+      "localhost",
+      "127.0.0.1",
+      "6341468d-e87e-448e-80ed-24511e66510e-00-1bvxiaa3e8cey.janeway.replit.dev",
+    ],
   },
   resolve: {
     alias: {
-      '@': path.resolve(__dirname, './src')
-    }
+      "@": path.resolve(__dirname, "./src"),
+    },
   },
   build: {
     sourcemap: true,
-    minify: 'terser',
+    minify: "terser",
     rollupOptions: {
       output: {
         manualChunks: {
-          'react-vendor': ['react', 'react-dom', 'react-router-dom'],
-          'ui-vendor': ['framer-motion', '@fortawesome/react-fontawesome']
-        }
-      }
-    }
-  }
-})
+          "react-vendor": ["react", "react-dom", "react-router-dom"],
+          "ui-vendor": ["framer-motion", "@fortawesome/react-fontawesome"],
+        },
+      },
+    },
+  },
+});
