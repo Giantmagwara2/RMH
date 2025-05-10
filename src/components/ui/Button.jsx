@@ -51,7 +51,22 @@ const Button = React.forwardRef(
       <button
         ref={ref}
         disabled={disabled}
-        className={`${baseClasses} ${variantClass} ${sizeClass} ${className} ${loading ? 'relative !text-transparent hover:!text-transparent' : ''}`}
+        className={`
+  ${baseClasses} 
+  ${variantClass} 
+  ${sizeClass} 
+  ${className} 
+  ${loading ? 'relative !text-transparent hover:!text-transparent' : ''}
+  transition-all duration-300 ease-in-out
+  hover:scale-[1.02] active:scale-[0.98]
+  text-[length:var(--font-size-base)]
+  md:text-[length:var(--font-size-md)]
+  p-[var(--space-sm)]
+  md:p-[var(--space-md)]
+  rounded-[var(--radius-md)]
+  shadow-[var(--shadow-md)]
+  dark:shadow-none
+`}
         onClick={loading ? undefined : onClick}
         {...props}
       >
