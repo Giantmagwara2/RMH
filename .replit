@@ -33,6 +33,19 @@ mode = "sequential"
 task = "shell.exec"
 args = "yarn jest"
 
+[[workflows.workflow]]
+name = "Full Test Suite"
+author = 42501159
+mode = "sequential"
+
+[[workflows.workflow.tasks]]
+task = "shell.exec"
+args = "yarn test"
+
+[[workflows.workflow.tasks]]
+task = "shell.exec"
+args = "yarn test:coverage"
+
 [[ports]]
 localPort = 5000
 externalPort = 80
