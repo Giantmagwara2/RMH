@@ -5,4 +5,21 @@ run = "yarn dev"
 channel = "stable-24_05"
 
 [deployment]
-run = ["sh", "-c", "yarn dev"]
+run = ["sh", "-c", "yarn preview"]
+build = ["sh", "-c", "yarn build"]
+
+[workflows]
+runButton = "Dev"
+
+[[workflows.workflow]]
+name = "Dev"
+author = 42501159
+mode = "sequential"
+
+[[workflows.workflow.tasks]]
+task = "shell.exec"
+args = "yarn install"
+
+[[workflows.workflow.tasks]]
+task = "shell.exec"
+args = "yarn dev"

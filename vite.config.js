@@ -1,14 +1,23 @@
-// vite.config.js
-import { defineConfig } from 'vite';
-import react from '@vitejs/plugin-react-swc';
-import { fileURLToPath, URL } from 'node:url'; // Import necessary utilities
 
-// https://vitejs.dev/config/
+import { defineConfig } from 'vite'
+import react from '@vitejs/plugin-react-swc'
+
 export default defineConfig({
   plugins: [react()],
-  resolve: {
-    alias: {
-      '@': fileURLToPath(new URL('./src', import.meta.url)),
-    },
+  server: {
+    host: '0.0.0.0',
+    port: 5000
   },
-});
+  build: {
+    sourcemap: true,
+    minify: 'terser',
+    rollupOptions: {
+      output: {
+        manualChunks: {
+          'react-vendor': ['react', 'react-dom', 'react-router-dom'],
+          'ui-vendor': ['framer-motion', '@fortawesome/react-fontawesome']
+        }
+      }
+    }
+  }
+})
