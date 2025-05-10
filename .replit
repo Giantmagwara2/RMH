@@ -23,3 +23,7 @@ args = "yarn install"
 [[workflows.workflow.tasks]]
 task = "shell.exec"
 args = "yarn dev"
+
+[[ports]]
+localPort = 5000
+externalPort = 80
