@@ -7,7 +7,7 @@ const HeroSection = () => {
     <section
       className="
         relative pt-header pb-section
-        bg-gradient-to-br from-indigo-600 to-electric-blue
+        bg-gradient-to-br from-brand-primary via-blue-500 to-brand-secondary
         dark:from-midnight-blue dark:to-rich-black
         overflow-hidden
       "

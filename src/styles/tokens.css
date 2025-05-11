@@ -42,17 +42,17 @@
   --space-4xl: clamp(4rem, 8vw, 5rem);
 
   /* Brand Colors */
-  --color-brand-primary: #2563EB;
-  --color-brand-secondary: #1E40AF;
+  --color-brand-primary: #3B82F6;
+  --color-brand-secondary: #1D4ED8;
   --color-brand-accent: #F59E0B;
 
   /* Neutrals */
-  --color-bg: #ffffff;
-  --color-surface: #f3f4f6;
-  --color-border: #e5e7eb;
-  --color-text-primary: #111827;
-  --color-text-secondary: #4b5563;
-  --color-muted: #9ca3af;
+  --color-bg: #FAFAFA;
+  --color-surface: #FFFFFF;
+  --color-border: #E2E8F0;
+  --color-text-primary: #1A202C;
+  --color-text-secondary: #4A5568;
+  --color-muted: #718096;
 
   /* Semantic Colors */
   --color-success: #10b981;

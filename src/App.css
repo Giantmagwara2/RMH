@@ -69,5 +69,5 @@ h3 {
 
 /* Button Styling */
 .btn-primary {
-  @apply px-4 py-2 font-semibold text-white transition-colors duration-300 rounded-md shadow-md bg-brand-primary hover:bg-brand-secondary focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2; /* Changed text-soft-white to text-white */
+  @apply px-5 py-2.5 font-semibold text-white transition-all duration-300 rounded-lg shadow-lg bg-brand-primary hover:bg-brand-secondary hover:shadow-xl focus:outline-none focus:ring-2 focus:ring-brand-primary/50 focus:ring-offset-2 active:transform active:scale-95;
 }
