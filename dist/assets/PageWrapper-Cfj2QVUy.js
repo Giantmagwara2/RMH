@@ -1,0 +1,2 @@
+import{j as i}from"./index-CAaY3JIT.js";import{m as a,P as t}from"./ui-vendor-BAMcEHQe.js";const n={initial:{opacity:0},animate:{opacity:1},exit:{opacity:0}},e=({children:t,variants:e=n,transitionDuration:r=.5})=>i.jsx(a.div,{variants:e,initial:"initial",animate:"animate",exit:"exit",transition:{duration:r,ease:"easeInOut"},children:t});e.propTypes={children:t.node.isRequired,variants:t.object,transitionDuration:t.number};export{e as P};
+//# sourceMappingURL=PageWrapper-Cfj2QVUy.js.map

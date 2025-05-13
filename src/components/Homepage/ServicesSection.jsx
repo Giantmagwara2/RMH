@@ -15,8 +15,8 @@ const ServicesSection = ({ prioritizedServices, trackServiceClick, mostClickedSe
   };
 
   return (
-    <HomepageSection className="mb-section">
-      <h2 className="font-display text-3xl font-bold text-soft-white dark:text-soft-white text-center mb-8">Our Creative Services</h2>
+    <Section className="mb-section">
+      <h2 className="mb-8 text-3xl font-bold text-center font-display text-soft-white dark:text-soft-white">Our Creative Services</h2>
       <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
         {prioritizedServices.map(service => (
           <div
@@ -25,14 +25,14 @@ const ServicesSection = ({ prioritizedServices, trackServiceClick, mostClickedSe
             className={serviceCardClasses(service.name)}
           >
             <div className="p-6">
-              <div className="w-12 h-12 mb-4 flex items-center justify-center bg-electric-blue dark:bg-highlight-yellow text-soft-white dark:text-rich-black rounded-full">
+              <div className="flex items-center justify-center w-12 h-12 mb-4 rounded-full bg-electric-blue dark:bg-highlight-yellow text-soft-white dark:text-rich-black">
                 {service.icon}
               </div>
-              <h3 className="font-semibold text-xl text-midnight-blue dark:text-soft-white mb-2">{service.name}</h3>
+              <h3 className="mb-2 text-xl font-semibold text-midnight-blue dark:text-soft-white">{service.name}</h3>
               <p className="text-gray-700 dark:text-gray-300">{service.description}</p>
               <Link
                 to={ROUTES.SERVICES}
-                className="group-hover:text-electric-blue dark:group-hover:text-highlight-yellow text-gray-500 dark:text-gray-400 font-semibold mt-4 inline-block transition-colors duration-300"
+                className="inline-block mt-4 font-semibold text-gray-500 transition-colors duration-300 group-hover:text-electric-blue dark:group-hover:text-highlight-yellow dark:text-gray-400"
               >
                 Learn More →
               </Link>
@@ -40,7 +40,7 @@ const ServicesSection = ({ prioritizedServices, trackServiceClick, mostClickedSe
           </div>
         ))}
       </div>
-    </HomepageSection>
+    </Section>
   );
 };
 

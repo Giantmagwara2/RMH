@@ -1,13 +1,9 @@
 /* index.css — Global Styles */
 
-/* Import Design Tokens */
-@import './styles/tokens.css';
-
-/* Tailwind CSS v4 Core Reset (replaces @tailwind base) */
-@import 'tailwindcss/preflight';
-
-/* Tailwind CSS Utilities (replaces @tailwind utilities) */
-@import 'tailwindcss/utilities';
+/* Tailwind CSS Directives */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
 /* Color Scheme Awareness */
 :root {

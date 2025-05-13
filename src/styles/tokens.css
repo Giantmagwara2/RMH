@@ -66,15 +66,20 @@
   --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.1);
   --shadow-xl: 0 20px 25px rgba(0, 0, 0, 0.15);
 
-  /* Transitions */
-  --transition-fast: 150ms cubic-bezier(0.4, 0, 0.2, 1);
-  --transition-default: 300ms cubic-bezier(0.4, 0, 0.2, 1);
-  --transition-slow: 500ms cubic-bezier(0.4, 0, 0.2, 1);
-  
   /* Animation Curves */
   --ease-in-out: cubic-bezier(0.4, 0, 0.2, 1);
   --ease-in: cubic-bezier(0.4, 0, 1, 1);
   --ease-out: cubic-bezier(0, 0, 0.2, 1);
+
+  /* Transition Durations */
+  --duration-fast: 150ms;
+  --duration-default: 300ms;
+  --duration-slow: 500ms;
+
+  /* Combined Transition Shorthands (Duration + Easing) */
+  --transition-fast: var(--duration-fast) var(--ease-in-out);
+  --transition-default: var(--duration-default) var(--ease-in-out);
+  --transition-slow: var(--duration-slow) var(--ease-in-out);
   
   /* Border Radius */
   --radius-sm: 0.25rem;
@@ -83,6 +88,9 @@
   --radius-xl: 0.75rem;
   --radius-2xl: 1rem;
   --radius-full: 9999px;
+
+  /* Focus */
+  --color-focus-ring: var(--color-brand-primary);
 }
 
 /* Dark Mode Overrides */
@@ -94,15 +102,30 @@
   --color-text-secondary: #d1d5db;
   --color-muted: #6b7280;
 
+  /* Dark mode semantic colors (adjust as needed for contrast and aesthetics) */
+  --color-success: #34D399; /* Lighter green (e.g., Tailwind green-400) */
+  --color-error: #F87171;   /* Lighter red (e.g., Tailwind red-400) */
+  --color-warning: #FBBF24; /* Lighter amber (e.g., Tailwind amber-400) */
+  --color-info: #60A5FA;    /* Lighter blue (e.g., Tailwind blue-400) */
+
   --shadow-sm: 0 1px 2px rgba(255, 255, 255, 0.05);
   --shadow-md: 0 4px 6px rgba(255, 255, 255, 0.1);
   --shadow-lg: 0 10px 15px rgba(255, 255, 255, 0.1);
   --shadow-xl: 0 20px 25px rgba(255, 255, 255, 0.15);
+
+  --color-focus-ring: var(--color-brand-accent); /* Example: Use accent color for focus in dark mode */
 }
 
 /* Responsive Breakpoints */
+/*
+  The following media query demonstrates how you can fine-tune your fluid tokens
+  for specific viewport ranges if the default clamp() behavior needs adjustment.
+  Tailwind CSS utility classes are the primary way to handle responsive styling
+  for components, but direct token overrides can be useful for global scale adjustments.
+*/
 @media (max-width: 640px) {
   :root {
+    /* Example: Make some spacing values slightly smaller on small screens */
     --space-lg: clamp(1rem, 2vw, 1.5rem);
     --space-xl: clamp(1.5rem, 3vw, 2rem);
     --space-2xl: clamp(2rem, 4vw, 2.5rem);

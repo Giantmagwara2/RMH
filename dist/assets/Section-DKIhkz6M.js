@@ -1,1 +1,0 @@
-import{j as s}from"./index-CyZvArFk.js";const c=({children:t,className:e="",...o})=>{const n=`mb-section ${e}`;return s.jsx("section",{className:n,...o,children:s.jsx("div",{className:"container mx-auto px-4",children:t})})};export{c as S};

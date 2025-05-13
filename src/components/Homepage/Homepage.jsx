@@ -5,7 +5,7 @@ import useAIBehavior from '../../hooks/useAIBehavior';
 import { PROJECTS, ROUTES } from '../../constants/index'; // Import from index.js
 import { allServices } from '../../constants/allServices'; // Import from allServices.js
 import { testimonialsData } from '../../constants/testimonialsData'; // Import from testimonialsData.js
-import HomepageSection from '../Section/Section'; // Import reusable component
+import Section from '../Section/Section'; // Correct import for Section component
 import PageWrapper from '../Layout/PageWrapper'; // Import PageWrapper
 import ServicesSection from './ServicesSection';
 import TestimonialsSection from './TestimonialsSection';
@@ -17,7 +17,6 @@ const CTA_STORAGE_KEY = 'cta_button_variant';
 const CTA_CLICK_EVENT = 'cta_button_click';
 
 const Homepage = () => {
-  // Destructure our new hook
   const {
     pageViews,
     serviceClicks,
@@ -31,10 +30,7 @@ const Homepage = () => {
     trackCustomEvent,
   } = useAIBehavior();
 
-  // A/B Testing State
   const [ctaButtonText, setCtaButtonText] = useState(CTA_BUTTON_TEXT_VARIANTS[0]);
-
-  // Derive key UI state
   const mostClickedService = getMostClickedService();
   const [heroTitle, setHeroTitle] = useState("Welcome to RocVille — Creative Power, Amplified!");
   const [heroSubtitle, setHeroSubtitle] = useState("Building the Digital Empires of Tomorrow.");
@@ -43,7 +39,6 @@ const Homepage = () => {
   const [scrolledPastServices, setScrolledPastServices] = useState(false);
   const servicesRef = useRef(null);
 
-  // Determine and persist CTA variant
   useEffect(() => {
     try {
       const storedVariant = localStorage.getItem(CTA_STORAGE_KEY);
@@ -57,36 +52,29 @@ const Homepage = () => {
       }
     } catch (error) {
       console.error("Error interacting with localStorage:", error);
-      // Fallback to the first variant if localStorage is unavailable
       setCtaButtonText(CTA_BUTTON_TEXT_VARIANTS[0]);
     }
   }, []);
 
-  // Track CTA button click
   const trackCtaClick = useCallback(() => {
     trackCustomEvent(CTA_CLICK_EVENT, { variant: ctaButtonText });
   }, [trackCustomEvent, ctaButtonText]);
 
-  // Memoized prioritized services
   const prioritizedServices = useMemo(() => {
     return [...allServices].sort((a, b) => (serviceClicks[b.name] || 0) - (serviceClicks[a.name] || 0));
   }, [serviceClicks]);
 
-  // Memoized personalized testimonials
   const personalizedTestimonials = useMemo(() => {
     if (!mostClickedService) return testimonialsData.slice(0, 2);
     return testimonialsData.filter(t => t.service === mostClickedService);
   }, [mostClickedService]);
 
-  // On relevant changes, update UI
   useEffect(() => {
     trackPageView();
     updateHeroContent();
     updateCtaTextBasedOnScrollAndPreference();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [mostClickedService, scrolledPastServices]);
 
-  // Track scroll for CTA adaptation
   useEffect(() => {
     const handleScroll = () => {
       if (!servicesRef.current) return;
@@ -117,7 +105,7 @@ const Homepage = () => {
         setHeroTitle("Welcome to RocVille — Creative Power, Amplified!");
         setHeroSubtitle("Building the Digital Empires of Tomorrow.");
     }
-  }, [mostClickedService, setHeroTitle, setHeroSubtitle]);
+  }, [mostClickedService]);
 
   const updateCtaTextBasedOnScrollAndPreference = useCallback(() => {
     setCtaHeadline("Ready to take your brand to the next level?");
@@ -141,40 +129,33 @@ const Homepage = () => {
           setCtaSupportingText("Explore how we can help you achieve your goals.");
       }
     }
-  }, [scrolledPastServices, mostClickedService, setCtaHeadline, setCtaSupportingText]);
-
-  const serviceCardClasses = useCallback((name) => {
-    const base = "bg-white dark:bg-midnight-blue rounded-lg shadow-card p-6 transition transform hover:-translate-y-1 cursor-pointer group";
-    return mostClickedService === name && pageViews > 1
-      ? `${base} border-4 border-electric-blue dark:border-highlight-yellow`
-      : base;
-  }, [mostClickedService, pageViews]);
+  }, [scrolledPastServices, mostClickedService]);
 
   return (
     <PageWrapper>
       <div className="pt-header pb-section bg-gradient-to-br from-electric-blue to-indigo-500 dark:from-midnight-blue dark:to-rich-black">
-        <div className="container mx-auto px-4">
+        <div className="container px-4 mx-auto">
           {/* Hero */}
-          <HomepageSection className="text-center bg-white dark:bg-midnight-blue bg-opacity-80 dark:bg-opacity-80 rounded-lg p-12 mb-section shadow-lg dark:shadow-none">
-            <h1 className="font-display text-4xl font-bold text-electric-blue dark:text-highlight-yellow mb-4">{heroTitle}</h1>
-            <p className="text-lg text-midnight-blue dark:text-soft-white mb-6">{heroSubtitle}</p>
+          <Section className="p-12 text-center bg-white rounded-lg shadow-lg dark:bg-midnight-blue bg-opacity-80 dark:bg-opacity-80 mb-section dark:shadow-none">
+            <h1 className="mb-4 text-4xl font-bold font-display text-electric-blue dark:text-highlight-yellow">{heroTitle}</h1>
+            <p className="mb-6 text-lg text-midnight-blue dark:text-soft-white">{heroSubtitle}</p>
             <div className="space-x-4">
               <Link
                 to={ROUTES.PORTFOLIO}
-                className="bg-electric-blue dark:bg-highlight-yellow text-soft-white dark:text-rich-black py-3 px-6 rounded-md hover:bg-blue-700 dark:hover:bg-yellow-500 transition-colors duration-300 shadow-md dark:shadow-none"
+                className="px-6 py-3 transition-colors duration-300 rounded-md shadow-md bg-electric-blue dark:bg-highlight-yellow text-soft-white dark:text-rich-black hover:bg-blue-700 dark:hover:bg-yellow-500 dark:shadow-none"
                 aria-label="View our previous projects"
               >
                 View Our Work
               </Link>
               <Link
                 to={ROUTES.CONTACT}
-                className="border border-electric-blue dark:border-highlight-yellow text-electric-blue dark:text-highlight-yellow py-3 px-6 rounded-md hover:bg-blue-100 dark:hover:bg-yellow-100 transition-colors duration-300 shadow-md dark:shadow-none"
+                className="px-6 py-3 transition-colors duration-300 border rounded-md shadow-md border-electric-blue dark:border-highlight-yellow text-electric-blue dark:text-highlight-yellow hover:bg-blue-100 dark:hover:bg-yellow-100 dark:shadow-none"
                 aria-label="Request a quote for our services"
               >
                 Get a Quote
               </Link>
             </div>
-          </HomepageSection>
+          </Section>
 
           {/* Services */}
           <ServicesSection

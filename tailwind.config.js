@@ -3,12 +3,19 @@
 module.exports = {
   content: [
     './src/**/*.{js,jsx,ts,tsx}',
-    './public/index.html'
+    './public/index.html',
   ],
+  darkMode: 'class', // Enables dark mode with the 'class' strategy
   theme: {
     container: {
       center: true,
-      padding: '1rem',
+      padding: {
+        DEFAULT: '1rem',
+        sm: '1.5rem',
+        lg: '2rem',
+        xl: '3rem',
+        '2xl': '4rem',
+      },
       screens: {
         sm: '640px',
         md: '768px',
@@ -23,84 +30,31 @@ module.exports = {
         heading: ['Poppins', 'sans-serif'],
       },
       fontWeight: {
+        extralight: '200',
         light: '300',
         normal: '400',
         medium: '500',
         semibold: '600',
         bold: '700',
+        extrabold: '800',
+        black: '900',
       },
-      fontSize: {
-        'xs': ['0.75rem', { lineHeight: '1rem' }],
-        'sm': ['0.875rem', { lineHeight: '1.25rem' }],
-        'base': ['1rem', { lineHeight: '1.5rem' }],
-        'md': ['1.125rem', { lineHeight: '1.75rem' }],
-        'lg': ['1.25rem', { lineHeight: '1.75rem' }],
-        'xl': ['1.5rem', { lineHeight: '2rem' }],
-        '2xl': ['1.875rem', { lineHeight: '2.25rem' }],
-        '3xl': ['2.25rem', { lineHeight: '2.5rem' }],
-        '4xl': ['3rem', { lineHeight: '1.2' }],
-        '5xl': ['3.75rem', { lineHeight: '1.1' }],
-        '6xl': ['4.5rem', { lineHeight: '1.1' }],
-      },
-      spacing: {
-        'space-0': '0px',
-        'space-xs': '4px',
-        'space-sm': '8px',
-        'space-md': '16px',
-        'space-lg': '24px',
-        'space-xl': '32px',
-        'space-2xl': '40px',
-        'space-3xl': '48px',
-        'space-4xl': '64px',
-      },
+      // Add additional custom theme extensions here
       colors: {
         brand: {
-          primary: '#2563EB',
-          secondary: '#1E40AF',
-          accent: '#F59E0B',
+          primary: {
+            DEFAULT: '#2563EB', // Blue-600
+            800: '#1E40AF', // Blue-800
+          },
+          accent: {
+            DEFAULT: '#F59E0B', // Amber-500
+          },
         },
-        neutrals: {
-          background: '#FFFFFF',
-          surface: '#F3F4F6',
-          border: '#E5E7EB',
-          textPrimary: '#111827',
-          textSecondary: '#4B5563',
-          muted: '#9CA3AF',
-        },
-        semantic: {
-          success: '#10B981',
-          error: '#EF4444',
-          warning: '#F59E0B',
-          info: '#3B82F6',
-        },
-      },
-      transitionTimingFunction: {
-        soft: 'cubic-bezier(0.4, 0, 0.2, 1)',
-      },
-      transitionDuration: {
-        DEFAULT: '300ms',
-        fast: '150ms',
-        slow: '500ms',
-      },
-      boxShadow: {
-        card: '0 2px 8px rgba(0, 0, 0, 0.05)',
-        navbar: '0 2px 12px rgba(0, 0, 0, 0.08)',
-      },
-      keyframes: {
-        fadeInUp: {
-          '0%': { opacity: 0, transform: 'translateY(20px)' },
-          '100%': { opacity: 1, transform: 'translateY(0)' },
-        },
-        fadeIn: {
-          '0%': { opacity: 0 },
-          '100%': { opacity: 1 },
-        },
-      },
-      animation: {
-        fadeInUp: 'fadeInUp 0.6s ease-out',
-        fadeIn: 'fadeIn 0.5s ease-in',
       },
     },
   },
-  plugins: [],
-}
+  plugins: [
+    require('@tailwindcss/forms'),
+    require('@tailwindcss/typography'),
+  ],
+};

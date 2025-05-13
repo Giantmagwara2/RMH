@@ -1,6 +1,6 @@
-// vite.config.js
+// Updated vite.config.js
 import { defineConfig } from "vite";
-import react from "@vitejs/plugin-react-swc";
+import react from "@vitejs/plugin-react";
 import path from "path";
 
 export default defineConfig({
@@ -16,7 +16,7 @@ export default defineConfig({
     allowedHosts: [
       "localhost",
       "127.0.0.1",
-      "6341468d-e87e-448e-80ed-24511e66510e-00-1bvxiaa3e8cey.janeway.replit.dev",
+      // Update any project-specific hosts
     ],
   },
   resolve: {

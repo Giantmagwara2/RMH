@@ -10,8 +10,8 @@ const TestimonialsSection = ({ personalizedTestimonials }) => {
   }
 
   return (
-    <Section className="mb-section bg-white dark:bg-midnight-blue bg-opacity-80 dark:bg-opacity-80 rounded-lg p-8 shadow-lg dark:shadow-none">
-      <h2 className="font-display text-3xl font-bold text-electric-blue dark:text-highlight-yellow text-center mb-6">What Our Clients Say</h2>
+    <Section className="p-8 bg-white rounded-lg shadow-lg mb-section dark:bg-midnight-blue bg-opacity-80 dark:bg-opacity-80 dark:shadow-none">
+      <h2 className="mb-6 text-3xl font-bold text-center font-display text-electric-blue dark:text-highlight-yellow">What Our Clients Say</h2>
       <div className="space-y-6">
         {personalizedTestimonials.map((t, i) => (
           <blockquote key={i} className={testimonialBaseStyles}>
