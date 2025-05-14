@@ -37,3 +37,11 @@ Disabled.args = {
   placeholder: 'Cannot type here...',
   disabled: true,
 };
+
+export const CustomStyles = Template.bind({});
+CustomStyles.args = {
+  label: 'Message',
+  placeholder: 'Type your message...',
+  borderColor: 'border-brand-primary',
+  backgroundColor: 'bg-brand-light',
+};

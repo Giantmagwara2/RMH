@@ -15,3 +15,10 @@ export const Variants = () => (
     <Badge variant="info">Info</Badge>
   </div>
 );
+
+// Added a story to demonstrate custom styles and accessibility
+export const CustomStyledBadge = () => (
+  <Badge variant="success" className="border border-green-500" aria-label="Success badge">
+    Custom Styled Badge
+  </Badge>
+);

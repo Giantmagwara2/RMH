@@ -3,8 +3,15 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import clsx from 'clsx';
 
-export const FlexRow = ({ children, gap = 'space-md', justifyContent, alignItems, className }) => {
-  const gapClass = `gap-${gap}`;
+export const FlexRow = ({
+  children,
+  gap = 'space-md',
+  justifyContent,
+  alignItems,
+  className,
+  customGap,
+}) => {
+  const gapClass = customGap ? customGap : `gap-${gap}`;
   const justifyClass = justifyContent ? `justify-${justifyContent}` : '';
   const alignClass = alignItems ? `items-${alignItems}` : '';
 
@@ -21,4 +28,5 @@ FlexRow.propTypes = {
   justifyContent: PropTypes.oneOf(['start', 'center', 'end', 'between', 'around', 'evenly']),
   alignItems: PropTypes.oneOf(['start', 'center', 'end', 'baseline', 'stretch']),
   className: PropTypes.string,
+  customGap: PropTypes.string,
 };

@@ -68,8 +68,9 @@ const CategoryDropdown = ({ categories, selectedCategory, onSelect }) => {
 
   return (
     <div className="relative inline-block text-left" ref={menuRef}>
+      {/* Dropdown Button */}
       <button
-        className="inline-flex w-full justify-center rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+        className="inline-flex items-center justify-between w-full px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-electric-blue dark:bg-gray-800 dark:text-gray-300 dark:hover:bg-gray-700"
         aria-haspopup="true"
         aria-expanded={isOpen}
         aria-label="Select project category"
@@ -77,11 +78,28 @@ const CategoryDropdown = ({ categories, selectedCategory, onSelect }) => {
         onKeyDown={handleKeyDown}
       >
         {selectedCategory}
+        <svg
+          className={`w-5 h-5 transform transition-transform duration-300 ${
+            isOpen ? 'rotate-180' : ''
+          }`}
+          fill="none"
+          stroke="currentColor"
+          viewBox="0 0 24 24"
+          aria-hidden="true"
+        >
+          <path
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            strokeWidth={2}
+            d="M19 9l-7 7-7-7"
+          />
+        </svg>
       </button>
 
+      {/* Dropdown Menu */}
       {isOpen && (
         <div
-          className="absolute right-0 z-10 mt-2 w-56 origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5"
+          className="absolute right-0 z-10 w-56 mt-2 origin-top-right bg-white rounded-md shadow-lg ring-1 ring-black ring-opacity-5 dark:bg-gray-800"
           role="menu"
           aria-orientation="vertical"
           tabIndex={-1}
@@ -97,8 +115,10 @@ const CategoryDropdown = ({ categories, selectedCategory, onSelect }) => {
                 setIsOpen(false);
               }}
               onKeyDown={handleKeyDown}
-              className={`w-full text-left px-4 py-2 text-sm hover:bg-indigo-100 focus:bg-indigo-100 focus:outline-none ${
-                selectedCategory === category ? 'bg-indigo-50 font-semibold' : ''
+              className={`w-full text-left px-4 py-2 text-sm font-medium transition-colors duration-300 ${
+                selectedCategory === category
+                  ? 'bg-electric-blue text-soft-white'
+                  : 'hover:bg-gray-100 dark:hover:bg-gray-700 dark:text-gray-300'
               }`}
               aria-selected={selectedCategory === category}
             >

@@ -50,3 +50,10 @@ Error.args = {
   type: 'error',
   message: 'Something went wrong.',
 };
+
+export const WithCustomIcon = Template.bind({});
+WithCustomIcon.args = {
+  type: 'info',
+  message: 'This is a custom icon toast!',
+  icon: () => <span>🌟</span>,
+};

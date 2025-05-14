@@ -25,21 +25,18 @@ const ContactUsPage = () => {
     let isValid = true;
     const newErrors = {};
 
-    // Enhanced validation
     if (!formData.name.trim() || formData.name.length > 100) {
-      newErrors.name = 'Name is required and must be less than 100 characters';
+      newErrors.name = 'Name is required and must be less than 100 characters.';
       isValid = false;
     }
 
-    // Sanitize and validate email
     if (!formData.email.trim() || !/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(formData.email)) {
-      newErrors.email = 'Please enter a valid email address';
+      newErrors.email = 'Please enter a valid email address.';
       isValid = false;
     }
 
-    // Prevent XSS in message
     if (!formData.message.trim() || formData.message.length > 1000 || /[<>]/.test(formData.message)) {
-      newErrors.message = 'Message is required, must be less than 1000 characters, and cannot contain HTML tags';
+      newErrors.message = 'Message is required, must be less than 1000 characters, and cannot contain HTML tags.';
       isValid = false;
     }
 
@@ -52,7 +49,6 @@ const ContactUsPage = () => {
     if (validateForm()) {
       setSubmissionStatus('pending');
       try {
-        // Simulate backend submission (replace with your actual API call)
         console.log('Form Data Submitted:', formData);
         await new Promise(resolve => setTimeout(resolve, 1500)); // Simulate delay
         setSubmissionStatus('success');
@@ -68,48 +64,48 @@ const ContactUsPage = () => {
   return (
     <PageWrapper>
       <div className="pt-header pb-section bg-gradient-to-br from-electric-blue to-indigo-500 dark:from-midnight-blue dark:to-rich-black">
-        <div className="container mx-auto px-4">
+        <div className="container px-4 mx-auto">
           {/* Page Header */}
           <Section className="text-center mb-section">
-            <h1 className="font-display text-4xl font-bold text-soft-white mb-6">Contact Us</h1>
-            <p className="text-soft-white text-lg leading-relaxed">
+            <h1 className="mb-6 text-4xl font-bold font-display text-soft-white">Contact Us</h1>
+            <p className="text-lg leading-relaxed text-soft-white">
               We'd love to hear from you! Get in touch with us to discuss your project or any inquiries.
             </p>
           </Section>
 
           {/* Contact Form and Information */}
-          <div className="bg-white dark:bg-dark-bg bg-opacity-80 dark:bg-opacity-80 rounded-lg shadow-card dark:shadow-none p-8 md:p-12 mb-section">
-            <h2 className="font-display text-3xl font-bold text-midnight-blue dark:text-secondary mb-8 text-center">Get in Touch</h2>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+          <div className="p-8 bg-white rounded-lg dark:bg-dark-bg bg-opacity-80 dark:bg-opacity-80 shadow-card dark:shadow-none md:p-12 mb-section">
+            <h2 className="mb-8 text-3xl font-bold text-center font-display text-midnight-blue dark:text-secondary">Get in Touch</h2>
+            <div className="grid grid-cols-1 gap-8 md:grid-cols-2">
               {/* Contact Information */}
               <div>
-                <h3 className="font-semibold text-xl text-electric-blue dark:text-highlight-yellow mb-4">Contact Information</h3>
-                <ul className="text-gray-700 dark:text-gray-300 leading-relaxed">
-                  <li className="mb-3 flex items-center">
-                    <FontAwesomeIcon icon={faMapMarkerAlt} className="mr-4 text-electric-blue dark:text-highlight-yellow text-lg" aria-hidden="true" />
+                <h3 className="mb-4 text-xl font-semibold text-electric-blue dark:text-highlight-yellow">Contact Information</h3>
+                <ul className="leading-relaxed text-gray-700 dark:text-gray-300">
+                  <li className="flex items-center mb-3">
+                    <FontAwesomeIcon icon={faMapMarkerAlt} className="mr-4 text-lg text-electric-blue dark:text-highlight-yellow" aria-hidden="true" />
                     <address className="not-italic">
                       123 Main Street, Jabulani, Soweto, Gauteng, South Africa
                     </address>
                   </li>
-                  <li className="mb-3 flex items-center">
-                    <FontAwesomeIcon icon={faPhone} className="mr-4 text-electric-blue dark:text-highlight-yellow text-lg" aria-hidden="true" />
-                    <a href="tel:+27110000000" className="hover:text-electric-blue dark:hover:text-highlight-yellow transition-colors duration-300">+27 11 000 0000</a>
+                  <li className="flex items-center mb-3">
+                    <FontAwesomeIcon icon={faPhone} className="mr-4 text-lg text-electric-blue dark:text-highlight-yellow" aria-hidden="true" />
+                    <a href="tel:+27110000000" className="transition-colors duration-300 hover:text-electric-blue dark:hover:text-highlight-yellow">+27 11 000 0000</a>
                   </li>
-                  <li className="mb-3 flex items-center">
-                    <FontAwesomeIcon icon={faEnvelope} className="mr-4 text-electric-blue dark:text-highlight-yellow text-lg" aria-hidden="true" />
-                    <a href="mailto:info@rocvillecreative.com" className="hover:text-electric-blue dark:hover:text-highlight-yellow transition-colors duration-300">info@rocvillecreative.com</a>
+                  <li className="flex items-center mb-3">
+                    <FontAwesomeIcon icon={faEnvelope} className="mr-4 text-lg text-electric-blue dark:text-highlight-yellow" aria-hidden="true" />
+                    <a href="mailto:info@rocvillecreative.com" className="transition-colors duration-300 hover:text-electric-blue dark:hover:text-highlight-yellow">info@rocvillecreative.com</a>
                   </li>
                 </ul>
                 <div className="mt-8">
-                  <h3 className="font-semibold text-xl text-electric-blue dark:text-highlight-yellow mb-4">Follow Us</h3>
+                  <h3 className="mb-4 text-xl font-semibold text-electric-blue dark:text-highlight-yellow">Follow Us</h3>
                   <div className="flex space-x-4">
-                    <a href="#" className="text-gray-700 dark:text-gray-300 hover:text-electric-blue dark:hover:text-highlight-yellow transition-colors duration-300" aria-label="Follow us on Facebook">
+                    <a href="#" className="text-gray-700 transition-colors duration-300 dark:text-gray-300 hover:text-electric-blue dark:hover:text-highlight-yellow" aria-label="Follow us on Facebook">
                       <FontAwesomeIcon icon={faFacebook} size="lg" />
                     </a>
-                    <a href="#" className="text-gray-700 dark:text-gray-300 hover:text-electric-blue dark:hover:text-highlight-yellow transition-colors duration-300" aria-label="Follow us on Twitter">
+                    <a href="#" className="text-gray-700 transition-colors duration-300 dark:text-gray-300 hover:text-electric-blue dark:hover:text-highlight-yellow" aria-label="Follow us on Twitter">
                       <FontAwesomeIcon icon={faTwitter} size="lg" />
                     </a>
-                    <a href="#" className="text-gray-700 dark:text-gray-300 hover:text-electric-blue dark:hover:text-highlight-yellow transition-colors duration-300" aria-label="Follow us on Instagram">
+                    <a href="#" className="text-gray-700 transition-colors duration-300 dark:text-gray-300 hover:text-electric-blue dark:hover:text-highlight-yellow" aria-label="Follow us on Instagram">
                       <FontAwesomeIcon icon={faInstagram} size="lg" />
                     </a>
                   </div>
@@ -118,10 +114,10 @@ const ContactUsPage = () => {
 
               {/* Contact Form */}
               <div>
-                <h3 className="font-semibold text-xl text-electric-blue dark:text-highlight-yellow mb-4">Send Us a Message</h3>
+                <h3 className="mb-4 text-xl font-semibold text-electric-blue dark:text-highlight-yellow">Send Us a Message</h3>
                 <form onSubmit={handleSubmit} className="space-y-4">
                   <div>
-                    <label htmlFor="name" className="block text-gray-700 dark:text-gray-300 font-medium mb-2">Name</label>
+                    <label htmlFor="name" className="block mb-2 font-medium text-gray-700 dark:text-gray-300">Name</label>
                     <input
                       type="text"
                       id="name"
@@ -133,10 +129,10 @@ const ContactUsPage = () => {
                       aria-invalid={!!errors.name}
                       aria-describedby={errors.name ? 'name-error' : null}
                     />
-                    {errors.name && <p className="text-red-500 text-sm mt-1" id="name-error">{errors.name}</p>}
+                    {errors.name && <p className="mt-1 text-sm text-red-500" id="name-error">{errors.name}</p>}
                   </div>
                   <div>
-                    <label htmlFor="email" className="block text-gray-700 dark:text-gray-300 font-medium mb-2">Email</label>
+                    <label htmlFor="email" className="block mb-2 font-medium text-gray-700 dark:text-gray-300">Email</label>
                     <input
                       type="email"
                       id="email"
@@ -148,10 +144,10 @@ const ContactUsPage = () => {
                       aria-invalid={!!errors.email}
                       aria-describedby={errors.email ? 'email-error' : null}
                     />
-                    {errors.email && <p className="text-red-500 text-sm mt-1" id="email-error">{errors.email}</p>}
+                    {errors.email && <p className="mt-1 text-sm text-red-500" id="email-error">{errors.email}</p>}
                   </div>
                   <div>
-                    <label htmlFor="message" className="block text-gray-700 dark:text-gray-300 font-medium mb-2">Message</label>
+                    <label htmlFor="message" className="block mb-2 font-medium text-gray-700 dark:text-gray-300">Message</label>
                     <textarea
                       id="message"
                       name="message"
@@ -163,20 +159,20 @@ const ContactUsPage = () => {
                       aria-invalid={!!errors.message}
                       aria-describedby={errors.message ? 'message-error' : null}
                     ></textarea>
-                    {errors.message && <p className="text-red-500 text-sm mt-1" id="message-error">{errors.message}</p>}
+                    {errors.message && <p className="mt-1 text-sm text-red-500" id="message-error">{errors.message}</p>}
                   </div>
                   <button
                     type="submit"
-                    className="bg-electric-blue dark:bg-highlight-yellow text-soft-white dark:text-rich-black py-3 px-6 rounded-md w-full hover:bg-blue-700 dark:hover:bg-yellow-500 transition-colors duration-300 shadow-md dark:shadow-none font-semibold"
+                    className="w-full px-6 py-3 font-semibold transition-colors duration-300 rounded-md shadow-md bg-electric-blue dark:bg-highlight-yellow text-soft-white dark:text-rich-black hover:bg-blue-700 dark:hover:bg-yellow-500 dark:shadow-none"
                     disabled={submissionStatus === 'pending'}
                   >
                     {submissionStatus === 'pending' ? 'Sending...' : 'Send Message'}
                   </button>
                   {submissionStatus === 'success' && (
-                    <p className="text-green-500 text-sm mt-2">Message sent successfully!</p>
+                    <p className="mt-2 text-sm text-green-500">Message sent successfully!</p>
                   )}
                   {submissionStatus === 'error' && (
-                    <p className="text-red-500 text-sm mt-2">There was an error sending your message. Please try again later.</p>
+                    <p className="mt-2 text-sm text-red-500">There was an error sending your message. Please try again later.</p>
                   )}
                 </form>
               </div>

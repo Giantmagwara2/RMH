@@ -1,6 +1,6 @@
 // Updated vite.config.js
 import { defineConfig } from "vite";
-import react from "@vitejs/plugin-react";
+import react from "@vitejs/plugin-react-swc";
 import path from "path";
 
 export default defineConfig({
@@ -26,7 +26,9 @@ export default defineConfig({
   },
   build: {
     sourcemap: true,
-    minify: "terser",
+    // Using ESbuild (Vite's default) for minification is significantly faster
+    // than Terser and usually provides comparable bundle sizes.
+    // minify: "terser", // Keep if Terser's specific features or slightly smaller output are critical
     rollupOptions: {
       output: {
         manualChunks: {

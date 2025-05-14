@@ -32,6 +32,7 @@ const Select = ({
         className={`px-space-sm py-space-xs rounded-md border ${borderColor} ${textColor} bg-white focus:outline-none focus:ring-2 focus:ring-brand-base transition`}
         aria-label={ariaLabel}
         aria-describedby={ariaDescribedby}
+        aria-live="polite"
         required={required}
       >
         <option value="" disabled>{placeholder}</option>
@@ -41,7 +42,7 @@ const Select = ({
           </option>
         ))}
       </select>
-      {error && <span className="text-sm text-red-500">{error}</span>}
+      {error && <span className="text-sm text-red-500" aria-live="assertive">{error}</span>}
     </div>
   );
 };

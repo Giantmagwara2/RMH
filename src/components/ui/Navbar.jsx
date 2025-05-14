@@ -8,7 +8,7 @@ const navItems = [
   { label: 'Contact', to: '/contact' },
 ];
 
-const Navbar = ({ logo, className = '' }) => {
+const Navbar = ({ logo, className = '', activePath }) => {
   const [mobileOpen, setMobileOpen] = useState(false);
 
   return (
@@ -24,7 +24,9 @@ const Navbar = ({ logo, className = '' }) => {
               <RouterLink
                 key={item.to}
                 to={item.to}
-                className="transition-colors text-text-primary hover:text-brand-primary duration-default"
+                className={`transition-colors text-text-primary hover:text-brand-primary duration-default ${
+                  activePath === item.to ? 'font-bold text-brand-primary' : ''
+                }`}
               >
                 {item.label}
               </RouterLink>
@@ -61,7 +63,9 @@ const Navbar = ({ logo, className = '' }) => {
                 <RouterLink
                   key={item.to}
                   to={item.to}
-                  className="block transition-colors text-text-primary hover:bg-neutrals-border"
+                  className={`block transition-colors text-text-primary hover:bg-neutrals-border ${
+                    activePath === item.to ? 'font-bold text-brand-primary' : ''
+                  }`}
                   onClick={() => setMobileOpen(false)}
                 >
                   {item.label}

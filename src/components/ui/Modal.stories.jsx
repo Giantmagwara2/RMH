@@ -28,3 +28,32 @@ export const Default = () => {
     </>
   );
 };
+
+export const WithFocusTrap = () => {
+  const [open, setOpen] = useState(false);
+  return (
+    <>
+      <button
+        onClick={() => setOpen(true)}
+        className="text-white rounded bg-brand-primary px-space-md py-space-sm"
+      >
+        Open Modal with Focus Trap
+      </button>
+      <Modal
+        isOpen={open}
+        onClose={() => setOpen(false)}
+        title="Focus Trapped Modal"
+      >
+        <p className="text-text-secondary">
+          This modal traps focus within its content. Use Tab and Shift+Tab to navigate.
+        </p>
+        <button className="text-white rounded mt-space-md bg-brand-primary px-space-md py-space-sm">
+          Confirm
+        </button>
+        <button className="text-white rounded mt-space-md ml-space-sm bg-semantic-error px-space-md py-space-sm">
+          Cancel
+        </button>
+      </Modal>
+    </>
+  );
+};

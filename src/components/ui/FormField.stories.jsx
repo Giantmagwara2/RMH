@@ -66,3 +66,26 @@ export const TextareaField = () => {
     </FormField>
   );
 };
+
+export const CustomStyles = () => (
+  <FormField
+    id="custom"
+    label="Custom Styled Field"
+    helperText="This field has custom styles."
+    customStyles="bg-gray-100 p-4 rounded-md"
+  >
+    <Input placeholder="Custom input" />
+  </FormField>
+);
+
+// Added a story to demonstrate custom styles and aria-describedby
+export const CustomStyledField = () => (
+  <FormField
+    id="custom-field"
+    label="Custom Field"
+    helperText="This is a custom styled field."
+    customStyles="border border-blue-500 p-2 rounded"
+  >
+    <Input placeholder="Enter something..." />
+  </FormField>
+);

@@ -1,6 +1,6 @@
 import React from 'react';
 
-const Spinner = ({ size = 'md', className = '' }) => {
+const Spinner = ({ size = 'md', color = 'text-brand-primary', className = '' }) => {
   const sizeClasses = {
     sm: 'w-4 h-4',
     md: 'w-6 h-6',
@@ -9,10 +9,12 @@ const Spinner = ({ size = 'md', className = '' }) => {
 
   return (
     <svg
-      className={`${sizeClasses[size]} animate-spin text-brand-primary ${className}`}
+      className={`${sizeClasses[size]} animate-spin ${color} ${className}`}
       xmlns="http://www.w3.org/2000/svg"
       fill="none"
       viewBox="0 0 24 24"
+      role="status"
+      aria-live="polite"
       aria-label="Loading"
     >
       <circle

@@ -1,4 +1,3 @@
-
 import React from 'react';
 import clsx from 'clsx';
 
@@ -10,13 +9,14 @@ const FormField = ({
   helpText,
   className,
   id,
+  customStyles = '',
 }) => {
   const fieldId = id || Math.random().toString(36).substring(2);
   const errorId = `${fieldId}-error`;
   const helpTextId = `${fieldId}-help`;
 
   return (
-    <div className={clsx('form-field', className)}>
+    <div className={clsx('form-field', className, customStyles)}>
       {label && (
         <label 
           htmlFor={fieldId}
@@ -49,7 +49,7 @@ const FormField = ({
       {helpText && (
         <p 
           id={helpTextId}
-          className="mt-1 text-sm text-gray-500 dark:text-gray-400"
+          className="text-sm text-gray-500 dark:text-gray-400 mt-1"
         >
           {helpText}
         </p>
@@ -58,8 +58,7 @@ const FormField = ({
       {error && (
         <p 
           id={errorId}
-          className="mt-1 text-sm text-red-600 dark:text-red-400"
-          role="alert"
+          className="text-sm text-red-500 mt-1"
         >
           {error}
         </p>

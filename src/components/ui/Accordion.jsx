@@ -2,6 +2,25 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { ChevronDownIcon } from '@heroicons/react/24/outline'; // Optional: Replace with your own icon if needed
 
+// Added keyboard navigation and improved accessibility
+const handleKeyDown = (event, index, items) => {
+  if (event.key === 'ArrowDown') {
+    event.preventDefault();
+    const nextIndex = (index + 1) % items.length;
+    document.getElementById(`accordion-button-${nextIndex}`).focus();
+  } else if (event.key === 'ArrowUp') {
+    event.preventDefault();
+    const prevIndex = (index - 1 + items.length) % items.length;
+    document.getElementById(`accordion-button-${prevIndex}`).focus();
+  } else if (event.key === 'Home') {
+    event.preventDefault();
+    document.getElementById('accordion-button-0').focus();
+  } else if (event.key === 'End') {
+    event.preventDefault();
+    document.getElementById(`accordion-button-${items.length - 1}`).focus();
+  }
+};
+
 const AccordionItem = ({
   item,
   isOpen,
@@ -11,6 +30,7 @@ const AccordionItem = ({
   contentClassName = '',
   IconComponent = ChevronDownIcon,
   iconClassName = '',
+  items,
 }) => {
   const buttonId = `accordion-button-${index}`;
   const contentId = `accordion-content-${index}`;
@@ -21,6 +41,7 @@ const AccordionItem = ({
         <button
           id={buttonId}
           onClick={onClick}
+          onKeyDown={(event) => handleKeyDown(event, index, items)}
           aria-expanded={isOpen}
           aria-controls={contentId}
           className={`flex items-center justify-between w-full font-medium text-left px-space-md py-space-sm text-text-primary focus:outline-none focus:ring-2 focus:ring-brand-primary focus:ring-opacity-50 ${buttonClassName}`.trim()}
@@ -62,6 +83,7 @@ AccordionItem.propTypes = {
   contentClassName: PropTypes.string,
   IconComponent: PropTypes.elementType,
   iconClassName: PropTypes.string,
+  items: PropTypes.array.isRequired,
 };
 
 const Accordion = ({
@@ -107,6 +129,7 @@ const Accordion = ({
           contentClassName={contentClassName}
           IconComponent={IconComponent}
           iconClassName={iconClassName}
+          items={items}
         />
       ))}
     </div>

@@ -35,3 +35,13 @@ export const WithCustomClass = () => (
     </Link>
   </div>
 );
+
+export const ActiveLink = () => (
+  <div className="space-x-4">
+    <Link to="/" isActive>
+      Home
+    </Link>
+    <Link to="/portfolio">Portfolio</Link>
+    <Link to="/contact">Contact</Link>
+  </div>
+);

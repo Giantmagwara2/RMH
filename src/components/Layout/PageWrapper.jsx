@@ -6,25 +6,35 @@ import PropTypes from 'prop-types';
 const defaultPageVariants = {
   initial: {
     opacity: 0,
-    // y: 15, // Optional: Add a slight vertical movement
+    y: 20, // Adds a slight vertical movement for entry
   },
   animate: {
     opacity: 1,
-    // y: 0,
+    y: 0,
   },
   exit: {
     opacity: 0,
-    // y: -15, // Optional: Add a slight vertical movement
+    y: -20, // Adds a slight vertical movement for exit
   },
 };
 
-const PageWrapper = ({ children, variants = defaultPageVariants, transitionDuration = 0.5 }) => (
+// PageWrapper Component
+const PageWrapper = ({
+  children,
+  variants = defaultPageVariants,
+  transitionDuration = 0.5,
+  easing = 'easeInOut',
+  className = '',
+  ...props
+}) => (
   <motion.div
+    className={className}
     variants={variants}
     initial="initial"
     animate="animate"
     exit="exit"
-    transition={{ duration: transitionDuration, ease: 'easeInOut' }}
+    transition={{ duration: transitionDuration, ease: easing }}
+    {...props}
   >
     {children}
   </motion.div>
@@ -34,6 +44,8 @@ PageWrapper.propTypes = {
   children: PropTypes.node.isRequired,
   variants: PropTypes.object,
   transitionDuration: PropTypes.number,
+  easing: PropTypes.oneOfType([PropTypes.string, PropTypes.array]),
+  className: PropTypes.string,
 };
 
 export default PageWrapper;

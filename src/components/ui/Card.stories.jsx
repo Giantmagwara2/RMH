@@ -58,3 +58,11 @@ CardWithImageAndActions.args = {
     <Button variant="secondary" size="sm">Secondary Action</Button>
   ],
 };
+
+// Added a story to demonstrate custom styles and accessibility
+export const CustomStyledCard = Template.bind({});
+CustomStyledCard.args = {
+  title: 'Custom Styled Card',
+  content: 'This card demonstrates custom styles and accessibility.',
+  className: 'border border-blue-500 shadow-lg',
+};

@@ -13,3 +13,12 @@ export const Default = () => (
     </div>
   </Container>
 );
+
+// Added a story to demonstrate accessibility with aria-label
+export const AccessibleContainer = () => (
+  <Container className="bg-gray-100" aria-label="Accessible Container">
+    <div className="text-center rounded-md shadow-md bg-neutrals-surface p-space-md">
+      <p className="text-text-primary">This is an accessible Container component.</p>
+    </div>
+  </Container>
+);

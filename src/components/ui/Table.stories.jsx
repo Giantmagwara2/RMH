@@ -19,3 +19,7 @@ const sampleData = [
 ];
 
 export const Default = () => <Table columns={columns} data={sampleData} />;
+
+export const StripedRows = () => (
+  <Table columns={columns} data={sampleData} striped />
+);

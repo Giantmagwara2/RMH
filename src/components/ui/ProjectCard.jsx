@@ -4,29 +4,40 @@ import { Link } from 'react-router-dom';
 
 const ProjectCard = ({ project }) => (
   <div
-    className="bg-white rounded-lg shadow-card overflow-hidden group hover:shadow-lg transition-shadow duration-300"
+    className="overflow-hidden transition-shadow duration-300 bg-white rounded-lg shadow-card group hover:shadow-lg sm:max-w-sm md:max-w-md lg:max-w-lg"
     data-aos="fade-up"
+    role="region"
+    aria-labelledby={`project-title-${project.id}`}
+    aria-describedby={`project-description-${project.id}`}
   >
-    <Link to={project.link} aria-label={`View ${project.title}`}>
+    <Link to={project.link} aria-label={`View ${project.title}`} tabIndex={0}>
       <div className="relative">
         <img
           src={project.image}
           alt={project.title}
-          className="w-full h-48 object-cover transition-transform duration-300 group-hover:scale-105"
+          className="object-cover w-full h-48 transition-transform duration-300 group-hover:scale-105"
           loading="lazy"
         />
-        <div className="absolute inset-0 bg-midnight-blue bg-opacity-0 group-hover:bg-opacity-70 transition-opacity duration-300 flex items-center justify-center">
-          <span className="text-soft-white font-semibold text-lg opacity-0 group-hover:opacity-100">
+        <div className="absolute inset-0 flex items-center justify-center transition-opacity duration-300 bg-opacity-0 bg-midnight-blue group-hover:bg-opacity-70">
+          <span className="text-lg font-semibold opacity-0 text-soft-white group-hover:opacity-100">
             View Project
           </span>
         </div>
       </div>
       <div className="p-4">
-        <h3 className="font-semibold text-lg text-midnight-blue mb-1">
+        <h3
+          id={`project-title-${project.id}`}
+          className="mb-1 text-lg font-semibold text-midnight-blue"
+        >
           {project.title}
         </h3>
-        <p className="text-gray-600 text-sm mb-1">{project.description}</p>
-        <p className="text-electric-blue text-xs">{project.category}</p>
+        <p
+          id={`project-description-${project.id}`}
+          className="mb-1 text-sm text-gray-600"
+        >
+          {project.description}
+        </p>
+        <p className="text-xs text-electric-blue">{project.category}</p>
       </div>
     </Link>
   </div>

@@ -1,12 +1,14 @@
 /* App.css */
 
 /*
-  Global base styles (html, body, base 'a' tags) and Tailwind core imports
-  should be primarily handled by index.css to avoid redundancy.
+  App-specific styles and component-level overrides.
+  Global base styles and Tailwind core imports are in index.css.
 */
 
 #root {
   padding: var(--space-md);
+  background-color: var(--color-bg); /* Ensure background matches the global theme */
+  color: var(--color-text-primary); /* Ensure text color matches the global theme */
 }
 
 /* Logo Styling */
@@ -15,12 +17,13 @@
   width: auto;
   max-height: 6em;
   padding: var(--space-sm);
-  will-change: filter;
-  transition: filter var(--transition-duration) ease-in-out;
+  will-change: filter, transform; /* Added transform for potential scaling effects */
+  transition: filter var(--duration-normal) var(--transition-ease), transform var(--duration-fast) var(--transition-ease);
 }
 
 .logo:hover {
   filter: drop-shadow(0 0 1em var(--color-brand-accent));
+  transform: scale(1.05); /* Slight scaling effect for hover */
 }
 
 .logo.react:hover {
@@ -32,32 +35,104 @@
   color: var(--color-text-secondary);
   font-size: var(--font-size-sm);
   margin-top: var(--space-md);
+  text-align: center;
+  transition: color var(--duration-fast) var(--transition-ease);
 }
 
-/*
-  App-specific anchor hover style.
-  Base 'a' styles (color, text-decoration, base transition)
-  should be defined in index.css for consistency.
-  Ensure the transition property is unified in index.css.
-*/
-a:hover {
-  color: var(--color-brand-primary);
+.read-the-docs:hover {
+  color: var(--color-brand-secondary); /* Bright Sky Blue for hover */
 }
 
 /* Typography */
 h1 {
-  @apply text-4xl font-bold font-heading text-midnight-blue; /* Assuming you have this color defined */
+  @apply text-4xl font-bold font-heading;
+  color: var(--color-brand-primary); /* Vibrant Orange for headings */
 }
 
 h2 {
-  @apply text-3xl font-semibold font-heading text-midnight-blue; /* Assuming you have this color defined */
+  @apply text-3xl font-semibold font-heading;
+  color: var(--color-brand-secondary); /* Bright Sky Blue for subheadings */
 }
 
 h3 {
-  @apply text-2xl font-semibold font-heading text-midnight-blue; /* Assuming you have this color defined */
+  @apply text-2xl font-semibold font-heading;
+  color: var(--color-brand-accent); /* Vibrant Pink for tertiary headings */
 }
 
 /* Button Styling */
 .btn-primary {
-  @apply px-5 py-2.5 font-semibold text-white transition-all duration-300 rounded-lg shadow-lg bg-brand-primary hover:bg-brand-secondary hover:shadow-xl focus:outline-none focus:ring-2 focus:ring-brand-primary/50 focus:ring-offset-2 active:transform active:scale-95;
+  @apply px-5 py-2.5 font-semibold text-white transition-all rounded-lg shadow-lg;
+  background-color: var(--color-brand-primary);
+  @apply focus:outline-none focus:ring-2 focus:ring-offset-2 active:transform active:scale-95;
+  border-color: transparent;
+  transition-property: background-color, box-shadow, transform;
+  transition-duration: var(--duration-normal);
+  transition-timing-function: var(--transition-ease);
+}
+
+.btn-primary:hover {
+  background-color: var(--color-brand-primary-hover);
+  @apply shadow-xl;
+}
+
+.btn-primary:focus {
+  box-shadow: 0 0 0 2px var(--color-bg), 0 0 0 4px var(--color-focus-ring);
+}
+
+.btn-secondary {
+  @apply px-5 py-2.5 font-semibold text-white transition-all rounded-lg shadow-lg;
+  background-color: var(--color-brand-secondary);
+  @apply focus:outline-none focus:ring-2 focus:ring-offset-2 active:transform active:scale-95;
+  border-color: transparent;
+  transition-property: background-color, box-shadow, transform;
+  transition-duration: var(--duration-normal);
+  transition-timing-function: var(--transition-ease);
+}
+
+.btn-secondary:hover {
+  background-color: var(--color-brand-secondary-hover);
+  @apply shadow-xl;
+}
+
+.btn-secondary:focus {
+  box-shadow: 0 0 0 2px var(--color-bg), 0 0 0 4px var(--color-focus-ring);
+}
+
+/* Anchor Hover Styles */
+a:hover {
+  color: var(--color-brand-primary-hover); /* Align with global hover styles */
+  text-decoration: underline;
+}
+
+/* Card Styling */
+.card {
+  @apply p-6 transition-all bg-white rounded-lg shadow-md dark:bg-gray-800;
+  border: 1px solid var(--color-border);
+  transition-property: transform, box-shadow;
+  transition-duration: var(--duration-normal);
+  transition-timing-function: var(--transition-ease);
+}
+
+.card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+}
+
+/* Footer Styling */
+.footer {
+  padding: var(--space-lg);
+  background-color: var(--color-bg-secondary);
+  color: var(--color-text-secondary);
+  text-align: center;
+  font-size: var(--font-size-sm);
+}
+
+.footer a {
+  color: var(--color-brand-secondary);
+  text-decoration: none;
+  transition: color var(--duration-fast) var(--transition-ease);
+}
+
+.footer a:hover {
+  color: var(--color-brand-secondary-hover);
 }

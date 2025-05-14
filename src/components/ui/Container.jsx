@@ -9,6 +9,7 @@ export const Container = ({ children, className }) => {
         'mx-auto px-space-md sm:px-space-lg md:px-space-xl w-full max-w-screen-xl',
         className
       )}
+      aria-label="Container"
     >
       {children}
     </div>

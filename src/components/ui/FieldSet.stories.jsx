@@ -37,3 +37,14 @@ export const MultipleGroups = () => (
     </FieldSet>
   </div>
 );
+
+export const CustomStyles = () => (
+  <FieldSet
+    legend="Custom Styled FieldSet"
+    description="This FieldSet has custom styles applied."
+    borderColor="border-brand-primary"
+    backgroundColor="bg-brand-light"
+  >
+    <Input label="Custom Input" name="customInput" id="customInput" />
+  </FieldSet>
+);

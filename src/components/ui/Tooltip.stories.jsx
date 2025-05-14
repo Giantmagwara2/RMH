@@ -36,3 +36,11 @@ Right.args = {
   content: 'This is a right tooltip',
   position: 'right',
 };
+
+export const CustomColors = Template.bind({});
+CustomColors.args = {
+  content: 'This is a custom tooltip',
+  position: 'top',
+  backgroundColor: 'bg-brand-primary',
+  textColor: 'text-white',
+};

@@ -3,7 +3,13 @@ import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import clsx from 'clsx';
 
-export const Toast = ({ type = 'info', message, onClose, duration = 3000 }) => {
+export const Toast = ({
+  type = 'info',
+  message,
+  onClose,
+  duration = 3000,
+  icon: CustomIcon,
+}) => {
   useEffect(() => {
     const timer = setTimeout(() => {
       onClose?.();
@@ -19,8 +25,20 @@ export const Toast = ({ type = 'info', message, onClose, duration = 3000 }) => {
     error: 'bg-red-600',
   };
 
+  const icons = {
+    info: 'ℹ️',
+    success: '✔️',
+    warning: '⚠️',
+    error: '❌',
+  };
+
   return (
-    <div className={clsx(baseStyles, variants[type])} role="alert">
+    <div className={clsx(baseStyles, variants[type])} role="alert" aria-live="assertive">
+      {CustomIcon ? (
+        <CustomIcon className="mr-space-sm" />
+      ) : (
+        <span className="mr-space-sm">{icons[type]}</span>
+      )}
       <span className="flex-1">{message}</span>
       <button
         onClick={onClose}
@@ -38,4 +56,5 @@ Toast.propTypes = {
   message: PropTypes.string.isRequired,
   onClose: PropTypes.func,
   duration: PropTypes.number,
+  icon: PropTypes.elementType,
 };

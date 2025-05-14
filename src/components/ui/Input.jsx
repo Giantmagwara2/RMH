@@ -17,9 +17,10 @@ const Input = React.forwardRef(({
   required = false,
   'aria-label': ariaLabel,
   'aria-describedby': ariaDescribedby,
+  borderColor = 'border-neutrals-border',
+  backgroundColor = 'bg-neutrals-surface',
   ...props
 }, ref) => {
-  const borderColor = error ? 'border-error' : 'border-neutrals-border';
   const focusRing = error ? 'focus:ring-error' : 'focus:ring-brand-primary';
 
   return (
@@ -39,7 +40,7 @@ const Input = React.forwardRef(({
         disabled={disabled}
         className={`
           w-full px-space-sm py-space-xs
-          bg-neutrals-surface
+          ${backgroundColor}
           ${borderColor} border rounded-md
           focus:outline-none focus:ring-2 ${focusRing}
           disabled:opacity-50 disabled:cursor-not-allowed
@@ -51,7 +52,7 @@ const Input = React.forwardRef(({
         aria-describedby={ariaDescribedby}
       />
       {helperText && (
-        <p className={`mt-1 text-sm ${error ? 'text-error' : 'text-text-secondary'}`}>
+        <p className={`mt-1 text-sm ${error ? 'text-error' : 'text-text-secondary'}`} aria-live="assertive">
           {helperText}
         </p>
       )}

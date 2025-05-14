@@ -17,26 +17,17 @@ const CategoryFilter = ({ categories, onCategoryChange, isFetching }) => {
 
   const handleCategoryKeyDown = useCallback(
     (e, index) => {
-      switch (e.key) {
-        case 'ArrowDown':
-          categoryButtonRefs.current[index + 1]?.focus();
-          break;
-        case 'ArrowUp':
-          if (index > 0) {
-            categoryButtonRefs.current[index - 1]?.focus();
-          } else {
-            mobileFilterButtonRef.current?.focus();
-          }
-          break;
-        case 'Enter':
-          handleCategoryChange(categories[index]); // Use local handler
-          break;
-        case 'Escape':
-          setIsFilterDropdownOpen(false);
-          mobileFilterButtonRef.current?.focus();
-          break;
-        default:
-          break;
+      if (e.key === 'ArrowDown') {
+        e.preventDefault();
+        const nextIndex = (index + 1) % categories.length;
+        categoryButtonRefs.current[nextIndex]?.focus();
+      } else if (e.key === 'ArrowUp') {
+        e.preventDefault();
+        const prevIndex = (index - 1 + categories.length) % categories.length;
+        categoryButtonRefs.current[prevIndex]?.focus();
+      } else if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        handleCategoryChange(categories[index]);
       }
     },
     [categories, handleCategoryChange]
@@ -56,13 +47,13 @@ const CategoryFilter = ({ categories, onCategoryChange, isFetching }) => {
   }, [isFilterDropdownOpen]);
 
   return (
-    <div className="container mx-auto px-4">
+    <div className="container px-4 mx-auto">
       {/* Mobile Dropdown */}
-      <div className="block md:hidden relative category-dropdown-container">
+      <div className="relative block md:hidden category-dropdown-container" aria-live="polite">
         <button
           ref={mobileFilterButtonRef}
           onClick={() => setIsFilterDropdownOpen((prev) => !prev)}
-          className="w-full px-4 py-2 rounded-md bg-white text-midnight-blue shadow-md flex justify-between items-center"
+          className="flex items-center justify-between w-full px-4 py-2 bg-white rounded-md shadow-md text-midnight-blue"
           aria-haspopup="listbox"
           aria-expanded={isFilterDropdownOpen}
         >
@@ -73,7 +64,7 @@ const CategoryFilter = ({ categories, onCategoryChange, isFetching }) => {
         </button>
 
         {isFilterDropdownOpen && (
-          <div className="absolute top-full left-0 right-0 bg-white shadow-md rounded-md z-10">
+          <div className="absolute left-0 right-0 z-10 bg-white rounded-md shadow-md top-full">
             {categories.map((cat, idx) => (
               <button
                 key={cat}
@@ -96,7 +87,7 @@ const CategoryFilter = ({ categories, onCategoryChange, isFetching }) => {
       </div>
 
       {/* Desktop Pills */}
-      <div className="hidden md:flex flex-wrap justify-center gap-3 mb-8">
+      <div className="flex-wrap justify-center hidden gap-3 mb-8 md:flex">
         {categories.map((cat) => (
           <button
             key={cat}

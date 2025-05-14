@@ -6,18 +6,14 @@ import { serviceIcons } from '../../constants'; // To access the SVG icons
 const ServicesSection = () => (
   <section
     id="services"
-    className="
-      pt-section pb-section
-      bg-soft-white dark:bg-rich-black
-      overflow-hidden
-    "
+    className="overflow-hidden pt-section pb-section bg-soft-white dark:bg-rich-black"
     aria-labelledby="services-heading"
   >
-    <div className="container mx-auto px-4">
+    <div className="container px-4 mx-auto">
       {/* Section Heading */}
       <h2
         id="services-heading"
-        className="font-display text-3xl md:text-4xl text-midnight-blue dark:text-soft-white text-center mb-12"
+        className="mb-12 text-3xl text-center font-display md:text-4xl text-midnight-blue dark:text-soft-white"
         data-aos="fade-up"
       >
         Our Creative Services
@@ -30,63 +26,33 @@ const ServicesSection = () => (
           return (
             <div
               key={svc.id}
-              className="
-                group
-                bg-white dark:bg-midnight-blue
-                rounded-xl
-                shadow-card
-                hover:shadow-lg
-                transform hover:-translate-y-1
-                transition
-                duration-300
-                flex flex-col
-                p-6
-                hover:border hover:border-electric-blue dark:hover:border-highlight-yellow
-              "
+              className="flex flex-col p-6 transition duration-300 transform bg-white group dark:bg-midnight-blue rounded-xl shadow-card hover:shadow-lg hover:-translate-y-1 hover:border hover:border-electric-blue dark:hover:border-highlight-yellow"
               data-aos="fade-up"
               data-aos-delay={idx * 100}
             >
               {/* Icon */}
               <div
-                className={`
-                  mb-4
-                  inline-flex items-center justify-center
-                  p-3
-                  bg-electric-blue dark:bg-highlight-yellow
-                  rounded-md
-                  text-white dark:text-rich-black
-                  transition-colors duration-300
-                  group-hover:bg-blue-700 dark:group-hover:bg-yellow-500
-                `}
+                className="inline-flex items-center justify-center p-3 mb-4 text-white transition-colors duration-300 rounded-md bg-electric-blue dark:bg-highlight-yellow dark:text-rich-black group-hover:bg-blue-700 dark:group-hover:bg-yellow-500"
               >
                 {IconComponent && (
-                  <IconComponent
-                    className={`w-8 h-8 group-hover:text-white dark:group-hover:text-rich-black`}
-                  />
+                  <IconComponent className="w-8 h-8 group-hover:text-white dark:group-hover:text-rich-black" />
                 )}
               </div>
 
               {/* Title */}
-              <h3 className="text-xl font-semibold mb-2 text-midnight-blue dark:text-soft-white group-hover:text-electric-blue dark:group-hover:text-highlight-yellow transition-colors duration-300">
+              <h3 className="mb-2 text-xl font-semibold transition-colors duration-300 text-midnight-blue dark:text-soft-white group-hover:text-electric-blue dark:group-hover:text-highlight-yellow">
                 {svc.name}
               </h3>
 
               {/* Description */}
-              <p className="flex-grow text-gray-700 dark:text-gray-300 mb-6 leading-relaxed">
+              <p className="flex-grow mb-6 leading-relaxed text-gray-700 dark:text-gray-300">
                 {svc.description}
               </p>
 
               {/* Learn More */}
               <Link
                 to={`/services/${svc.slug}`} // Use the slug from allServices
-                className="
-                  inline-flex items-center
-                  text-electric-blue dark:text-highlight-yellow
-                  font-medium
-                  hover:underline
-                  focus:outline-none focus:ring-2 focus:ring-electric-blue/50
-                  transition-colors duration-300
-                "
+                className="inline-flex items-center font-medium transition-colors duration-300 text-electric-blue dark:text-highlight-yellow hover:underline focus:outline-none focus:ring-2 focus:ring-electric-blue/50"
                 aria-label={`Learn more about ${svc.name}`}
               >
                 Learn More&nbsp;&rarr;

@@ -20,3 +20,11 @@ Info.args = { variant: 'info', message: 'This is an informational alert.' };
 
 export const Error = Template.bind({});
 Error.args = { variant: 'error', message: 'This is an error alert!' };
+
+// Added a story to demonstrate dynamic updates with aria-live
+export const DynamicAlert = Template.bind({});
+DynamicAlert.args = {
+  variant: 'success',
+  message: 'This alert dynamically updates!',
+};
+DynamicAlert.storyName = 'Dynamic Alert';

@@ -8,19 +8,29 @@ const MAIN_CONTENT_ID = 'main-content';
 
 const Layout = ({ children }) => {
   return (
-    <div className="min-h-screen flex flex-col antialiased transition-colors duration-300 overflow-x-hidden">
+    <div className="flex flex-col min-h-screen overflow-x-hidden antialiased text-gray-800 transition-colors duration-300 bg-gray-50 dark:bg-gray-900 dark:text-gray-200">
+      {/* Skip Link for Accessibility */}
       <a
         href={`#${MAIN_CONTENT_ID}`}
-        className="absolute z-50 left-4 top-4 -translate-y-full focus:translate-y-0 p-3 bg-white dark:bg-neutral-900 text-brand-primary dark:text-brand-accent shadow-lg rounded-md transition-transform duration-200 ease-in-out"
-        // Alternatively, for a simpler hide/show:
-        // className="sr-only focus:not-sr-only focus:absolute focus:top-3 focus:left-3 focus:z-50 focus:p-3 focus:bg-white focus:text-blue-600 focus:rounded focus:shadow-md"
+        className="absolute z-50 p-3 transition-transform duration-200 ease-in-out -translate-y-full bg-white rounded-md shadow-lg left-4 top-4 focus:translate-y-0 dark:bg-gray-800 text-electric-blue dark:text-highlight-yellow"
       >
         Skip to main content
       </a>
+
+      {/* Header */}
       <Header />
-      <main id={MAIN_CONTENT_ID} className="flex-grow">
+
+      {/* Main Content */}
+      <main
+        id={MAIN_CONTENT_ID}
+        className="container flex-grow px-4 py-8 mx-auto"
+        role="main"
+        aria-labelledby="main-heading"
+      >
         {children}
       </main>
+
+      {/* Footer */}
       <Footer />
     </div>
   );

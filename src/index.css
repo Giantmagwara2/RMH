@@ -7,6 +7,41 @@
 
 /* Color Scheme Awareness */
 :root {
+  /* Define base color variables - Light Theme (Default) */
+  --color-text-primary: #1a202c; /* Vibrant Dark Gray */
+  --color-text-secondary: #4a5568; /* Medium Gray */
+  --color-bg: #f7fafc; /* Light Grayish White */
+  --color-bg-secondary: #edf2f7; /* Slightly Darker Grayish White */
+
+  --color-brand-primary: #ff5722; /* Vibrant Orange */
+  --color-brand-primary-hover: #e64a19; /* Darker Vibrant Orange */
+  --color-brand-secondary: #03a9f4; /* Bright Sky Blue */
+  --color-brand-secondary-hover: #0288d1; /* Darker Sky Blue */
+  --color-brand-accent: #ff4081; /* Vibrant Pink */
+
+  --color-border: #cbd5e0; /* Light Gray for borders */
+  --color-focus-ring: var(--color-brand-primary); /* For focus indicators */
+
+  /* Font & Transition Variables */
+  --font-sans: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  --font-serif: 'Poppins', Georgia, 'Times New Roman', Times, serif;
+  --font-mono: 'Fira Code', Menlo, Monaco, Consolas, 'Courier New', monospace;
+  --font-weight-normal: 400;
+  --font-weight-semibold: 600;
+  --font-weight-bold: 700;
+  --line-height-normal: 1.6;
+  --line-height-tight: 1.3;
+
+  --duration-fast: 150ms;
+  --duration-normal: 300ms;
+  --transition-ease: ease-in-out;
+
+  --space-xs: 0.25rem;
+  --space-sm: 0.5rem;
+  --space-md: 1rem;
+  --space-lg: 1.5rem;
+  --space-xl: 2rem;
+
   color-scheme: light dark;
 }
 
@@ -34,23 +69,51 @@ body {
 
 /* Code Element */
 code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New', monospace;
+  font-family: var(--font-mono);
+  background-color: var(--color-bg-secondary);
+  padding: var(--space-xs) var(--space-sm);
+  border-radius: 0.25rem;
+  font-size: 0.9em;
 }
 
-/* Anchor Reset */
+/* Headings */
+h1, h2, h3, h4, h5, h6 {
+  color: var(--color-brand-primary); /* Vibrant Orange for headings */
+  font-family: var(--font-serif);
+  line-height: var(--line-height-tight);
+  margin-bottom: var(--space-md);
+}
+h1 { font-size: 2.5rem; font-weight: var(--font-weight-bold); } /* Approx 40px */
+h2 { font-size: 2rem; font-weight: var(--font-weight-semibold); } /* Approx 32px */
+h3 { font-size: 1.75rem; font-weight: var(--font-weight-semibold); } /* Approx 28px */
+
+/* Anchor Styles */
 a {
-  color: inherit;
+  color: var(--color-brand-secondary); /* Bright Sky Blue for links */
   text-decoration: none;
-  transition: color var(--duration-fast) var(--transition-soft);
+  transition: color var(--duration-fast) var(--transition-ease);
 }
 
-/* Button Reset */
+a:hover,
+a:focus {
+  color: var(--color-brand-secondary-hover); /* Darker Sky Blue on hover */
+  text-decoration: underline;
+}
+
+/* Button Styles */
 button {
   font-family: inherit;
   cursor: pointer;
   border: none;
-  background: none;
-  transition: all var(--duration-fast) var(--transition-soft);
+  background: var(--color-brand-primary);
+  color: #fff;
+  padding: var(--space-sm) var(--space-md);
+  border-radius: 0.375rem;
+  transition: background-color var(--duration-fast) var(--transition-ease);
+}
+
+button:hover {
+  background: var(--color-brand-primary-hover);
 }
 
 /* Global Container Utility */
@@ -59,4 +122,26 @@ button {
   margin-inline: auto;
   padding-inline: var(--space-md);
   width: 100%;
+}
+
+/* Dark Mode Overrides */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --color-text-primary: #e2e8f0; /* Light Gray */
+    --color-text-secondary: #a0aec0; /* Medium Gray */
+    --color-bg: #1a202c; /* Dark Grayish Blue */
+    --color-bg-secondary: #2d3748; /* Slightly Lighter Dark Gray */
+
+    --color-brand-primary: #ff7043; /* Lighter Vibrant Orange */
+    --color-brand-primary-hover: #ff8a65; /* Even Lighter Orange */
+    --color-brand-secondary: #29b6f6; /* Lighter Sky Blue */
+    --color-brand-secondary-hover: #4fc3f7; /* Even Lighter Sky Blue */
+    --color-brand-accent: #ff80ab; /* Lighter Pink */
+
+    --color-border: #4a5568; /* Darker Gray for borders */
+  }
+
+  code {
+    color: var(--color-text-primary); /* Ensure code text is visible in dark mode */
+  }
 }

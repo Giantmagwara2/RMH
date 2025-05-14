@@ -209,3 +209,44 @@ export const ValidationFormDark: Story = {
     );
   },
 };
+
+export const Default: Story = {
+  name: 'Default Form (Auto-wired Inputs)',
+  render: () => (
+    <Form onSubmit={(values) => alert(JSON.stringify(values, null, 2))}>
+      <Input name="email" label="Email" placeholder="Enter your email" />
+      <Input name="password" label="Password" type="password" placeholder="Enter your password" />
+      <Button type="submit" className="mt-4">Submit</Button>
+    </Form>
+  ),
+};
+
+export const CustomStyles: Story = {
+  name: 'Form with Custom Styles',
+  render: () => (
+    <Form
+      onSubmit={(values) => alert(JSON.stringify(values, null, 2))}
+      customStyles="bg-gray-100 p-4 rounded-md"
+    >
+      <Input name="email" label="Email" placeholder="Enter your email" />
+      <Input name="password" label="Password" type="password" placeholder="Enter your password" />
+      <Button type="submit" className="mt-4">Submit</Button>
+    </Form>
+  ),
+};
+
+// Added a story to demonstrate custom styles and aria-live updates
+export const CustomStyledForm: Story = {
+  name: 'Custom Styled Form',
+  render: () => (
+    <Form
+      onSubmit={(values) => alert(`Submitted: ${JSON.stringify(values)}`)}
+      customStyles="bg-gray-100 p-4 rounded-lg"
+      aria-label="Custom Styled Form"
+    >
+      <Input name="username" placeholder="Enter your username" />
+      <Input name="password" type="password" placeholder="Enter your password" />
+      <Button type="submit">Submit</Button>
+    </Form>
+  ),
+};

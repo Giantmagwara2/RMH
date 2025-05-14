@@ -1,7 +1,7 @@
 import React from 'react';
 
 export const RadioButton = React.forwardRef(
-  ({ id, label, value, name, checked, onChange, disabled = false, className = '', ...props }, ref) => (
+  ({ id, label, value, name, checked, onChange, disabled = false, error = false, className = '', ...props }, ref) => (
     <div className={`flex items-center mb-space-sm ${className}`}>
       <input
         type="radio"
@@ -12,7 +12,10 @@ export const RadioButton = React.forwardRef(
         checked={checked}
         onChange={onChange}
         disabled={disabled}
-        className="w-4 h-4 text-brand-primary border-neutrals-border focus:ring focus:ring-brand-primary"
+        aria-invalid={error}
+        className={`w-4 h-4 text-brand-primary border-neutrals-border focus:ring focus:ring-brand-primary ${
+          error ? 'border-red-500' : ''
+        }`}
         {...props}
       />
       {label && (
@@ -24,9 +27,9 @@ export const RadioButton = React.forwardRef(
   )
 );
 
-const RadioGroup = ({ name, options = [], selectedValue, onChange, className = '' }) => (
-  <div className={className}>
-    {options.map(opt => (
+const RadioGroup = ({ name, options = [], selectedValue, onChange, error = '', className = '' }) => (
+  <div className={className} role="radiogroup" aria-labelledby={`${name}-label`}>
+    {options.map((opt) => (
       <RadioButton
         key={opt.value}
         id={`${name}-${opt.value}`}
@@ -35,8 +38,10 @@ const RadioGroup = ({ name, options = [], selectedValue, onChange, className = '
         value={opt.value}
         checked={selectedValue === opt.value}
         onChange={() => onChange(opt.value)}
+        error={!!error}
       />
     ))}
+    {error && <p className="mt-1 text-sm text-red-500" id={`${name}-error`}>{error}</p>}
   </div>
 );
 

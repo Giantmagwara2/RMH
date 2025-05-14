@@ -13,6 +13,7 @@ const Alert = ({ variant = 'info', message, onClose, className = '', ...props })
       className={`flex justify-between items-center px-space-md py-space-sm rounded-md mb-space-md
                   ${VARIANT_CLASSES[variant]} ${className}`}
       role="alert"
+      aria-live="assertive"
       {...props}
     >
       <span>{message}</span>

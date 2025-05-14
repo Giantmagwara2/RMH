@@ -31,3 +31,29 @@ export const Default = () => {
     </div>
   );
 };
+
+// Added a story to demonstrate accessibility with aria-labelledby and aria-describedby
+export const AccessibleDialog = () => {
+  const [open, setOpen] = useState(false);
+
+  return (
+    <div className="p-space-md">
+      <Button onClick={() => setOpen(true)}>Open Accessible Dialog</Button>
+      <Dialog
+        isOpen={open}
+        onClose={() => setOpen(false)}
+        title="Accessible Dialog"
+        actions={[
+          <Button key="cancel" variant="secondary" onClick={() => setOpen(false)}>
+            Cancel
+          </Button>,
+          <Button key="confirm" onClick={() => alert('Confirmed!')}>
+            Confirm
+          </Button>,
+        ]}
+      >
+        This dialog demonstrates accessibility with aria-labelledby and aria-describedby.
+      </Dialog>
+    </div>
+  );
+};

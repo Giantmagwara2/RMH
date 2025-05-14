@@ -40,3 +40,10 @@ export const MobileMenuOpen = () => {
     </div>
   );
 };
+
+export const ActiveLinkHighlight = () => (
+  <Navbar
+    logo={<div className="text-lg font-bold text-text-primary">RocVille</div>}
+    activePath="/portfolio" // Highlight the Portfolio link
+  />
+);

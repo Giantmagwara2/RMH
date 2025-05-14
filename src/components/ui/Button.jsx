@@ -25,6 +25,7 @@ const SIZE_CLASSES = {
  * - size: one of the keys in SIZE_CLASSES
  * - disabled: boolean
  * - className: additional classes
+ * - fullWidth: boolean for full-width buttons
  * - ...props: other <button> props (onClick, type, etc.)
  */
 const Button = React.forwardRef(
@@ -41,6 +42,7 @@ const Button = React.forwardRef(
       variant = 'primary',
       size = 'md',
       loading = false,
+      fullWidth = false, // New prop for full-width buttons
       onClick,
       ...props
     },
@@ -58,10 +60,11 @@ const Button = React.forwardRef(
         disabled={disabled}
         className={`
   ${baseClasses} 
-  ${variantClass} 
+  ${variantClass}
   ${sizeClass} 
   ${className} 
   ${loading ? 'relative !text-transparent hover:!text-transparent' : ''}
+  ${fullWidth ? 'w-full' : ''} // Apply full-width class if fullWidth is true
   transition-all duration-300 ease-in-out
   hover:scale-[1.02] active:scale-[0.98]
   text-[length:var(--font-size-base)]
@@ -76,7 +79,7 @@ const Button = React.forwardRef(
         aria-label={ariaLabel}
         aria-expanded={ariaExpanded}
         aria-pressed={ariaPressed}
-        aria-busy={ariaBusy}
+        aria-busy={loading || ariaBusy}
         {...props}
       >
         {loading && (

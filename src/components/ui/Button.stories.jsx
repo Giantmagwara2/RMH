@@ -59,3 +59,11 @@ export const Sizes = () => (
     <Button size="lg">Large</Button>
   </div>
 );
+
+// Added a story to demonstrate the loading state
+export const Loading = Template.bind({});
+Loading.args = {
+  variant: 'primary',
+  size: 'md',
+  loading: true,
+};

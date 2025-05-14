@@ -19,20 +19,22 @@ const ServicesPage = () => {
     return (
       <PageWrapper>
         <div className="pt-header pb-section bg-gradient-to-br from-electric-blue to-indigo-500 dark:from-midnight-blue dark:to-rich-black">
-          <div className="container mx-auto px-4">
+          <div className="container px-4 mx-auto">
             <Section className="text-center mb-section">
-              <h1 className="font-display text-4xl lg:text-5xl font-bold text-soft-white mb-4">
+              <h1 className="mb-4 text-4xl font-bold font-display lg:text-5xl text-soft-white">
                 Our Expert Services
               </h1>
-              <p className="text-lg text-soft-white leading-relaxed max-w-2xl mx-auto">
+              <p className="max-w-2xl mx-auto text-lg leading-relaxed text-soft-white">
                 From stunning web experiences to strategic marketing campaigns, our full suite of creative services is designed to help your brand thrive.
               </p>
             </Section>
           </div>
         </div>
         <Section className="pt-section pb-section">
-          <div className="container mx-auto px-4">
-            <p className="text-center mt-10">Loading services…</p>
+          <div className="container px-4 mx-auto">
+            <p className="mt-10 text-center text-gray-700 animate-pulse dark:text-gray-300">
+              Loading services…
+            </p>
           </div>
         </Section>
       </PageWrapper>
@@ -43,20 +45,20 @@ const ServicesPage = () => {
     return (
       <PageWrapper>
         <div className="pt-header pb-section bg-gradient-to-br from-electric-blue to-indigo-500 dark:from-midnight-blue dark:to-rich-black">
-          <div className="container mx-auto px-4">
+          <div className="container px-4 mx-auto">
             <Section className="text-center mb-section">
-              <h1 className="font-display text-4xl lg:text-5xl font-bold text-soft-white mb-4">
+              <h1 className="mb-4 text-4xl font-bold font-display lg:text-5xl text-soft-white">
                 Our Expert Services
               </h1>
-              <p className="text-lg text-soft-white leading-relaxed max-w-2xl mx-auto">
+              <p className="max-w-2xl mx-auto text-lg leading-relaxed text-soft-white">
                 From stunning web experiences to strategic marketing campaigns, our full suite of creative services is designed to help your brand thrive.
               </p>
             </Section>
           </div>
         </div>
         <Section className="pt-section pb-section">
-          <div className="container mx-auto px-4">
-            <p className="text-center text-red-500 mt-10">
+          <div className="container px-4 mx-auto">
+            <p className="mt-10 text-center text-red-500">
               Error loading services: {error?.message || 'Failed to load services'}
             </p>
           </div>
@@ -69,16 +71,16 @@ const ServicesPage = () => {
     <PageWrapper>
       {/* Hero Section */}
       <div className="pt-header pb-section bg-gradient-to-br from-electric-blue to-indigo-500 dark:from-midnight-blue dark:to-rich-black">
-        <div className="container mx-auto px-4">
+        <div className="container px-4 mx-auto">
           <Section
             className="text-center mb-section"
             data-aos="fade-down"
             data-aos-duration="800"
           >
-            <h1 className="font-display text-4xl lg:text-5xl font-bold text-soft-white mb-4">
+            <h1 className="mb-4 text-4xl font-bold font-display lg:text-5xl text-soft-white">
               Our Expert Services
             </h1>
-            <p className="text-lg text-soft-white leading-relaxed max-w-2xl mx-auto">
+            <p className="max-w-2xl mx-auto text-lg leading-relaxed text-soft-white">
               From stunning web experiences to strategic marketing campaigns, our full suite of creative services is designed to help your brand thrive.
             </p>
           </Section>
@@ -87,7 +89,7 @@ const ServicesPage = () => {
 
       {/* Services Grid */}
       <Section className="pt-section pb-section">
-        <div className="container mx-auto px-4">
+        <div className="container px-4 mx-auto">
           <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
             {services?.map((service) => (
               <div
@@ -96,13 +98,13 @@ const ServicesPage = () => {
                 data-aos="fade-up"
                 data-aos-duration="600"
               >
-                <div className="flex items-center justify-center h-12 w-12 rounded-md bg-electric-blue dark:bg-highlight-yellow text-soft-white dark:text-rich-black mb-4">
+                <div className="flex items-center justify-center w-12 h-12 mb-4 rounded-md bg-electric-blue dark:bg-highlight-yellow text-soft-white dark:text-rich-black">
                   {service.icon}
                 </div>
-                <h2 className="font-semibold text-xl text-midnight-blue dark:text-secondary mb-2">
+                <h2 className="mb-2 text-xl font-semibold text-midnight-blue dark:text-secondary">
                   {service.name}
                 </h2>
-                <p className="text-gray-700 dark:text-gray-300 mb-4">
+                <p className="mb-4 text-gray-700 dark:text-gray-300">
                   {service.description}
                 </p>
                 <Link
@@ -129,16 +131,16 @@ const ServicesPage = () => {
 
       {/* Call to Action */}
       <Section
-        className="text-center bg-electric-blue dark:bg-indigo-700 py-12 mt-section rounded-lg mx-4 sm:mx-8 lg:mx-32"
+        className="py-12 mx-4 text-center rounded-lg bg-electric-blue dark:bg-indigo-700 mt-section sm:mx-8 lg:mx-32"
         data-aos="fade-up"
         data-aos-duration="800"
       >
-        <p className="text-soft-white italic text-lg mb-6">
+        <p className="mb-6 text-lg italic text-soft-white">
           Ready to take your project to the next level?
         </p>
         <Link
           to={ROUTES.CONTACT}
-          className="inline-block bg-soft-white dark:bg-white text-electric-blue dark:text-rich-black font-semibold py-3 px-8 rounded-md shadow-md hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors duration-300 focus:outline-none focus:ring-2 focus:ring-electric-blue dark:focus:ring-highlight-yellow focus:ring-offset-2"
+          className="inline-block px-8 py-3 font-semibold transition-colors duration-300 rounded-md shadow-md bg-soft-white dark:bg-white text-electric-blue dark:text-rich-black hover:bg-gray-100 dark:hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-electric-blue dark:focus:ring-highlight-yellow focus:ring-offset-2"
           aria-label="Contact us to discuss your project"
         >
           Contact Us

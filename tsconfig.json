@@ -21,6 +21,5 @@
       "@/*": ["src/*"]
     }
   },
-  "include": ["src"],
-  // Removed the reference to tsconfig.node.json as the file does not exist
+  "include": ["src/**/*"]
 }

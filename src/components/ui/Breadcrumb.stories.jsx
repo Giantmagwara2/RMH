@@ -25,3 +25,15 @@ export const CurrentPage = () => (
     ]}
   />
 );
+
+// Added a story to demonstrate custom separators and accessibility
+export const CustomSeparator = () => (
+  <Breadcrumb
+    items={[
+      { label: 'Home', link: '/' },
+      { label: 'Blog', link: '/blog' },
+      { label: 'Post Title' },
+    ]}
+    separator=">"
+  />
+);

@@ -15,7 +15,7 @@ const Card = ({
   const combinedClasses = `${baseClasses} ${className}`;
 
   return (
-    <div className={combinedClasses} {...props}>
+    <div className={combinedClasses} {...props} aria-label={title || 'Card'}>
       {title && (
         <div className="border-b p-space-md border-neutrals-border">
           <h3 className="font-semibold text-text-primary">{title}</h3>

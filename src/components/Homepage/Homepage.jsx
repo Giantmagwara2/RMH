@@ -2,11 +2,11 @@
 import React, { useState, useEffect, useRef, useCallback, useMemo } from 'react';
 import { Link } from 'react-router-dom';
 import useAIBehavior from '../../hooks/useAIBehavior';
-import { PROJECTS, ROUTES } from '../../constants/index'; // Import from index.js
-import { allServices } from '../../constants/allServices'; // Import from allServices.js
-import { testimonialsData } from '../../constants/testimonialsData'; // Import from testimonialsData.js
-import Section from '../Section/Section'; // Correct import for Section component
-import PageWrapper from '../Layout/PageWrapper'; // Import PageWrapper
+import { PROJECTS, ROUTES } from '../../constants/index';
+import { allServices } from '../../constants/allServices';
+import { testimonialsData } from '../../constants/testimonialsData';
+import Section from '../Section/Section';
+import PageWrapper from '../Layout/PageWrapper';
 import ServicesSection from './ServicesSection';
 import TestimonialsSection from './TestimonialsSection';
 import ProjectsTeaser from './ProjectsTeaser';
@@ -21,7 +21,6 @@ const Homepage = () => {
     pageViews,
     serviceClicks,
     portfolioHovered,
-    scrollBehavior,
     trackPageView,
     trackServiceClick,
     trackPortfolioHover,
@@ -135,7 +134,7 @@ const Homepage = () => {
     <PageWrapper>
       <div className="pt-header pb-section bg-gradient-to-br from-electric-blue to-indigo-500 dark:from-midnight-blue dark:to-rich-black">
         <div className="container px-4 mx-auto">
-          {/* Hero */}
+          {/* Hero Section */}
           <Section className="p-12 text-center bg-white rounded-lg shadow-lg dark:bg-midnight-blue bg-opacity-80 dark:bg-opacity-80 mb-section dark:shadow-none">
             <h1 className="mb-4 text-4xl font-bold font-display text-electric-blue dark:text-highlight-yellow">{heroTitle}</h1>
             <p className="mb-6 text-lg text-midnight-blue dark:text-soft-white">{heroSubtitle}</p>
@@ -157,7 +156,7 @@ const Homepage = () => {
             </div>
           </Section>
 
-          {/* Services */}
+          {/* Services Section */}
           <ServicesSection
             ref={servicesRef}
             prioritizedServices={prioritizedServices}
@@ -166,13 +165,13 @@ const Homepage = () => {
             pageViews={pageViews}
           />
 
-          {/* Testimonials */}
+          {/* Testimonials Section */}
           <TestimonialsSection personalizedTestimonials={personalizedTestimonials} />
 
           {/* Portfolio Teaser */}
           <ProjectsTeaser PROJECTS={PROJECTS} trackPortfolioHover={trackPortfolioHover} />
 
-          {/* Final CTA */}
+          {/* Final Call-to-Action */}
           <FinalCTA
             ctaHeadline={ctaHeadline}
             ctaSupportingText={ctaSupportingText}

@@ -17,12 +17,12 @@ export const Textarea = ({
   'aria-label': ariaLabel,
   'aria-describedby': ariaDescribedby,
   maxLength,
+  borderColor = 'border-neutrals-border',
+  backgroundColor = 'bg-white',
 }) => {
   const baseStyle = 'w-full px-space-md py-space-sm border rounded-md text-base transition duration-300';
-  const borderColor = error
-    ? 'border-error-border focus:border-error-border'
-    : 'border-neutrals-border focus:border-brand-primary';
-  const textColor = disabled ? 'text-text-disabled bg-neutrals-surface' : 'text-text-primary bg-white';
+  const errorStyle = error ? 'border-error-border focus:border-error-border' : '';
+  const disabledStyle = disabled ? 'text-text-disabled bg-neutrals-surface' : '';
 
   return (
     <div className="flex flex-col space-y-space-xs">
@@ -39,13 +39,14 @@ export const Textarea = ({
         placeholder={placeholder}
         disabled={disabled}
         rows={rows}
-        className={clsx(baseStyle, borderColor, textColor, 'resize-none')}
+        className={clsx(baseStyle, borderColor, backgroundColor, errorStyle, disabledStyle, 'resize-none')}
         required={required}
         aria-label={ariaLabel}
         aria-describedby={ariaDescribedby}
         maxLength={maxLength}
+        aria-live="polite"
       />
-      {error && <span className="text-sm text-error-text">{error}</span>}
+      {error && <span className="text-sm text-error-text" aria-live="assertive">{error}</span>}
     </div>
   );
 };
@@ -64,4 +65,6 @@ Textarea.propTypes = {
   'aria-label': PropTypes.string,
   'aria-describedby': PropTypes.string,
   maxLength: PropTypes.number,
+  borderColor: PropTypes.string,
+  backgroundColor: PropTypes.string,
 };

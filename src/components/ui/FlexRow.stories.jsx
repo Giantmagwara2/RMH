@@ -29,3 +29,10 @@ export const WithJustification = () => (
     <div className="text-white rounded-md bg-primary-surface p-space-md">Item 2</div>
   </FlexRow>
 );
+
+export const CustomGap = () => (
+  <FlexRow customGap="gap-8">
+    <div className="text-white rounded-md bg-primary-surface p-space-md">Item 1</div>
+    <div className="text-white rounded-md bg-primary-surface p-space-md">Item 2</div>
+  </FlexRow>
+);

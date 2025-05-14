@@ -14,20 +14,27 @@ const BlogPage = lazy(() => import('./components/BlogPage/BlogPage.jsx'));
 const BlogPostPage = lazy(() => import('./components/BlogPostPage/BlogPostPage.jsx'));
 const NotFoundPage = lazy(() => import('./components/NotFoundPage/NotFoundPage.jsx'));
 
+// Reusable Suspense Wrapper
+const SuspenseWrapper = ({ children }) => (
+  <Suspense fallback={<div className="text-lg text-center text-gray-600 dark:text-gray-300">Loading...</div>}>
+    {children}
+  </Suspense>
+);
+
 // Define routes
 const router = createBrowserRouter([
   {
     path: '/',
     element: <App />,
     children: [
-      { path: '', element: <Suspense fallback={<div>Loading...</div>}><Homepage /></Suspense> },
-      { path: 'services', element: <Suspense fallback={<div>Loading...</div>}><ServicesPage /></Suspense> },
-      { path: 'portfolio', element: <Suspense fallback={<div>Loading...</div>}><PortfolioPage /></Suspense> },
-      { path: 'about-us', element: <Suspense fallback={<div>Loading...</div>}><AboutUsPage /></Suspense> },
-      { path: 'contact-us', element: <Suspense fallback={<div>Loading...</div>}><ContactUsPage /></Suspense> },
-      { path: 'blog', element: <Suspense fallback={<div>Loading...</div>}><BlogPage /></Suspense> },
-      { path: 'blog/:postId', element: <Suspense fallback={<div>Loading...</div>}><BlogPostPage /></Suspense> },
-      { path: '*', element: <Suspense fallback={<div>Loading...</div>}><NotFoundPage /></Suspense> },
+      { path: '', element: <SuspenseWrapper><Homepage /></SuspenseWrapper> },
+      { path: 'services', element: <SuspenseWrapper><ServicesPage /></SuspenseWrapper> },
+      { path: 'portfolio', element: <SuspenseWrapper><PortfolioPage /></SuspenseWrapper> },
+      { path: 'about-us', element: <SuspenseWrapper><AboutUsPage /></SuspenseWrapper> },
+      { path: 'contact-us', element: <SuspenseWrapper><ContactUsPage /></SuspenseWrapper> },
+      { path: 'blog', element: <SuspenseWrapper><BlogPage /></SuspenseWrapper> },
+      { path: 'blog/:postId', element: <SuspenseWrapper><BlogPostPage /></SuspenseWrapper> },
+      { path: '*', element: <SuspenseWrapper><NotFoundPage /></SuspenseWrapper> },
     ],
   },
 ]);

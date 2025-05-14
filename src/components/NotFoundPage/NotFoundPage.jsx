@@ -4,15 +4,28 @@ import { Link } from 'react-router-dom';
 
 const NotFoundPage = () => {
   return (
-    <div className="min-h-screen flex flex-col justify-center items-center text-center p-4">
-      <h1 className="text-6xl font-bold text-gray-800 mb-4">404</h1>
-      <p className="text-2xl text-gray-600 mb-8">Oops! Page Not Found.</p>
-      <p className="text-lg text-gray-500 mb-8">
-        The page you are looking for might have been removed, had its name changed, or is temporarily unavailable.
+    <div className="flex flex-col items-center justify-center min-h-screen p-4 text-center bg-gradient-to-br from-electric-blue to-indigo-500 dark:from-midnight-blue dark:to-rich-black">
+      {/* 404 Heading */}
+      <h1 className="mb-4 font-extrabold text-8xl text-soft-white animate-fadeIn">
+        404
+      </h1>
+      <p className="mb-4 text-2xl font-semibold text-gray-200 md:text-3xl animate-fadeIn animation-delay-200">
+        Oops! Page Not Found.
       </p>
+      <p className="max-w-xl mb-8 text-lg text-gray-300 animate-fadeIn animation-delay-400">
+        The page you are looking for might have been removed, had its name
+        changed, or is temporarily unavailable.
+      </p>
+
+      {/* Decorative SVG */}
+      <div className="absolute top-0 left-0 rounded-full w-72 h-72 bg-highlight-yellow opacity-20 blur-3xl animate-fadeIn"></div>
+      <div className="absolute bottom-0 right-0 rounded-full w-96 h-96 bg-electric-blue opacity-10 blur-2xl animate-fadeIn animation-delay-200"></div>
+
+      {/* Back to Homepage Button */}
       <Link
         to="/"
-        className="px-6 py-3 bg-blue-600 text-white font-semibold rounded-lg shadow-md hover:bg-blue-700 transition duration-300"
+        className="px-6 py-3 font-semibold transition duration-300 rounded-lg shadow-md bg-soft-white text-electric-blue hover:bg-gray-100 hover:text-blue-700 dark:bg-highlight-yellow dark:text-rich-black dark:hover:bg-yellow-500 focus:outline-none focus:ring-4 focus:ring-electric-blue/50 dark:focus:ring-highlight-yellow/50"
+        aria-label="Go to Homepage"
       >
         Go to Homepage
       </Link>

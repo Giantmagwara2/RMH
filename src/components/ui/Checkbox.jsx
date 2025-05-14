@@ -11,6 +11,7 @@ const Checkbox = React.forwardRef(
         onChange={onChange}
         disabled={disabled}
         className="w-4 h-4 rounded text-brand-primary border-neutrals-border focus:ring focus:ring-brand-primary"
+        aria-checked={checked}
         {...props}
       />
       {label && (

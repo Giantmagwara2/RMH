@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { Button } from './Button';
 
-export const FormStepper = ({ steps, onComplete, initialStep = 0 }) => {
+export const FormStepper = ({ steps, onComplete, initialStep = 0, customStyles = '' }) => {
   const [currentStep, setCurrentStep] = useState(initialStep);
   const [formValues, setFormValues] = useState({});
   const [formErrors, setFormErrors] = useState({});
@@ -60,7 +60,7 @@ export const FormStepper = ({ steps, onComplete, initialStep = 0 }) => {
   };
 
   return (
-    <div className="space-y-space-lg">
+    <div className={`space-y-space-lg ${customStyles}`} aria-live="polite">
       {/* Step Progress Indicator */}
       <div className="flex items-center justify-between text-sm text-gray-500 dark:text-gray-400 mb-space-md">
         {filteredSteps.map((step, idx) => (
@@ -108,5 +108,6 @@ FormStepper.propTypes = {
   ).isRequired,
   onComplete: PropTypes.func.isRequired,
   initialStep: PropTypes.number,
+  customStyles: PropTypes.string,
 };
 

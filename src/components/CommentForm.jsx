@@ -7,6 +7,7 @@ function CommentForm() {
     comments,
     (state, newComment) => [...state, newComment]
   );
+  const [error, setError] = useState(null); // State for error handling
 
   async function handleSubmit(event) {
     event.preventDefault();
@@ -19,20 +20,38 @@ function CommentForm() {
       pending: true,
     });
 
-    // Perform the actual update
-    const newComment = await submitComment(formData);
-    setComments((prevComments) => [...prevComments, newComment]);
+    try {
+      // Perform the actual update
+      const newComment = await submitComment(formData);
+      setComments((prevComments) => [...prevComments, newComment]);
+    } catch (err) {
+      setError('Failed to submit comment. Please try again.');
+    }
   }
 
   return (
     <>
-      <form onSubmit={handleSubmit}>
-        <input name="comment" placeholder="Write a comment..." required />
+      <form onSubmit={handleSubmit} aria-describedby="error-message">
+        <input
+          name="comment"
+          placeholder="Write a comment..."
+          required
+          aria-label="Comment input"
+        />
         <button type="submit">Add Comment</button>
       </form>
+      {error && (
+        <p id="error-message" className="text-red-500">
+          {error}
+        </p>
+      )}
       <ul>
         {optimisticComments.map((comment) => (
-          <li key={comment.id} className={comment.pending ? 'opacity-70' : ''}>
+          <li
+            key={comment.id}
+            className={comment.pending ? 'opacity-70' : ''}
+            aria-busy={comment.pending}
+          >
             {comment.text}
           </li>
         ))}

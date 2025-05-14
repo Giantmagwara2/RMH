@@ -32,3 +32,11 @@ export const WithDifferentGaps = () => (
     </Stack>
   </>
 );
+
+export const HorizontalStack = () => (
+  <Stack gap="space-md" direction="horizontal">
+    <div className="rounded-md bg-neutrals-surface p-space-md">Item 1</div>
+    <div className="rounded-md bg-neutrals-surface p-space-md">Item 2</div>
+    <div className="rounded-md bg-neutrals-surface p-space-md">Item 3</div>
+  </Stack>
+);

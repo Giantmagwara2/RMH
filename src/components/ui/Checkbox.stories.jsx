@@ -27,3 +27,10 @@ Disabled.args = {
   label: 'I agree to the terms',
   disabled: true,
 };
+
+// Added a story to demonstrate accessibility with aria-checked
+export const AccessibleCheckbox = Template.bind({});
+AccessibleCheckbox.args = {
+  id: 'accessible-checkbox',
+  label: 'Accessible Checkbox',
+};

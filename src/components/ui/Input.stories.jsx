@@ -43,3 +43,10 @@ Disabled.args = {
   ...Default.args,
   disabled: true,
 };
+
+export const CustomStyles = Template.bind({});
+CustomStyles.args = {
+  ...Default.args,
+  borderColor: 'border-brand-primary',
+  backgroundColor: 'bg-brand-light',
+};

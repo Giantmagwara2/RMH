@@ -30,3 +30,12 @@ WithError.args = {
   placeholder: 'Enter your name',
   error: 'This field is required.',
 };
+
+export const CustomStyles = Template.bind({});
+CustomStyles.args = {
+  id: 'example-custom',
+  label: 'Your Name',
+  placeholder: 'Enter your name',
+  borderColor: 'border-brand-primary',
+  backgroundColor: 'bg-brand-light',
+};

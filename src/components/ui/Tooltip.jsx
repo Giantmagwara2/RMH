@@ -16,6 +16,8 @@ export const Tooltip = ({
   position = 'top',
   className = '',
   delay = 150,
+  backgroundColor = 'bg-black',
+  textColor = 'text-white',
 }) => {
   const [visible, setVisible] = useState(false);
   let timeout;
@@ -29,14 +31,33 @@ export const Tooltip = ({
     setVisible(false);
   };
 
+  const handleKeyDown = (event) => {
+    if (event.key === 'Enter' || event.key === ' ') {
+      event.preventDefault();
+      setVisible((prev) => !prev);
+    }
+  };
+
   return (
-    <div className="relative inline-block" onMouseEnter={show} onMouseLeave={hide} onFocus={show} onBlur={hide}>
+    <div
+      className="relative inline-block"
+      onMouseEnter={show}
+      onMouseLeave={hide}
+      onFocus={show}
+      onBlur={hide}
+      onKeyDown={handleKeyDown}
+      tabIndex={0}
+      aria-describedby="tooltip"
+    >
       {children}
       {visible && (
         <div
+          id="tooltip"
           className={clsx(
-            'absolute z-10 px-space-sm py-space-xs text-sm text-white bg-black rounded shadow-md whitespace-nowrap transition-opacity duration-300',
+            'absolute z-10 px-space-sm py-space-xs text-sm rounded shadow-md whitespace-nowrap transition-opacity duration-300',
             positions[position],
+            backgroundColor,
+            textColor,
             className
           )}
           role="tooltip"
@@ -54,4 +75,6 @@ Tooltip.propTypes = {
   position: PropTypes.oneOf(['top', 'bottom', 'left', 'right']),
   className: PropTypes.string,
   delay: PropTypes.number,
+  backgroundColor: PropTypes.string,
+  textColor: PropTypes.string,
 };

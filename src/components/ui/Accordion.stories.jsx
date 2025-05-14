@@ -98,3 +98,12 @@ WithDifferentCustomIcon.args = {
   allowMultipleOpen: true,
 };
 WithDifferentCustomIcon.storyName = 'Different Custom Icon (Sparkles)';
+
+// Added a story to demonstrate keyboard navigation and accessibility
+export const AccessibleAccordion = Template.bind({});
+AccessibleAccordion.args = {
+  items: sampleItems,
+  className: 'border border-gray-300 rounded-md',
+  buttonClassName: 'focus:ring-2 focus:ring-offset-2 focus:ring-brand-primary',
+};
+AccessibleAccordion.storyName = 'Accessible Accordion';

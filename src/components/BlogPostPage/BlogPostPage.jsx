@@ -3,9 +3,9 @@ import React from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
 import PageWrapper from '../Layout/PageWrapper';
-import Section from '../Section/Section.jsx'; // Updated import to Section
-import { blogPosts } from '../../constants/BlogData.js'; // Corrected import to BlogData.js
-import { ROUTES } from '../../constants/index'; // Correct import path for ROUTES
+import Section from '../Section/Section.jsx';
+import { blogPosts } from '../../constants/BlogData.js';
+import { ROUTES } from '../../constants/index';
 
 const BlogPostPage = () => {
   const { slug } = useParams();
@@ -16,17 +16,17 @@ const BlogPostPage = () => {
       <PageWrapper>
         <div className="pt-header pb-section bg-gradient-to-br from-electric-blue to-indigo-500 dark:from-midnight-blue dark:to-rich-black">
           <Section
-            className="container mx-auto px-4 text-center text-soft-white"
+            className="container px-4 mx-auto text-center text-soft-white"
             data-aos="fade-down"
             data-aos-duration="600"
           >
-            <h1 className="font-display text-4xl font-bold mb-4">Post Not Found</h1>
-            <p className="text-lg leading-relaxed mb-6">
+            <h1 className="mb-4 text-4xl font-bold font-display">Post Not Found</h1>
+            <p className="mb-6 text-lg leading-relaxed">
               Sorry, we couldn’t find the article you’re looking for.
             </p>
             <Link
               to={ROUTES.BLOG}
-              className="inline-block bg-soft-white dark:bg-dark-bg text-electric-blue dark:text-highlight-yellow py-2 px-6 rounded-md font-semibold hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors duration-300 shadow-md dark:shadow-none"
+              className="inline-block px-6 py-2 font-semibold transition-colors duration-300 rounded-md shadow-md bg-soft-white dark:bg-dark-bg text-electric-blue dark:text-highlight-yellow hover:bg-gray-100 dark:hover:bg-gray-700 dark:shadow-none"
             >
               Back to Blog
             </Link>
@@ -59,17 +59,17 @@ const BlogPostPage = () => {
 
       <PageWrapper>
         <div className="pt-header pb-section bg-gradient-to-br from-electric-blue to-indigo-500 dark:from-midnight-blue dark:to-rich-black">
-          <div className="container mx-auto px-4">
+          <div className="container px-4 mx-auto">
             <Section
-              className="bg-white dark:bg-dark-bg bg-opacity-90 dark:bg-opacity-90 rounded-lg shadow-card dark:shadow-none p-8 md:p-12"
+              className="p-8 bg-white rounded-lg dark:bg-dark-bg bg-opacity-90 dark:bg-opacity-90 shadow-card dark:shadow-none md:p-12"
               data-aos="fade-up"
               data-aos-duration="600"
             >
               {/* Title & Meta */}
-              <h1 className="font-display text-4xl md:text-5xl font-bold text-midnight-blue dark:text-secondary mb-4">
+              <h1 className="mb-4 text-4xl font-bold font-display md:text-5xl text-midnight-blue dark:text-secondary">
                 {post.title}
               </h1>
-              <p className="text-gray-600 dark:text-gray-400 text-sm mb-6">
+              <p className="mb-6 text-sm text-gray-600 dark:text-gray-400">
                 By <span className="font-medium">{post.author}</span> on{' '}
                 {new Date(post.datePublished).toLocaleDateString()}
               </p>
@@ -79,12 +79,12 @@ const BlogPostPage = () => {
                 <img
                   src={post.featuredImage}
                   alt={post.title}
-                  className="w-full rounded-md shadow-lg dark:shadow-none mb-8 object-cover max-h-96 mx-auto"
+                  className="object-cover w-full mx-auto mb-8 rounded-md shadow-lg dark:shadow-none max-h-96"
                 />
               )}
 
               {/* Content */}
-              <div className="prose prose-lg dark:prose-dark max-w-none text-gray-700 dark:text-gray-300 leading-relaxed mb-8">
+              <div className="mb-8 leading-relaxed prose prose-lg text-gray-700 dark:prose-dark max-w-none dark:text-gray-300">
                 {post.content.map((block, i) => (
                   <p key={i}>{block}</p>
                 ))}
@@ -93,12 +93,12 @@ const BlogPostPage = () => {
               {/* Categories */}
               {post.categories?.length > 0 && (
                 <div className="mb-6">
-                  <h4 className="font-semibold text-lg text-electric-blue dark:text-highlight-yellow mb-2">Categories:</h4>
+                  <h4 className="mb-2 text-lg font-semibold text-electric-blue dark:text-highlight-yellow">Categories:</h4>
                   <div className="flex flex-wrap gap-2">
                     {post.categories.map(cat => (
                       <span
                         key={cat}
-                        className="inline-block bg-electric-blue dark:bg-highlight-yellow bg-opacity-10 dark:bg-opacity-20 text-electric-blue dark:text-highlight-yellow text-xs font-semibold px-2 py-1 rounded"
+                        className="inline-block px-2 py-1 text-xs font-semibold rounded bg-electric-blue dark:bg-highlight-yellow bg-opacity-10 dark:bg-opacity-20 text-electric-blue dark:text-highlight-yellow"
                       >
                         {cat}
                       </span>
@@ -110,12 +110,12 @@ const BlogPostPage = () => {
               {/* Tags */}
               {post.tags?.length > 0 && (
                 <div>
-                  <h4 className="font-semibold text-lg text-electric-blue dark:text-highlight-yellow mb-2">Tags:</h4>
+                  <h4 className="mb-2 text-lg font-semibold text-electric-blue dark:text-highlight-yellow">Tags:</h4>
                   <div className="flex flex-wrap gap-2">
                     {post.tags.map(tag => (
                       <span
                         key={tag}
-                        className="inline-block bg-blue-100 dark:bg-blue-900 text-blue-700 dark:text-blue-300 text-xs font-semibold px-2 py-1 rounded"
+                        className="inline-block px-2 py-1 text-xs font-semibold text-blue-700 bg-blue-100 rounded dark:bg-blue-900 dark:text-blue-300"
                       >
                         {tag}
                       </span>
@@ -123,6 +123,16 @@ const BlogPostPage = () => {
                   </div>
                 </div>
               )}
+
+              {/* Back to Blog Button */}
+              <div className="mt-8 text-center">
+                <Link
+                  to={ROUTES.BLOG}
+                  className="inline-block px-8 py-3 font-semibold text-white transition-colors duration-300 rounded-md shadow-md bg-electric-blue dark:bg-highlight-yellow dark:text-rich-black hover:bg-blue-700 dark:hover:bg-yellow-500"
+                >
+                  Back to Blog
+                </Link>
+              </div>
             </Section>
           </div>
         </div>

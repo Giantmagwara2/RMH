@@ -1,7 +1,7 @@
 import React from 'react';
 import clsx from 'clsx';
 
-const Badge = ({ children, variant = 'default' }) => {
+const Badge = ({ children, variant = 'default', className = '', 'aria-label': ariaLabel }) => {
   const variants = {
     default: 'bg-neutrals-border text-text-secondary',
     success: 'bg-green-100 text-green-800',
@@ -11,10 +11,14 @@ const Badge = ({ children, variant = 'default' }) => {
   };
 
   return (
-    <span className={clsx(
-      'inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium',
-      variants[variant]
-    )}>
+    <span
+      className={clsx(
+        'inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium',
+        variants[variant],
+        className
+      )}
+      aria-label={ariaLabel}
+    >
       {children}
     </span>
   );
