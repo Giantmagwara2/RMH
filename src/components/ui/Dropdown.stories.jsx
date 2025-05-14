@@ -8,7 +8,7 @@ export default {
 
 const Template = (args) => {
   const handleSelect = (option) => {
-    console.log(option);
+    // Removed console.log(option);
   };
 
   return <Dropdown {...args} onSelect={handleSelect} />;

@@ -1,6 +1,8 @@
 import React from 'react';
 
 const Modal = ({ isOpen, onClose, title, children }) => {
+  const modalContentRef = React.useRef(null);
+
   React.useEffect(() => {
     const handleEscape = (e) => {
       if (e.key === 'Escape') onClose();
@@ -12,11 +14,12 @@ const Modal = ({ isOpen, onClose, title, children }) => {
   }, [isOpen, onClose]);
 
   React.useEffect(() => {
-    if (isOpen) {
-      const focusableElements = document.querySelectorAll(
+    if (isOpen && modalContentRef.current) {
+      const focusableElements = modalContentRef.current.querySelectorAll(
         'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
       );
-      const firstElement = focusableElements[0];
+      if (focusableElements.length === 0) return;
+      const firstElement = focusableElements[0] ;
       const lastElement = focusableElements[focusableElements.length - 1];
 
       const handleTabKey = (e) => {
@@ -34,7 +37,7 @@ const Modal = ({ isOpen, onClose, title, children }) => {
       document.addEventListener('keydown', handleTabKey);
       return () => document.removeEventListener('keydown', handleTabKey);
     }
-  }, [isOpen]);
+  }, [isOpen, modalContentRef]);
 
   if (!isOpen) return null;
 
@@ -44,7 +47,11 @@ const Modal = ({ isOpen, onClose, title, children }) => {
       aria-modal="true"
       role="dialog"
     >
-      <div className="relative w-full max-w-lg rounded-lg shadow-xl bg-neutrals-surface p-space-lg">
+      <div
+        ref={modalContentRef}
+        className="relative w-full max-w-lg rounded-lg shadow-xl bg-neutrals-surface p-space-lg"
+        
+      >
         <button
           onClick={onClose}
           className="absolute top-space-sm right-space-sm text-text-tertiary hover:text-text-primary"

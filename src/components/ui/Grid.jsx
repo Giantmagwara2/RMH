@@ -12,7 +12,7 @@ export const Grid = ({
   const gapClass = `gap-${gap}`;
 
   const responsiveClasses = Object.entries(responsive)
-    .map(([breakpoint, cols]) => `grid-cols-${breakpoint}-${cols}`)
+    .map(([breakpoint, cols]) => `${breakpoint}:grid-cols-${cols}`)
     .join(' ');
 
   return (
@@ -20,7 +20,9 @@ export const Grid = ({
       className={clsx(
         `grid grid-cols-${columns}`,
         gapClass,
-        responsiveClasses, // Add responsive classes
+        responsiveClasses,
+        'w-full',
+        'transition-all duration-300 ease-in-out', // Smooth transitions for layout changes
         className
       )}
     >
@@ -31,8 +33,10 @@ export const Grid = ({
 
 Grid.propTypes = {
   children: PropTypes.node.isRequired,
-  columns: PropTypes.oneOf([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]),
+  columns: PropTypes.number,
   gap: PropTypes.string,
   className: PropTypes.string,
-  responsive: PropTypes.object, // Add prop type for responsive
+  responsive: PropTypes.object, // Responsive column configurations
 };
+
+export default Grid;

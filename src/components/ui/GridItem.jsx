@@ -9,7 +9,7 @@ export const GridItem = ({
   responsive = {}, // New prop for responsive column spans
 }) => {
   const responsiveClasses = Object.entries(responsive)
-    .map(([breakpoint, span]) => `col-span-${breakpoint}-${span}`)
+    .map(([breakpoint, span]) => `${breakpoint}:col-span-${span}`)
     .join(' ');
 
   return (

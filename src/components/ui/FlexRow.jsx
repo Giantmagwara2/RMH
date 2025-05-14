@@ -16,7 +16,16 @@ export const FlexRow = ({
   const alignClass = alignItems ? `items-${alignItems}` : '';
 
   return (
-    <div className={clsx('flex flex-row', gapClass, justifyClass, alignClass, className)}>
+    <div
+      className={clsx(
+        'flex flex-row',
+        gapClass,
+        justifyClass,
+        alignClass,
+        'transition-all duration-300 ease-in-out', // Smooth transitions for layout changes
+        className
+      )}
+    >
       {children}
     </div>
   );
@@ -25,8 +34,10 @@ export const FlexRow = ({
 FlexRow.propTypes = {
   children: PropTypes.node.isRequired,
   gap: PropTypes.string,
-  justifyContent: PropTypes.oneOf(['start', 'center', 'end', 'between', 'around', 'evenly']),
-  alignItems: PropTypes.oneOf(['start', 'center', 'end', 'baseline', 'stretch']),
+  justifyContent: PropTypes.string,
+  alignItems: PropTypes.string,
   className: PropTypes.string,
   customGap: PropTypes.string,
 };
+
+export default FlexRow;

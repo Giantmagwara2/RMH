@@ -7,6 +7,7 @@ export const Container = ({ children, className }) => {
     <div
       className={clsx(
         'mx-auto px-space-md sm:px-space-lg md:px-space-xl w-full max-w-screen-xl',
+        'transition-all duration-300 ease-in-out', // Smooth transitions for layout changes
         className
       )}
       aria-label="Container"
@@ -20,3 +21,5 @@ Container.propTypes = {
   children: PropTypes.node.isRequired,
   className: PropTypes.string,
 };
+
+export default Container;

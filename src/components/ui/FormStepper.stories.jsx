@@ -60,39 +60,53 @@ export const MultiStepForm = () => {
   );
 };
 
+export const NameValidation = () => {
+  const { values, errors, handleChange } = useForm({
+    initialValues: { name: '' },
+    validate: (values) => {
+      const errors = {};
+      if (!values.name) errors.name = 'Name is required';
+      return errors;
+    },
+  });
+
+  return (
+    <Form>
+      <Input
+        name="name"
+        value={values.name}
+        onChange={handleChange}
+        error={errors.name}
+        placeholder="Enter your name"
+      />
+    </Form>
+  );
+};
+
+export const AgeValidation = () => {
+  const { values, errors, handleChange } = useForm({
+    initialValues: { age: '' },
+    validate: (values) => {
+      const errors = {};
+      if (!values.age) errors.age = 'Age is required';
+      return errors;
+    },
+  });
+
+  return (
+    <Form>
+      <Input
+        name="age"
+        value={values.age}
+        onChange={handleChange}
+        error={errors.age}
+        placeholder="Enter your age"
+      />
+    </Form>
+  );
+};
+
 export const ConditionalSteps = () => {
-  const nameValidation = async (values) => {
-    const { handleSubmit, errors, values: newValues } = useForm(
-      { name: values.name || '' },
-      {
-        name: { required: 'Name is required' },
-      },
-      () => {}
-    );
-    await handleSubmit({ preventDefault: () => {} });
-    const isValid = Object.keys(errors).length === 0;
-    return { isValid, errors, values: newValues };
-  };
-
-  const ageValidation = async (values) => {
-    const { handleSubmit, errors, values: newValues } = useForm(
-      { age: values.age || '' },
-      {
-        age: {
-          required: 'Age is required',
-          pattern: {
-            value: /^\d+$/,
-            message: 'Age must be a number',
-          },
-        },
-      },
-      () => {}
-    );
-    await handleSubmit({ preventDefault: () => {} });
-    const isValid = Object.keys(errors).length === 0;
-    return { isValid, errors, values: newValues };
-  };
-
   const steps = [
     {
       title: 'Your Name',
@@ -101,7 +115,11 @@ export const ConditionalSteps = () => {
           <Input name="name" label="Name" value={values.name || ''} error={errors.name} onChange={onChange} />
         </Form>
       ),
-      validate: nameValidation,
+      validate: async (values) => {
+        const errors = {};
+        if (!values.name) errors.name = 'Name is required';
+        return { isValid: Object.keys(errors).length === 0, errors, values };
+      },
     },
     {
       title: 'Your Age',
@@ -110,11 +128,15 @@ export const ConditionalSteps = () => {
           <Input name="age" label="Age" value={values.age || ''} error={errors.age} onChange={onChange} />
         </Form>
       ),
-      validate: ageValidation,
+      validate: async (values) => {
+        const errors = {};
+        if (!values.age) errors.age = 'Age is required';
+        return { isValid: Object.keys(errors).length === 0, errors, values };
+      },
     },
     {
       title: 'Minor Consent Form',
-      content: () => ( // No values needed directly for content, onChange might be needed if there were inputs
+      content: () => (
         <div className="text-sm">
           <p>Please confirm that you have parental consent to continue.</p>
         </div>

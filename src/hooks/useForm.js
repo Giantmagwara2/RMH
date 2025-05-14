@@ -1,5 +1,4 @@
-
-import { useState, useCallback, useRef } from 'react';
+import { useState, useCallback } from 'react';
 import { useDebounce } from './useDebounce';
 
 export const useForm = ({ onSubmit, asyncValidate, validateOnChange = false }) => {
@@ -37,6 +36,12 @@ export const useForm = ({ onSubmit, asyncValidate, validateOnChange = false }) =
     setErrors(prev => ({ ...prev, [field]: error }));
   }, []);
 
+  const resetForm = useCallback(() => {
+    setValues({});
+    setErrors({});
+    setIsDirty(false);
+  }, []);
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     setIsSubmitting(true);
@@ -62,6 +67,7 @@ export const useForm = ({ onSubmit, asyncValidate, validateOnChange = false }) =
     isValidating,
     handleChange,
     handleSubmit,
-    setFieldError
+    setFieldError,
+    resetForm, // Added resetForm function
   };
 };

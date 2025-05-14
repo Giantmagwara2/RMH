@@ -20,7 +20,6 @@ const Homepage = () => {
   const {
     pageViews,
     serviceClicks,
-    portfolioHovered,
     trackPageView,
     trackServiceClick,
     trackPortfolioHover,
@@ -37,54 +36,6 @@ const Homepage = () => {
   const [ctaSupportingText, setCtaSupportingText] = useState("Let’s chat and make it happen.");
   const [scrolledPastServices, setScrolledPastServices] = useState(false);
   const servicesRef = useRef(null);
-
-  useEffect(() => {
-    try {
-      const storedVariant = localStorage.getItem(CTA_STORAGE_KEY);
-      if (storedVariant) {
-        setCtaButtonText(storedVariant);
-      } else {
-        const randomIndex = Math.floor(Math.random() * CTA_BUTTON_TEXT_VARIANTS.length);
-        const variant = CTA_BUTTON_TEXT_VARIANTS[randomIndex];
-        setCtaButtonText(variant);
-        localStorage.setItem(CTA_STORAGE_KEY, variant);
-      }
-    } catch (error) {
-      console.error("Error interacting with localStorage:", error);
-      setCtaButtonText(CTA_BUTTON_TEXT_VARIANTS[0]);
-    }
-  }, []);
-
-  const trackCtaClick = useCallback(() => {
-    trackCustomEvent(CTA_CLICK_EVENT, { variant: ctaButtonText });
-  }, [trackCustomEvent, ctaButtonText]);
-
-  const prioritizedServices = useMemo(() => {
-    return [...allServices].sort((a, b) => (serviceClicks[b.name] || 0) - (serviceClicks[a.name] || 0));
-  }, [serviceClicks]);
-
-  const personalizedTestimonials = useMemo(() => {
-    if (!mostClickedService) return testimonialsData.slice(0, 2);
-    return testimonialsData.filter(t => t.service === mostClickedService);
-  }, [mostClickedService]);
-
-  useEffect(() => {
-    trackPageView();
-    updateHeroContent();
-    updateCtaTextBasedOnScrollAndPreference();
-  }, [mostClickedService, scrolledPastServices]);
-
-  useEffect(() => {
-    const handleScroll = () => {
-      if (!servicesRef.current) return;
-      const top = servicesRef.current.offsetTop;
-      const halfway = window.scrollY + window.innerHeight / 2;
-      setScrolledPastServices(halfway > top);
-      trackScroll(halfway > top ? 'pastServices' : 'beforeServices');
-    };
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, [trackScroll]);
 
   const updateHeroContent = useCallback(() => {
     switch (mostClickedService) {
@@ -130,9 +81,57 @@ const Homepage = () => {
     }
   }, [scrolledPastServices, mostClickedService]);
 
+  useEffect(() => {
+    try {
+      const storedVariant = localStorage.getItem(CTA_STORAGE_KEY);
+      if (storedVariant) {
+        setCtaButtonText(storedVariant);
+      } else {
+        const randomIndex = Math.floor(Math.random() * CTA_BUTTON_TEXT_VARIANTS.length);
+        const variant = CTA_BUTTON_TEXT_VARIANTS[randomIndex];
+        setCtaButtonText(variant);
+        localStorage.setItem(CTA_STORAGE_KEY, variant);
+      }
+    } catch (error) {
+      console.error("Error interacting with localStorage:", error);
+      setCtaButtonText(CTA_BUTTON_TEXT_VARIANTS[0]);
+    }
+  }, []);
+
+  const trackCtaClick = useCallback(() => {
+    trackCustomEvent(CTA_CLICK_EVENT, { variant: ctaButtonText });
+  }, [trackCustomEvent, ctaButtonText]);
+
+  const prioritizedServices = useMemo(() => {
+    return [...allServices].sort((a, b) => (serviceClicks[b.name] || 0) - (serviceClicks[a.name] || 0));
+  }, [serviceClicks]);
+
+  const personalizedTestimonials = useMemo(() => {
+    if (!mostClickedService) return testimonialsData.slice(0, 2);
+    return testimonialsData.filter(t => t.service === mostClickedService);
+  }, [mostClickedService]);
+
+  useEffect(() => {
+    trackPageView();
+    updateHeroContent();
+    updateCtaTextBasedOnScrollAndPreference();
+  }, [trackPageView, updateHeroContent, updateCtaTextBasedOnScrollAndPreference]);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      if (!servicesRef.current) return;
+      const top = servicesRef.current.offsetTop;
+      const halfway = window.scrollY + window.innerHeight / 2;
+      setScrolledPastServices(halfway > top);
+      trackScroll(halfway > top ? 'pastServices' : 'beforeServices');
+    };
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, [trackScroll]);
+
   return (
     <PageWrapper>
-      <div className="pt-header pb-section bg-gradient-to-br from-electric-blue to-indigo-500 dark:from-midnight-blue dark:to-rich-black">
+      <div className="bg-red-500 pt-header pb-section bg-gradient-to-br from-electric-blue to-indigo-500 dark:from-midnight-blue dark:to-rich-black">
         <div className="container px-4 mx-auto">
           {/* Hero Section */}
           <Section className="p-12 text-center bg-white rounded-lg shadow-lg dark:bg-midnight-blue bg-opacity-80 dark:bg-opacity-80 mb-section dark:shadow-none">

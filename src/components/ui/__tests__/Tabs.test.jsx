@@ -4,11 +4,13 @@ import Tabs from '../Tabs';
 
 describe('Tabs', () => {
   const mockTabs = (
-    <Tabs>
-      <Tabs.Tab>Tab 1</Tabs.Tab>
-      <Tabs.Tab>Tab 2</Tabs.Tab>
-      <div>Content 1</div>
-      <div>Content 2</div>
+    <Tabs defaultActiveTab={0}>
+      <Tabs.Tab title="Tab 1">
+        <div>Content 1</div>
+      </Tabs.Tab>
+      <Tabs.Tab title="Tab 2">
+        <div>Content 2</div>
+      </Tabs.Tab>
     </Tabs>
   );
 

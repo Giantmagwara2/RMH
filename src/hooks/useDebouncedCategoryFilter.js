@@ -5,15 +5,19 @@ const useDebouncedCategoryFilter = (value, delay = 300) => {
   const [debouncedValue, setDebouncedValue] = useState(value);
 
   useEffect(() => {
+    if (typeof value !== 'string') {
+      console.warn('Expected a string value for category filter');
+      return;
+    }
+
     const handler = setTimeout(() => {
-      setDebouncedValue(value); // Update debounced value after delay
+      setDebouncedValue(value);
     }, delay);
 
-    // Cleanup the timeout on component unmount or when value changes
     return () => {
       clearTimeout(handler);
     };
-  }, [value, delay]); // Re-run effect when value or delay changes
+  }, [value, delay]);
 
   return debouncedValue;
 };

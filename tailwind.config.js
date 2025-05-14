@@ -2,8 +2,11 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
   content: [
+    './index.html',
     './src/**/*.{js,jsx,ts,tsx}',
+    './pages/**/*.{js,jsx,ts,tsx}',
     './public/index.html',
+    './RMH-Replit/**/*.{js,jsx,ts,tsx}',
   ],
   darkMode: 'class', // Enables dark mode with the 'class' strategy
   theme: {
@@ -28,6 +31,7 @@ module.exports = {
       fontFamily: {
         sans: ['Inter', 'sans-serif'],
         heading: ['Poppins', 'sans-serif'],
+        serif: ['Merriweather', 'serif'],
       },
       fontWeight: {
         extralight: '200',
@@ -62,6 +66,8 @@ module.exports = {
         'space-2xl': '40px',
         'space-3xl': '48px',
         'space-4xl': '64px',
+        '128': '32rem',
+        '144': '36rem',
       },
       colors: {
         brand: {
@@ -79,7 +85,7 @@ module.exports = {
           },
         },
         neutrals: {
-          background: '#FFFFFF',
+          background: '#F3F4F6',
           'background-dark': '#111827', // Dark Gray/Blue for dark mode background
           surface: '#F3F4F6',
           'surface-dark': '#1F2937',    // Slightly lighter dark for surfaces
@@ -103,6 +109,32 @@ module.exports = {
         'electric-blue': '#007BFF', // Example: A bright blue
         'midnight-blue': '#191970', // Example: A very dark blue (good for light mode text)
         'soft-white': '#F8F8FF',    // Example: An off-white (good for dark mode text or light bg)
+        primary: '#1E40AF',
+        primaryHover: '#1D4ED8',
+        primaryActive: '#1E3A8A',
+        gradientPrimary: 'linear-gradient(90deg, #1E40AF, #9333EA)',
+        'highlight-yellow': '#FFD700', // Bright yellow for dark mode highlights
+        secondary: '#9333EA', // Purple
+        accent: '#F59E0B', // Amber
+        foreground: '#1F2937', // Dark gray
+      },
+      opacity: {
+        50: '0.5',
+        75: '0.75',
+        90: '0.9',
+      },
+      zIndex: {
+        modal: 1000,
+        dropdown: 1050,
+        tooltip: 1100,
+      },
+      lineHeight: {
+        tight: '1.25',
+        relaxed: '1.75',
+      },
+      letterSpacing: {
+        tight: '-0.05em',
+        wide: '0.05em',
       },
       transitionTimingFunction: {
         soft: 'cubic-bezier(0.4, 0, 0.2, 1)',

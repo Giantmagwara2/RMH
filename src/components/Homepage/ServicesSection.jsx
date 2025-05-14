@@ -6,14 +6,14 @@ import { ROUTES } from '../../constants';
 
 const cardBaseStyles = "bg-white dark:bg-midnight-blue rounded-lg shadow-card p-6 transition-transform duration-300 transform hover:-translate-y-2 hover:shadow-lg cursor-pointer group";
 
-const ServicesSection = ({ prioritizedServices, trackServiceClick, mostClickedService, pageViews }) => {
+const ServicesSection = React.forwardRef(({ prioritizedServices, trackServiceClick, mostClickedService, pageViews }, ref) => {
   const serviceCardClasses = (name) => {
     const base = cardBaseStyles;
     return mostClickedService === name && pageViews > 1
       ? `${base} border-4 border-electric-blue dark:border-highlight-yellow`
       : base;
   };
-
+  
   return (
     <Section className="mb-section">
       {/* Section Header */}
@@ -27,7 +27,7 @@ const ServicesSection = ({ prioritizedServices, trackServiceClick, mostClickedSe
       </div>
 
       {/* Services Grid */}
-      <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
+      <div ref={ref} className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
         {prioritizedServices.map((service) => (
           <div
             key={service.name}
@@ -66,6 +66,8 @@ const ServicesSection = ({ prioritizedServices, trackServiceClick, mostClickedSe
       </div>
     </Section>
   );
-};
+});
+
+ServicesSection.displayName = 'ServicesSection';
 
 export default ServicesSection;

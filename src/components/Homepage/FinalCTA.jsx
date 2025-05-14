@@ -21,9 +21,9 @@ const FinalCTA = ({ ctaHeadline, ctaSupportingText, ctaButtonText, trackCtaClick
 
       {/* CTA Button */}
       <button
-        aria-label={ctaButtonText}
         onClick={trackCtaClick}
-        className="px-8 py-3 text-lg font-semibold transition-transform duration-300 rounded-md shadow-md bg-soft-white dark:bg-highlight-yellow text-electric-blue dark:text-rich-black hover:bg-gray-100 dark:hover:bg-yellow-400 hover:scale-105 hover:shadow-xl focus:outline-none focus:ring-4 focus:ring-electric-blue/50 dark:focus:ring-highlight-yellow/50"
+        className="px-6 py-3 text-lg font-semibold text-white transition-transform duration-300 bg-brand-primary rounded-md shadow-md hover:scale-105 hover:shadow-lg"
+        aria-label="Call to action button"
       >
         {ctaButtonText}
       </button>

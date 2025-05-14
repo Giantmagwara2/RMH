@@ -12,21 +12,24 @@ const reducer = (state, action) => {
   switch (action.type) {
     case 'TRACK_PAGE_VIEW':
       return { ...state, pageViews: state.pageViews + 1 };
-    case 'TRACK_SERVICE_CLICK':
+    case 'TRACK_SERVICE_CLICK': {
+      const { payload: serviceName } = action;
       return {
         ...state,
         serviceClicks: {
           ...state.serviceClicks,
-          [action.payload]: (state.serviceClicks[action.payload] || 0) + 1,
+          [serviceName]: (state.serviceClicks[serviceName] || 0) + 1,
         },
       };
+    }
     case 'TRACK_PORTFOLIO_HOVER':
       return { ...state, portfolioHovered: action.payload };
     case 'TRACK_SCROLL':
       return { ...state, scrollBehavior: action.payload };
     case 'RESET_BEHAVIOR':
-      return initialState;
+      return { ...initialState };
     default:
+      console.warn(`Unhandled action type: ${action.type}`);
       return state;
   }
 };
@@ -54,7 +57,6 @@ const useAIBehavior = () => {
     return () => clearTimeout(saveTimeout);
   }, [state]);
 
-  // Tracking functions
   const trackPageView = () => dispatch({ type: 'TRACK_PAGE_VIEW' });
   const trackServiceClick = (serviceName) => dispatch({ type: 'TRACK_SERVICE_CLICK', payload: serviceName });
   const trackPortfolioHover = (isHovering) => dispatch({ type: 'TRACK_PORTFOLIO_HOVER', payload: isHovering });
@@ -62,15 +64,9 @@ const useAIBehavior = () => {
   const clearBehavior = () => dispatch({ type: 'RESET_BEHAVIOR' });
 
   const getMostClickedService = () => {
-    let mostClicked = null;
-    let maxClicks = 0;
-    for (const service in state.serviceClicks) {
-      if (state.serviceClicks[service] > maxClicks) {
-        maxClicks = state.serviceClicks[service];
-        mostClicked = service;
-      }
-    }
-    return mostClicked;
+    return Object.entries(state.serviceClicks).reduce((mostClicked, [service, clicks]) => {
+      return clicks > (mostClicked.clicks || 0) ? { service, clicks } : mostClicked;
+    }, {}).service || null;
   };
 
   return {

@@ -9,6 +9,14 @@
   padding: var(--space-md);
   background-color: var(--color-bg); /* Ensure background matches the global theme */
   color: var(--color-text-primary); /* Ensure text color matches the global theme */
+  font-family: var(--font-sans);
+  line-height: var(--line-height-normal);
+
+  /* Dark Mode Support */
+  @media (prefers-color-scheme: dark) {
+    background-color: var(--color-bg-dark);
+    color: var(--color-text-primary-dark);
+  }
 }
 
 /* Logo Styling */
@@ -22,8 +30,8 @@
 }
 
 .logo:hover {
-  filter: drop-shadow(0 0 1em var(--color-brand-accent));
-  transform: scale(1.05); /* Slight scaling effect for hover */
+  transform: scale(1.1);
+  filter: drop-shadow(0 0 1.5em var(--color-brand-accent));
 }
 
 .logo.react:hover {
@@ -45,34 +53,40 @@
 
 /* Typography */
 h1 {
-  @apply text-4xl font-bold font-heading;
-  color: var(--color-brand-primary); /* Vibrant Orange for headings */
+  font-size: 2.25rem; /* text-4xl */
+  font-weight: 700; /* font-bold */
+  font-family: 'Poppins', sans-serif; /* font-heading */
+  color: var(--color-brand-primary);
 }
 
 h2 {
-  @apply text-3xl font-semibold font-heading;
-  color: var(--color-brand-secondary); /* Bright Sky Blue for subheadings */
+  font-size: 1.875rem; /* text-3xl */
+  font-weight: 600; /* font-semibold */
+  font-family: 'Poppins', sans-serif; /* font-heading */
+  color: var(--color-brand-secondary);
 }
 
 h3 {
-  @apply text-2xl font-semibold font-heading;
-  color: var(--color-brand-accent); /* Vibrant Pink for tertiary headings */
+  font-size: 1.5rem; /* text-2xl */
+  font-weight: 600; /* font-semibold */
+  font-family: 'Poppins', sans-serif; /* font-heading */
+  color: var(--color-brand-accent);
 }
 
 /* Button Styling */
 .btn-primary {
-  @apply px-5 py-2.5 font-semibold text-white transition-all rounded-lg shadow-lg;
+  padding: 0.75rem 1.5rem; /* px-6 py-3 */
+  font-weight: 700; /* font-bold */
+  color: #fff; /* text-white */
+  border-radius: 0.75rem; /* rounded-xl */
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* shadow-md */
   background-color: var(--color-brand-primary);
-  @apply focus:outline-none focus:ring-2 focus:ring-offset-2 active:transform active:scale-95;
-  border-color: transparent;
-  transition-property: background-color, box-shadow, transform;
-  transition-duration: var(--duration-normal);
-  transition-timing-function: var(--transition-ease);
+  transition: transform 150ms, box-shadow 150ms;
 }
 
 .btn-primary:hover {
-  background-color: var(--color-brand-primary-hover);
-  @apply shadow-xl;
+  transform: translateY(-3px);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
 }
 
 .btn-primary:focus {
@@ -80,22 +94,26 @@ h3 {
 }
 
 .btn-secondary {
-  @apply px-5 py-2.5 font-semibold text-white transition-all rounded-lg shadow-lg;
-  background-color: var(--color-brand-secondary);
-  @apply focus:outline-none focus:ring-2 focus:ring-offset-2 active:transform active:scale-95;
-  border-color: transparent;
-  transition-property: background-color, box-shadow, transform;
-  transition-duration: var(--duration-normal);
-  transition-timing-function: var(--transition-ease);
+  padding: 0.625rem 1.25rem; /* px-5 py-2.5 */
+  font-weight: 600; /* font-semibold */
+  color: #fff; /* text-white */
+  transition: all 0.3s ease-in-out; /* transition-all */
+  border-radius: 0.375rem; /* rounded-lg */
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* shadow-lg */
 }
 
 .btn-secondary:hover {
   background-color: var(--color-brand-secondary-hover);
-  @apply shadow-xl;
+  box-shadow: 0 10px 15px rgba(0, 0, 0, 0.2); /* shadow-xl */
 }
 
 .btn-secondary:focus {
-  box-shadow: 0 0 0 2px var(--color-bg), 0 0 0 4px var(--color-focus-ring);
+  outline: 2px solid var(--color-focus-ring); /* focus:ring-2 */
+  outline-offset: 2px; /* focus:ring-offset-2 */
+}
+
+.btn-secondary:active {
+  transform: scale(0.95); /* active:transform active:scale-95 */
 }
 
 /* Anchor Hover Styles */
@@ -106,16 +124,17 @@ a:hover {
 
 /* Card Styling */
 .card {
-  @apply p-6 transition-all bg-white rounded-lg shadow-md dark:bg-gray-800;
+  padding: 2rem; /* p-8 */
+  background-color: #fff; /* bg-white */
+  border-radius: 0.5rem; /* rounded-lg */
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* shadow-lg */
   border: 1px solid var(--color-border);
-  transition-property: transform, box-shadow;
-  transition-duration: var(--duration-normal);
-  transition-timing-function: var(--transition-ease);
+  transition: transform 300ms, box-shadow 300ms;
 }
 
 .card:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+  transform: translateY(-8px);
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.15);
 }
 
 /* Footer Styling */
@@ -135,4 +154,27 @@ a:hover {
 
 .footer a:hover {
   color: var(--color-brand-secondary-hover);
+}
+
+/* General Button Styling */
+.button {
+  padding: 0.625rem 1.25rem; /* px-5 py-2.5 */
+  font-weight: 600; /* font-semibold */
+  color: #fff; /* text-white */
+  transition: all 0.3s ease-in-out; /* transition-all */
+  border-radius: 0.375rem; /* rounded-lg */
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* shadow-lg */
+}
+
+.button:focus {
+  outline: 2px solid var(--color-focus-ring); /* focus:ring-2 */
+  outline-offset: 2px; /* focus:ring-offset-2 */
+}
+
+.button:active {
+  transform: scale(0.95); /* active:transform active:scale-95 */
+}
+
+.button:hover {
+  box-shadow: 0 10px 15px rgba(0, 0, 0, 0.2); /* shadow-xl */
 }

@@ -1,8 +1,8 @@
 /* index.css — Global Styles */
 
 /* Tailwind CSS Directives */
-@tailwind base;
-@tailwind components;
+@import "tailwindcss/preflight";
+@tailwind utilities;
 @tailwind utilities;
 
 /* Color Scheme Awareness */
@@ -32,6 +32,16 @@
   --line-height-normal: 1.6;
   --line-height-tight: 1.3;
 
+  --font-size-xs: 0.75rem; /* Extra Small */
+  --font-size-sm: 0.875rem; /* Small */
+  --font-size-base: 1rem; /* Base */
+  --font-size-lg: 1.125rem; /* Large */
+  --font-size-xl: 1.25rem; /* Extra Large */
+  --font-size-2xl: 1.5rem; /* 2x Extra Large */
+  --font-size-3xl: 1.875rem; /* 3x Extra Large */
+  --font-size-4xl: 2.25rem; /* 4x Extra Large */
+  --font-size-5xl: 3rem; /* 5x Extra Large */
+
   --duration-fast: 150ms;
   --duration-normal: 300ms;
   --transition-ease: ease-in-out;
@@ -41,6 +51,10 @@
   --space-md: 1rem;
   --space-lg: 1.5rem;
   --space-xl: 2rem;
+
+  --color-error: #e53e3e; /* Red for error states */
+  --color-warning: #d69e2e; /* Yellow for warning states */
+  --color-success: #38a169; /* Green for success states */
 
   color-scheme: light dark;
 }
@@ -52,6 +66,23 @@
   box-sizing: border-box;
   margin: 0;
   padding: 0;
+}
+
+/* Responsive Typography */
+html {
+  font-size: 16px;
+}
+
+@media (min-width: 640px) {
+  html {
+    font-size: 17px;
+  }
+}
+
+@media (min-width: 1024px) {
+  html {
+    font-size: 18px;
+  }
 }
 
 /* Body Styles */
@@ -91,10 +122,15 @@ h3 { font-size: 1.75rem; font-weight: var(--font-weight-semibold); } /* Approx 2
 a {
   color: var(--color-brand-secondary); /* Bright Sky Blue for links */
   text-decoration: none;
-  transition: color var(--duration-fast) var(--transition-ease);
+  transition: color var(--duration-fast) var(--transition-ease), text-decoration var(--duration-fast) var(--transition-ease);
 }
 
-a:hover,
+/* Enhanced hover effects */
+a:hover {
+  color: var(--color-highlight);
+  text-decoration: underline;
+}
+
 a:focus {
   color: var(--color-brand-secondary-hover); /* Darker Sky Blue on hover */
   text-decoration: underline;
@@ -109,18 +145,19 @@ button {
   color: #fff;
   padding: var(--space-sm) var(--space-md);
   border-radius: 0.375rem;
-  transition: background-color var(--duration-fast) var(--transition-ease);
+  transition: background-color var(--duration-fast) var(--transition-ease), transform var(--duration-fast) var(--transition-ease);
 }
 
 button:hover {
   background: var(--color-brand-primary-hover);
+  transform: translateY(-2px);
 }
 
 /* Global Container Utility */
 .container {
+  padding: var(--space-md);
+  margin: 0 auto;
   max-width: 1200px;
-  margin-inline: auto;
-  padding-inline: var(--space-md);
   width: 100%;
 }
 
@@ -129,8 +166,9 @@ button:hover {
   :root {
     --color-text-primary: #e2e8f0; /* Light Gray */
     --color-text-secondary: #a0aec0; /* Medium Gray */
-    --color-bg: #1a202c; /* Dark Grayish Blue */
+    --color-bg: #1a202c; /* Dark Gray */
     --color-bg-secondary: #2d3748; /* Slightly Lighter Dark Gray */
+    --color-border: #4a5568; /* Medium Gray for borders */
 
     --color-brand-primary: #ff7043; /* Lighter Vibrant Orange */
     --color-brand-primary-hover: #ff8a65; /* Even Lighter Orange */
@@ -138,10 +176,31 @@ button:hover {
     --color-brand-secondary-hover: #4fc3f7; /* Even Lighter Sky Blue */
     --color-brand-accent: #ff80ab; /* Lighter Pink */
 
-    --color-border: #4a5568; /* Darker Gray for borders */
+    --color-error: #fc8181; /* Lighter red for dark mode */
+    --color-warning: #f6e05e; /* Lighter yellow for dark mode */
+    --color-success: #68d391; /* Lighter green for dark mode */
+    --color-highlight: #ffd700; /* Gold for better contrast in dark mode */
+
+    --color-text-primary-dark: #e2e8f0; /* Light Gray for Dark Mode */
+    --color-text-secondary-dark: #a0aec0; /* Medium Gray for Dark Mode */
+    --color-bg-dark: #1a202c; /* Dark Grayish Blue */
+    --color-bg-secondary-dark: #2d3748; /* Slightly Lighter Grayish Blue */
+
+    --color-focus-ring-dark: var(--color-brand-secondary); /* For focus indicators in dark mode */
+
+    --line-height-loose: 1.8; /* For relaxed text spacing */
   }
 
   code {
     color: var(--color-text-primary); /* Ensure code text is visible in dark mode */
+  }
+
+  button {
+    background: var(--color-brand-primary);
+    color: var(--color-text-primary);
+  }
+
+  button:hover {
+    background: var(--color-brand-primary-hover);
   }
 }

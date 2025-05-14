@@ -49,7 +49,6 @@ const ContactUsPage = () => {
     if (validateForm()) {
       setSubmissionStatus('pending');
       try {
-        console.log('Form Data Submitted:', formData);
         await new Promise(resolve => setTimeout(resolve, 1500)); // Simulate delay
         setSubmissionStatus('success');
         setFormData({ name: '', email: '', message: '' }); // Reset form

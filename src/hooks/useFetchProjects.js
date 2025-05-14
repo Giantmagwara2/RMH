@@ -2,26 +2,15 @@
 import { useState, useEffect } from 'react';
 import { PROJECTS } from '@/constants/index.js'; // Keep this for now
 
-// Assume this is the base URL of your future API
-const API_BASE_URL = '/api'; // Placeholder
+async function fetchProjectsFromApi(category, signal) {
+  // Simulated API call with abort support
+  return new Promise((resolve, reject) => {
+    const timeout = setTimeout(() => {
+      if (signal.aborted) {
+        reject(new DOMException('Aborted', 'AbortError'));
+        return;
+      }
 
-async function fetchProjectsFromApi(category) {
-  // In a real implementation, you would use fetch or a library like Axios here
-  // Example using fetch:
-  // let url = `${API_BASE_URL}/projects`;
-  // if (category && category !== 'All') {
-  //   url += `?category=${category}`;
-  // }
-  // const response = await fetch(url);
-  // if (!response.ok) {
-  //   throw new Error(`HTTP error! status: ${response.status}`);
-  // }
-  // const data = await response.json();
-  // return data;
-
-  // For now, we'll simulate an API call using our local data
-  return new Promise((resolve) => {
-    setTimeout(() => {
       let filteredProjects = [];
       if (category === 'All') {
         filteredProjects = PROJECTS;
@@ -34,6 +23,11 @@ async function fetchProjectsFromApi(category) {
       }
       resolve(filteredProjects);
     }, 500);
+
+    signal.addEventListener('abort', () => {
+      clearTimeout(timeout);
+      reject(new DOMException('Aborted', 'AbortError'));
+    });
   });
 }
 
@@ -43,19 +37,26 @@ function useFetchProjects(category) {
   const [error, setError] = useState(null);
 
   useEffect(() => {
+    const controller = new AbortController();
+    const signal = controller.signal;
+
     setIsFetching(true);
     setError(null);
 
-    fetchProjectsFromApi(category)
+    fetchProjectsFromApi(category, signal)
       .then((data) => {
         setProjects(data);
         setIsFetching(false);
       })
       .catch((err) => {
-        setError(err);
+        if (err.name !== 'AbortError') {
+          setError(err);
+          console.error('Error fetching projects:', err);
+        }
         setIsFetching(false);
-        console.error('Error fetching projects:', err);
       });
+
+    return () => controller.abort();
   }, [category]);
 
   return { projects, isFetching, error };

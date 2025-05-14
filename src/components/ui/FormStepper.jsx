@@ -1,7 +1,7 @@
 // /src/components/ui/FormStepper.jsx
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import { Button } from './Button';
+import Button from './Button'; // Corrected to default import
 
 export const FormStepper = ({ steps, onComplete, initialStep = 0, customStyles = '' }) => {
   const [currentStep, setCurrentStep] = useState(initialStep);

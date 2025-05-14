@@ -25,13 +25,36 @@
     <link rel="icon" type="image/svg+xml" href="/vite.svg" />
     <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png" />
     <link rel="stylesheet" href="/styles/global.css" />
+    <link rel="manifest" href="/manifest.json" /> <!-- PWA support -->
+    <link rel="preload" href="/styles/global.css" as="style" /> <!-- Preload critical CSS -->
+    <link rel="preload" href="/vite.svg" as="image" /> <!-- Preload logo -->
+
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "Organization",
+        "name": "RocVille Media House",
+        "url": "https://rocvillemedia.com",
+        "logo": "/assets/og-image.png",
+        "description": "Crafting digital experiences that inspire and convert. Explore our services, portfolio, and more.",
+        "sameAs": [
+          "https://www.facebook.com/RocVilleMedia",
+          "https://twitter.com/RocVilleMedia",
+          "https://www.instagram.com/RocVilleMedia"
+        ]
+      }
+    </script>
 
     <title>RocVille Media House</title>
-    <script type="module" crossorigin src="/assets/index-BG_ejbtT.js"></script>
-    <link rel="modulepreload" crossorigin href="/assets/react-vendor-aP8jn7H9.js">
-    <link rel="stylesheet" crossorigin href="/assets/index-CO7558L_.css">
+    <script type="module" crossorigin src="/assets/index-BUhm5c5W.js"></script>
+    <link rel="modulepreload" crossorigin href="/assets/react-vendor-300vIUmN.js">
+    <link rel="modulepreload" crossorigin href="/assets/ui-vendor-DbWV7SJZ.js">
+    <link rel="stylesheet" crossorigin href="/assets/index-BcyOC_DW.css">
   </head>
   <body>
     <div id="root"></div>
+    <noscript>
+      <p style="color: red; text-align: center;">This website requires JavaScript to function properly. Please enable JavaScript in your browser settings.</p>
+    </noscript>
   </body>
 </html>

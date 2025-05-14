@@ -17,7 +17,7 @@ const Dialog = ({
         onClick={onClose}
       />
       <div
-        className="relative z-10 w-full max-w-md bg-white rounded-md shadow-lg dark:bg-neutrals-surface"
+        className="relative z-10 w-full max-w-md bg-white rounded-md shadow-xl dark:bg-neutrals-surface"
         role="dialog"
         aria-modal="true"
         aria-labelledby="dialog-title"

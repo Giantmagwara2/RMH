@@ -1,6 +1,10 @@
 module.exports = {
   presets: [
     '@babel/preset-env',
-    '@babel/preset-react'
+    ['@babel/preset-react', { runtime: 'automatic' }], // Enable automatic JSX runtime
+    '@babel/preset-typescript' // Add TypeScript support
+  ],
+  plugins: [
+    '@babel/plugin-transform-runtime' // Optimize for production
   ]
 };

@@ -8,33 +8,34 @@ export default {
 
 export const Default = () => (
   <Tabs>
-    <Tabs.Tab>Tab 1</Tabs.Tab>
-    <Tabs.Tab>Tab 2</Tabs.Tab>
-    <Tabs.Tab>Tab 3</Tabs.Tab>
-    <div>Content for Tab 1</div>
-    <div>Content for Tab 2</div>
-    <div>Content for Tab 3</div>
+    <Tabs.Tab title="Tab 1">
+      <div>Content for Tab 1</div>
+    </Tabs.Tab>
+    <Tabs.Tab title="Tab 2">
+      <div>Content for Tab 2</div>
+    </Tabs.Tab>
+    <Tabs.Tab title="Tab 3">
+      <div>Content for Tab 3</div>
+    </Tabs.Tab>
   </Tabs>
 );
 
 export const DefaultActiveTab = () => (
   <Tabs defaultActiveTab={1}>
-    <Tabs.Tab>Tab 1</Tabs.Tab>
-    <Tabs.Tab>Tab 2</Tabs.Tab>
-    <Tabs.Tab>Tab 3</Tabs.Tab>
-    <div>Content for Tab 1</div>
-    <div>Content for Tab 2</div>
-    <div>Content for Tab 3</div>
+    <Tabs.Tab title="Tab 1">
+      <div>Content for Tab 1</div>
+    </Tabs.Tab>
+    <Tabs.Tab title="Tab 2">
+      <div>Content for Tab 2</div>
+    </Tabs.Tab>
+    <Tabs.Tab title="Tab 3">
+      <div>Content for Tab 3</div>
+    </Tabs.Tab>
   </Tabs>
 );
 
-export const CustomActiveTabStyles = () => (
-  <Tabs>
-    <Tabs.Tab>Custom Tab 1</Tabs.Tab>
-    <Tabs.Tab>Custom Tab 2</Tabs.Tab>
-    <Tabs.Tab>Custom Tab 3</Tabs.Tab>
-    <div>Custom Content for Tab 1</div>
-    <div>Custom Content for Tab 2</div>
-    <div>Custom Content for Tab 3</div>
-  </Tabs>
-);
+// CustomActiveTabStyles story would now involve passing custom classNames to Tabs or Tab components
+// if you add such props to them, or by targeting their base classes with global CSS.
+// For now, this story can be simplified or removed if not demonstrating a specific prop.
+export const CustomActiveTabStyles = Default;
+CustomActiveTabStyles.storyName = "Tabs (Styling via Tailwind)";
