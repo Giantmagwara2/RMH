@@ -25,19 +25,22 @@ const ChatWindow = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const [feedback, setFeedback] = useState({}); // { messageIdx: 'up' | 'down' }
-  const [messageStatus, setMessageStatus] = useState({}); // { idx: 'sending' | 'delivered' }
+  const [messageStatus, setMessageStatus] = useState({}); // { originalUserMessageIdx: 'pending' | 'delivered' | 'failed' }
   const [commandHistory, setCommandHistory] = useState(() => {
-    const saved = localStorage.getItem('rocbot_command_history');
+    // Consider more specific localStorage keys
+    const saved = localStorage.getItem('rmh_rocbot_command_history');
     return saved ? JSON.parse(saved) : [];
   });
   const [historyIndex, setHistoryIndex] = useState(null);
   const [suggestions, setSuggestions] = useState([]);
   const [showSuggestions, setShowSuggestions] = useState(false);
   const messagesEndRef = useRef(null);
+  const inputRef = useRef(null); // Ref for the textarea
   const suggestionsRef = useRef(null);
 
   useEffect(() => {
-    const savedMessages = localStorage.getItem('rocbot_messages');
+    // Consider more specific localStorage keys
+    const savedMessages = localStorage.getItem('rmh_rocbot_messages');
     if (savedMessages) {
       setMessages(JSON.parse(savedMessages));
     }
@@ -48,7 +51,7 @@ const ChatWindow = () => {
   }, [messages]);
 
   useEffect(() => {
-    localStorage.setItem('rocbot_command_history', JSON.stringify(commandHistory));
+    localStorage.setItem('rmh_rocbot_command_history', JSON.stringify(commandHistory));
   }, [commandHistory]);
 
   const handleInputChange = (e) => {
@@ -85,6 +88,7 @@ const ChatWindow = () => {
         setShowSuggestions(false);
         setSuggestions([]);
         setHistoryIndex(null);
+        inputRef.current?.focus(); // Return focus to input
         return;
       }
     }
@@ -121,18 +125,53 @@ const ChatWindow = () => {
     }
     const now = Date.now();
     const userMessage = { role: 'user', content: input, timestamp: now };
+    const userMessageIndex = messages.length; // Index of the upcoming user message
     setMessages((prev) => [...prev, userMessage]);
     setInput('');
     setLoading(true);
     setError(null);
+    setMessageStatus(prev => ({ ...prev, [userMessageIndex]: 'pending' }));
     trackEvent('chat_message_sent', { content: input });
 
     // Command parsing
     if (input.trim().startsWith('/')) {
-      const [commandName, ...args] = input.trim().substring(1).split(' ');
+      const [commandName, ...argsArray] = input.trim().substring(1).split(' ');
+      const commandArgsString = argsArray.join(' ');
+
+      if (commandName === 'generateLeads') {
+        const [industry, region] = commandArgsString.split(' '); // industry is query
+        try {
+          const res = await fetch('/api/roccloser/generate-leads', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ query: industry, region })
+          });
+          const data = await res.json();
+          if (data.success && data.leads) {
+            const preview = data.leads.slice(0, 3).map(lead => `- ${lead.name} (${lead.company || lead.email || 'N/A'})`).join('\n');
+            setMessages(prev => [...prev, {
+              role: 'ai',
+              content: `Lead generation complete. Found ${data.leads.length} lead(s). Preview:\n\n${preview}\n\nType /showLeads to view more.`,
+              timestamp: Date.now()
+            }]);
+          } else {
+            setMessages(prev => [...prev, {
+              role: 'ai',
+              content: `❌ Failed to generate leads: ${data.error || 'Unknown error'}`,
+              timestamp: Date.now()
+            }]);
+          }
+        } catch (apiError) {
+          setMessages(prev => [...prev, { role: 'ai', content: `❌ Error calling lead generation API: ${apiError.message}`, timestamp: Date.now() }]);
+        }
+        setMessageStatus(prev => ({ ...prev, [userMessageIndex]: 'delivered' }));
+        setLoading(false);
+        return;
+      }
+
       const command = commands[commandName];
       if (command) {
-        const botResponse = await command.action(args, setMessages);
+        const botResponse = await command.action(argsArray, setMessages);
         setMessages((prev) => [...prev, { role: 'ai', content: botResponse, timestamp: Date.now() }]);
       } else {
         setMessages((prev) => [
@@ -140,6 +179,7 @@ const ChatWindow = () => {
           { role: 'ai', content: `Unknown command: /${commandName}`, timestamp: Date.now() },
         ]);
       }
+      setMessageStatus(prev => ({ ...prev, [userMessageIndex]: 'delivered' })); // Command execution is local/quick
       setLoading(false);
       return;
     }
@@ -167,12 +207,12 @@ const ChatWindow = () => {
       if (!response.ok) throw new Error('AI response failed');
       const data = await response.json();
       const aiContent = data.choices?.[0]?.message?.content || 'Sorry, I could not generate a response.';
+      setMessageStatus(prev => ({ ...prev, [userMessageIndex]: 'delivered' }));
       setMessages((prev) => [...prev, { role: 'ai', content: aiContent, timestamp: Date.now() }]);
-      setMessageStatus((prev) => ({ ...prev, [messages.length]: 'delivered' }));
       if (audioReceive) audioReceive.play();
     } catch (err) {
+      setMessageStatus(prev => ({ ...prev, [userMessageIndex]: 'failed' }));
       setMessages((prev) => [...prev, { role: 'ai', content: 'Sorry, there was a problem connecting to the AI.', timestamp: Date.now() }]);
-      setMessageStatus((prev) => ({ ...prev, [messages.length]: 'delivered' }));
       setError('Failed to connect to AI backend.');
       if (audioReceive) audioReceive.play();
     } finally {
@@ -223,8 +263,11 @@ const ChatWindow = () => {
                   title={msg.timestamp ? format(new Date(msg.timestamp), 'PPpp') : ''}
                 >
                   {msg.timestamp ? format(new Date(msg.timestamp), 'HH:mm') : ''}
-                  {msg.role === 'user' && messageStatus[idx] && (
-                    <span className="ml-2 text-[10px] align-middle text-blue-400 animate-pulse">{messageStatus[idx]}</span>
+                  {msg.role === 'user' && messageStatus[idx] === 'pending' && (
+                    <span className="ml-2 text-[10px] align-middle text-blue-400 animate-pulse">sending...</span>
+                  )}
+                  {msg.role === 'user' && messageStatus[idx] === 'failed' && (
+                    <span className="ml-2 text-[10px] align-middle text-red-400">failed</span>
                   )}
                 </span>
               </div>
@@ -288,6 +331,7 @@ const ChatWindow = () => {
         ) : null}
         <textarea
           className={`flex-1 p-2 text-sm border rounded-md outline-none resize-none transition-all duration-150 ${
+            // Ensure dark mode styles are comprehensive for textarea states
             input.startsWith('/')
               ? 'bg-blue-50 dark:bg-blue-900 border-blue-400 focus:ring-2 focus:ring-blue-400'
               : 'bg-white dark:bg-zinc-900 border dark:border-zinc-700 focus:ring-2 focus:ring-blue-400'
@@ -295,6 +339,7 @@ const ChatWindow = () => {
           disabled={loading}
           placeholder={input.startsWith('/') ? 'Type a command or /help' : 'Type your message...'}
           rows={1}
+          ref={inputRef}
           style={{ paddingLeft: input.startsWith('/') ? '2.5rem' : undefined }}
           value={input}
           onChange={handleInputChange}
@@ -330,11 +375,12 @@ const ChatWindow = () => {
                 className={`flex items-center gap-2 px-4 py-2 cursor-pointer ${i === historyIndex ? 'bg-blue-100 dark:bg-blue-900' : ''}`}
                 key={s.name}
                 role="option"
-                onMouseDown={() => {
+                onClick={() => { // Changed from onMouseDown for better accessibility
                   setInput('/' + s.name + ' ');
                   setShowSuggestions(false);
                   setSuggestions([]);
                   setHistoryIndex(null);
+                  inputRef.current?.focus(); // Return focus to input
                 }}
               >
                 <CommandLineIcon className="w-4 h-4 text-blue-400" />

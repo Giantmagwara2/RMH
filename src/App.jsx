@@ -1,6 +1,6 @@
 // App.jsx
 import React, { lazy, Suspense } from 'react';
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import { Route, Routes } from 'react-router-dom';
 import { Outlet } from 'react-router-dom';
 import Header from './components/Header/Header';
 import Footer from './components/Footer/Footer';
@@ -19,7 +19,6 @@ const PortfolioGrid = lazy(() => import('./components/PortfolioGrid'));
 
 function App() {
   return (
-    <Router>
       <Routes>
         <Route
           element={
@@ -42,12 +41,12 @@ function App() {
                   </div>
                   {/* Diagnostic Text End */}
 
-                  <div className="App flex">
+                  <div className="flex App">
                     <Suspense fallback={<div>Loading...</div>}>
                       <FilterSidebar />
                     </Suspense>
-                    <main className="flex-1 container flex-grow px-4 py-8 mx-auto">
-                      <div className="App p-4 space-y-8">
+                    <main className="container flex-1 flex-grow px-4 py-8 mx-auto">
+                      <div className="p-4 space-y-8 App">
                         <ThemeSwitcher />
                         <TechStackPicker onSelect={() => {}} />
                         <BudgetEstimator />
@@ -72,7 +71,6 @@ function App() {
         />
         <Route element={<CaseStudyPage />} path="/case-study" />
       </Routes>
-    </Router>
   );
 }
 
