@@ -1,9 +1,8 @@
 // /src/components/ui/FieldSet.jsx
 import React from 'react';
 import PropTypes from 'prop-types';
-import clsx from 'clsx';
 
-export const FieldSet = ({
+const FieldSet = ({
   legend,
   description,
   children,
@@ -13,25 +12,25 @@ export const FieldSet = ({
   ...rest
 }) => {
   return (
-    <fieldset
-      className={clsx(
-        `border rounded-md p-space-md space-y-space-sm ${borderColor} ${backgroundColor}`,
-        className
-      )}
-      {...rest}
-    >
-      {legend && (
-        <legend className="text-sm font-medium text-neutrals-strong mb-space-xs">
-          {legend}
-        </legend>
-      )}
-      {description && (
-        <p className="text-xs text-neutrals-muted mb-space-sm" aria-describedby="fieldset-description">
-          {description}
-        </p>
+    <div className={`rounded-md border ${borderColor} ${backgroundColor} ${className}`} {...rest}>
+      <fieldset className="p-4 space-y-2">
+        {legend && (
+          <legend className="block text-sm font-medium text-gray-700 dark:text-gray-300">
+            {legend}
+          </legend>
+        )}
+        {description && (
+          <p
+            className="mt-1 text-sm text-gray-500 dark:text-gray-400"
+            // If this paragraph describes the fieldset, the fieldset should have aria-describedby pointing to an id on this p.
+            // For now, removing as its current usage is not standard for a p tag.
+          >
+            {description}
+          </p>
       )}
       {children}
     </fieldset>
+    </div>
   );
 };
 
@@ -43,3 +42,5 @@ FieldSet.propTypes = {
   borderColor: PropTypes.string,
   backgroundColor: PropTypes.string,
 };
+
+export default FieldSet;

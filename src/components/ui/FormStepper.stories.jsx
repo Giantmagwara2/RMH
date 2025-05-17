@@ -1,14 +1,22 @@
 // /src/components/ui/FormStepper.stories.jsx
 
 import React from 'react';
-import { useForm } from '../../hooks/useForm';
-import { Form } from './Form';
+// Removed useForm and Form imports as they are not directly used by FormStepper stories here.
+// Input is used within the step content.
 import { Input } from './Input';
 import { FormStepper } from './FormStepper';
 
 export default {
   title: 'UI/FormStepper',
   component: FormStepper,
+  argTypes: {
+    initialStep: {
+      control: { type: 'number', min: 0 },
+      description: 'The initial step index to start the stepper from.',
+    },
+    className: { control: 'text', description: 'Custom CSS classes for the stepper container.' },
+    // `steps` and `onComplete` are complex and better demonstrated through specific story args.
+  },
 };
 
 export const MultiStepForm = () => {
@@ -17,7 +25,13 @@ export const MultiStepForm = () => {
       title: 'Your Name',
       content: ({ values, errors, onChange }) => (
         <div>
-          <Input name="name" label="Name" value={values.name || ''} error={errors.name} onChange={onChange} />
+          <Input
+            name="name"
+            label="Name"
+            value={values.name || ''}
+            error={errors?.name} // Ensure errors object exists
+            onChange={onChange}
+          />
         </div>
       ),
       validate: async (values) => {
@@ -30,7 +44,13 @@ export const MultiStepForm = () => {
       title: 'Your Email',
       content: ({ values, errors, onChange }) => (
         <div>
-          <Input name="email" label="Email" value={values.email || ''} error={errors.email} onChange={onChange} />
+          <Input
+            name="email"
+            label="Email"
+            value={values.email || ''}
+            error={errors?.email} // Ensure errors object exists
+            onChange={onChange}
+          />
         </div>
       ),
       validate: async (values) => {
@@ -60,60 +80,13 @@ export const MultiStepForm = () => {
   );
 };
 
-export const NameValidation = () => {
-  const { values, errors, handleChange } = useForm({
-    initialValues: { name: '' },
-    validate: (values) => {
-      const errors = {};
-      if (!values.name) errors.name = 'Name is required';
-      return errors;
-    },
-  });
-
-  return (
-    <Form>
-      <Input
-        name="name"
-        value={values.name}
-        onChange={handleChange}
-        error={errors.name}
-        placeholder="Enter your name"
-      />
-    </Form>
-  );
-};
-
-export const AgeValidation = () => {
-  const { values, errors, handleChange } = useForm({
-    initialValues: { age: '' },
-    validate: (values) => {
-      const errors = {};
-      if (!values.age) errors.age = 'Age is required';
-      return errors;
-    },
-  });
-
-  return (
-    <Form>
-      <Input
-        name="age"
-        value={values.age}
-        onChange={handleChange}
-        error={errors.age}
-        placeholder="Enter your age"
-      />
-    </Form>
-  );
-};
-
 export const ConditionalSteps = () => {
   const steps = [
     {
       title: 'Your Name',
       content: ({ values, errors, onChange }) => (
-        <Form>
-          <Input name="name" label="Name" value={values.name || ''} error={errors.name} onChange={onChange} />
-        </Form>
+        // The FormStepper itself handles form state per step, no need for an outer Form here
+        <Input name="name" label="Name" value={values.name || ''} error={errors?.name} onChange={onChange} />
       ),
       validate: async (values) => {
         const errors = {};
@@ -124,9 +97,7 @@ export const ConditionalSteps = () => {
     {
       title: 'Your Age',
       content: ({ values, errors, onChange }) => (
-        <Form>
-          <Input name="age" label="Age" value={values.age || ''} error={errors.age} onChange={onChange} />
-        </Form>
+        <Input name="age" label="Age" type="number" value={values.age || ''} error={errors?.age} onChange={onChange} />
       ),
       validate: async (values) => {
         const errors = {};
@@ -141,7 +112,7 @@ export const ConditionalSteps = () => {
           <p>Please confirm that you have parental consent to continue.</p>
         </div>
       ),
-      shouldInclude: (values) => {
+      shouldShow: (values) => { // Corrected prop name from shouldInclude to shouldShow
         const age = parseInt(values.age, 10);
         return !isNaN(age) && age < 18;
       },
@@ -173,7 +144,13 @@ export const CustomStyles = () => {
       title: 'Your Name',
       content: ({ values, errors, onChange }) => (
         <div>
-          <Input name="name" label="Name" value={values.name || ''} error={errors.name} onChange={onChange} />
+          <Input
+            name="name"
+            label="Name"
+            value={values.name || ''}
+            error={errors?.name}
+            onChange={onChange}
+          />
         </div>
       ),
       validate: async (values) => {
@@ -186,7 +163,13 @@ export const CustomStyles = () => {
       title: 'Your Email',
       content: ({ values, errors, onChange }) => (
         <div>
-          <Input name="email" label="Email" value={values.email || ''} error={errors.email} onChange={onChange} />
+          <Input
+            name="email"
+            label="Email"
+            value={values.email || ''}
+            error={errors?.email}
+            onChange={onChange}
+          />
         </div>
       ),
       validate: async (values) => {
@@ -211,13 +194,12 @@ export const CustomStyles = () => {
       <FormStepper
         steps={steps}
         onComplete={(values) => alert(`Form submitted: ${JSON.stringify(values, null, 2)}`)}
-        customStyles="bg-gray-100 p-4 rounded-md"
+        className="p-4 bg-gray-100 rounded-md" // Changed customStyles to className
       />
     </div>
   );
 };
-
-// Added a story to demonstrate custom styles and aria-live updates
+// Renamed for clarity
 export const CustomStyledStepper = () => {
   const steps = [
     {
@@ -234,7 +216,7 @@ export const CustomStyledStepper = () => {
     <FormStepper
       steps={steps}
       onComplete={(values) => alert(`Completed: ${JSON.stringify(values)}`)}
-      customStyles="p-4 bg-gray-50 rounded-lg"
+      className="p-4 rounded-lg bg-gray-50" // Changed customStyles to className
     />
   );
 };

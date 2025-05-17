@@ -1,4 +1,4 @@
-import React from 'react';
+import React from 'react'; 
 import { render, fireEvent } from '@testing-library/react';
 import Modal from '../Modal';
 
@@ -9,7 +9,7 @@ describe('Modal', () => {
         <div>Modal content</div>
       </Modal>
     );
-    expect(getByRole('dialog')).toBeInTheDocument();
+    expect(getByRole('dialog')).toBeInTheDocument(); 
   });
 
   it('does not render when isOpen is false', () => {
@@ -18,7 +18,7 @@ describe('Modal', () => {
         <div>Modal content</div>
       </Modal>
     );
-    expect(queryByRole('dialog')).not.toBeInTheDocument();
+    expect(queryByRole('dialog')).not.toBeInTheDocument(); 
   });
 
   it('calls onClose when close button is clicked', () => {
@@ -28,7 +28,7 @@ describe('Modal', () => {
         <div>Modal content</div>
       </Modal>
     );
-    fireEvent.click(getByLabelText('Close modal'));
+    fireEvent.click(getByLabelText('Close modal')); 
     expect(handleClose).toHaveBeenCalled();
   });
 
@@ -39,7 +39,7 @@ describe('Modal', () => {
         <div>Modal content</div>
       </Modal>
     );
-    fireEvent.keyDown(document, { key: 'Escape' });
-    expect(handleClose).toHaveBeenCalled();
+    fireEvent.keyDown(document, { key: 'Escape' }); 
+    expect(handleClose).toHaveBeenCalled(); 
   });
 });

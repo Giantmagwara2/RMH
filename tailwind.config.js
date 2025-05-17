@@ -2,11 +2,11 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
   content: [
-    './index.html',
-    './src/**/*.{js,jsx,ts,tsx}',
-    './pages/**/*.{js,jsx,ts,tsx}',
-    './public/index.html',
-    './RMH-Replit/**/*.{js,jsx,ts,tsx}',
+    './index.html', // If your main index.html is at the root
+    './public/index.html', // If your main index.html is in public (often the case)
+    './src/**/*.{js,jsx,ts,tsx}', // For all JS/JSX/TS/TSX files in the src directory
+    // Add other top-level directories if they contain files using Tailwind classes, e.g.:
+    // './pages/**/*.{js,jsx,ts,tsx}', // If you have a separate top-level 'pages' directory
   ],
   darkMode: 'class', // Enables dark mode with the 'class' strategy
   theme: {
@@ -29,13 +29,17 @@ module.exports = {
     },
     extend: {
       fontFamily: {
-        sans: ['Inter', 'sans-serif'],
-        heading: ['Poppins', 'sans-serif'],
-        serif: ['Merriweather', 'serif'],
+        sans: 'var(--font-sans)',
+        serif: 'var(--font-serif)', // Added to make font-serif utility available
+        heading: 'var(--font-heading)',
       },
       fontWeight: {
-        extralight: '200',
-        light: '300',
+        // Consider defining a distinct --font-weight-extralight token (e.g., 200)
+        // if you need a visually different weight from 'light'.
+        // If --font-weight-light is, for example, 300, then 'extralight' and 'light'
+        // utilities will currently produce the same result.
+        extralight: 'var(--font-weight-light)',
+        light: 'var(--font-weight-light)',
         normal: '400',
         medium: '500',
         semibold: '600',
@@ -71,52 +75,64 @@ module.exports = {
       },
       colors: {
         brand: {
-          primary: {
-            DEFAULT: '#2563EB', // Blue-600 (Example: Same for light/dark or define a dark variant)
-            dark: '#3B82F6',    // Blue-500 (Example: Lighter for dark mode)
-          },
-          secondary: {
-            DEFAULT: '#1E40AF', // Blue-800
-            dark: '#2563EB',    // Blue-600
-          },
-          accent: {
-            DEFAULT: '#F59E0B', // Amber-500
-            dark: '#FBBF24',    // Amber-400
-          },
+          primary: 'var(--color-brand-primary)',
+          'primary-hover': 'var(--color-brand-primary-hover)', // If token exists
+          'primary-dark': 'var(--color-brand-primary-dark)', // For text-brand-primary-dark
+          secondary: 'var(--color-brand-secondary)',
+          'secondary-hover': 'var(--color-brand-secondary-hover)', // If token exists
+          accent: 'var(--color-brand-accent)',
+          'accent-hover': 'var(--color-brand-accent-hover)', // If token exists
+          light: 'var(--color-brand-light)', // For bg-brand-light
+        },
+        // Theme-aware colors using CSS variables from tokens.css
+        // Tailwind will automatically use the correct value based on .dark class
+        bg: {
+          DEFAULT: 'var(--color-bg)',
+          surface: 'var(--color-surface)',
+          'surface-accent': 'var(--color-surface-accent)',
+          secondary: 'var(--color-bg-secondary)',
+        },
+        text: {
+          primary: 'var(--color-text-primary)',
+          secondary: 'var(--color-text-secondary)',
+          disabled: 'var(--color-text-disabled)',
+          muted: 'var(--color-muted)', // Now uses CSS variable
+        },
+        border: {
+          DEFAULT: 'var(--color-border)',
+          // Specific border colors like error, info, etc., are now under 'feedback'
         },
         neutrals: {
-          background: '#F3F4F6',
-          'background-dark': '#111827', // Dark Gray/Blue for dark mode background
-          surface: '#F3F4F6',
-          'surface-dark': '#1F2937',    // Slightly lighter dark for surfaces
-          border: '#E5E7EB',
-          'border-dark': '#374151',      // Darker gray for borders in dark mode
-          textPrimary: '#111827',
-          'textPrimary-dark': '#F3F4F6', // Light gray/off-white for dark mode primary text
-          textSecondary: '#4B5563',
-          'textSecondary-dark': '#9CA3AF',// Medium light gray for dark mode secondary text
-          muted: '#9CA3AF',
-          'muted-dark': '#6B7280',        // Darker light gray for dark mode muted text
+          surface: 'var(--color-neutrals-surface)',
+          'surface-accent': 'var(--color-neutrals-surface-accent)',
+          border: 'var(--color-neutrals-border)', // Used as bg-neutrals-border in Table
         },
-        semantic: {
-          success: '#10B981',
-          error: '#EF4444',
-          warning: '#F59E0B',
-          info: '#3B82F6',
-          // Consider dark variants if needed, e.g., success-dark: '#34D399'
+        feedback: {
+          success: {
+            DEFAULT: 'var(--color-feedback-success)', // For bg-feedback-success
+            text: 'var(--color-feedback-success-text)',
+            hover: 'var(--color-feedback-success-hover)', // For text hover
+            border: 'var(--color-feedback-success-border)', // If exists
+          },
+          error: {
+            DEFAULT: 'var(--color-feedback-error)', // For bg-feedback-error
+            text: 'var(--color-feedback-error-text)',
+            border: 'var(--color-feedback-error-border)', // For border-error-border
+          },
+          warning: {
+            DEFAULT: 'var(--color-feedback-warning)', // For bg-feedback-warning
+            text: 'var(--color-feedback-warning-text)', // For text-feedback-warning-text
+            border: 'var(--color-feedback-warning-border)', // If exists
+          },
+          info: {
+            DEFAULT: 'var(--color-feedback-info)', // For bg-feedback-info
+            text: 'var(--color-feedback-info-text)',
+            bg: 'var(--color-feedback-info-bg)', // For bg-feedback-info-bg
+            border: 'var(--color-feedback-info-border)',
+          },
         },
-        // Define the custom colors used in your components
-        'electric-blue': '#007BFF', // Example: A bright blue
-        'midnight-blue': '#191970', // Example: A very dark blue (good for light mode text)
-        'soft-white': '#F8F8FF',    // Example: An off-white (good for dark mode text or light bg)
-        primary: '#1E40AF',
-        primaryHover: '#1D4ED8',
-        primaryActive: '#1E3A8A',
-        gradientPrimary: 'linear-gradient(90deg, #1E40AF, #9333EA)',
-        'highlight-yellow': '#FFD700', // Bright yellow for dark mode highlights
-        secondary: '#9333EA', // Purple
-        accent: '#F59E0B', // Amber
-        foreground: '#1F2937', // Dark gray
+        highlight: 'var(--color-highlight)',
+        overlay: 'var(--color-overlay)',
       },
       opacity: {
         50: '0.5',
@@ -137,12 +153,12 @@ module.exports = {
         wide: '0.05em',
       },
       transitionTimingFunction: {
-        soft: 'cubic-bezier(0.4, 0, 0.2, 1)',
+        soft: 'var(--ease-in-out)', // Using token
       },
       transitionDuration: {
-        DEFAULT: '300ms',
-        fast: '150ms',
-        slow: '500ms',
+        DEFAULT: 'var(--duration-default)', // Using token
+        fast: 'var(--duration-fast)',       // Using token
+        slow: 'var(--duration-slow)',       // Using token
       },
       boxShadow: {
         card: '0 2px 8px rgba(0, 0, 0, 0.05)',

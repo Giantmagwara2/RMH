@@ -5,6 +5,7 @@ import { Helmet } from 'react-helmet-async';
 import PageWrapper from '../Layout/PageWrapper';
 import Section from '../Section/Section.jsx';
 import { blogPosts } from '../../constants/BlogData.js';
+import { ShareIcon, ArrowLeftIcon } from '@heroicons/react/24/outline';
 import { ROUTES } from '../../constants/index';
 
 const BlogPostPage = () => {
@@ -15,29 +16,33 @@ const BlogPostPage = () => {
     return (
       <PageWrapper>
         <div className="pt-header pb-section bg-gradient-to-br from-electric-blue to-indigo-500 dark:from-midnight-blue dark:to-rich-black">
-          <Section
-            className="container px-4 mx-auto text-center text-soft-white"
-            data-aos="fade-down"
-            data-aos-duration="600"
-          >
-            <h1 className="mb-4 text-4xl font-bold font-display">Post Not Found</h1>
-            <p className="mb-6 text-lg leading-relaxed">
-              Sorry, we couldn’t find the article you’re looking for.
-            </p>
-            <Link
-              to={ROUTES.BLOG}
-              className="inline-block px-6 py-2 font-semibold transition-colors duration-300 rounded-md shadow-md bg-soft-white dark:bg-dark-bg text-electric-blue dark:text-highlight-yellow hover:bg-gray-100 dark:hover:bg-gray-700 dark:shadow-none"
+          <div className="container flex flex-col items-center justify-center min-h-[calc(100vh-200px)] px-4 mx-auto text-center">
+            <Section
+              className="p-8 bg-white rounded-lg shadow-xl dark:bg-dark-bg dark:shadow-none"
+              data-aos="fade-down"
+              data-aos-duration="600"
             >
-              Back to Blog
-            </Link>
-          </Section>
+              <h1 className="mb-4 text-4xl font-bold font-display text-midnight-blue dark:text-secondary">Post Not Found</h1>
+              <p className="mb-8 text-lg leading-relaxed text-gray-700 dark:text-gray-300">
+                Sorry, we couldn’t find the article you’re looking for. It might have been moved or deleted.
+              </p>
+              <Link
+                to={ROUTES.BLOG}
+                className="inline-flex items-center gap-2 px-6 py-3 font-semibold transition-colors duration-300 rounded-md shadow-md bg-electric-blue dark:bg-highlight-yellow text-soft-white dark:text-rich-black hover:bg-blue-700 dark:hover:bg-yellow-500 focus:outline-none focus:ring-2 focus:ring-electric-blue dark:focus:ring-highlight-yellow focus:ring-offset-2"
+              >
+                <ArrowLeftIcon className="w-5 h-5" />
+                Back to Blog
+              </Link>
+            </Section>
+          </div>
         </div>
       </PageWrapper>
     );
   }
 
   // SEO + Open Graph
-  const currentUrl = `https://yourdomain.com${ROUTES.BLOG}/${slug}`;
+  const baseUrl = typeof window !== 'undefined' ? window.location.origin : 'https://yourdomain.com'; // Fallback for SSR or build time
+  const currentUrl = `${baseUrl}${ROUTES.BLOG}/${slug}`;
   const ogImage = post.ogImage || post.featuredImage;
 
   return (
@@ -54,7 +59,7 @@ const BlogPostPage = () => {
         {post.tags?.map(tag => (
           <meta key={tag} property="article:tag" content={tag} />
         ))}
-        <meta property="article:published_time" content={post.datePublished} />
+        <meta property="article:published_time" content={new Date(post.datePublished).toISOString()} />
       </Helmet>
 
       <PageWrapper>
@@ -85,10 +90,20 @@ const BlogPostPage = () => {
 
               {/* Content */}
               <div className="mb-8 leading-relaxed prose prose-lg text-gray-700 dark:prose-dark max-w-none dark:text-gray-300">
+                {/* 
+                  If post.content is a single HTML string, you would render it like this:
+                  <div dangerouslySetInnerHTML={{ __html: post.content }} />
+                  Ensure the HTML is sanitized if it comes from user input.
+                  The `prose` classes from @tailwindcss/typography will style this HTML.
+
+                  If post.content is Markdown, you'd use a library like react-markdown:
+                  <ReactMarkdown>{post.content}</ReactMarkdown>
+                */}
                 {post.content.map((block, i) => (
                   <p key={i}>{block}</p>
                 ))}
               </div>
+
 
               {/* Categories */}
               {post.categories?.length > 0 && (
@@ -124,12 +139,45 @@ const BlogPostPage = () => {
                 </div>
               )}
 
+              {/* Share Section */}
+              <div className="py-6 mt-8 border-t border-b border-gray-200 dark:border-zinc-700">
+                <h4 className="mb-3 text-lg font-semibold text-center text-electric-blue dark:text-highlight-yellow">
+                  Share this post
+                </h4>
+                <div className="flex items-center justify-center space-x-4">
+                  {[
+                    { name: 'Twitter', url: `https://twitter.com/intent/tweet?url=${encodeURIComponent(currentUrl)}&text=${encodeURIComponent(post.title)}`, color: "text-blue-400 hover:text-blue-500" },
+                    { name: 'Facebook', url: `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(currentUrl)}`, color: "text-blue-600 hover:text-blue-700" },
+                    { name: 'LinkedIn', url: `https://www.linkedin.com/shareArticle?mini=true&url=${encodeURIComponent(currentUrl)}&title=${encodeURIComponent(post.title)}&summary=${encodeURIComponent(post.excerpt)}`, color: "text-blue-700 hover:text-blue-800" },
+                    { name: 'WhatsApp', url: `https://api.whatsapp.com/send?text=${encodeURIComponent(post.title + " " + currentUrl)}`, color: "text-green-500 hover:text-green-600" },
+                  ].map(social => (
+                    <a
+                      key={social.name}
+                      href={social.url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      aria-label={`Share on ${social.name}`}
+                      className={`p-2 transition-colors duration-150 rounded-full bg-gray-100 dark:bg-zinc-800 hover:bg-gray-200 dark:hover:bg-zinc-700 ${social.color}`}
+                    >
+                      <ShareIcon className="w-5 h-5" /> 
+                      {/* 
+                        Ideally, you'd use specific icons for each social media platform.
+                        For simplicity, using a generic ShareIcon here.
+                        Example: <TwitterIcon className="w-5 h-5" /> 
+                      */}
+                    </a>
+                  ))}
+                </div>
+              </div>
+
+
               {/* Back to Blog Button */}
-              <div className="mt-8 text-center">
+              <div className="pt-8 mt-8 text-center">
                 <Link
                   to={ROUTES.BLOG}
-                  className="inline-block px-8 py-3 font-semibold text-white transition-colors duration-300 rounded-md shadow-md bg-electric-blue dark:bg-highlight-yellow dark:text-rich-black hover:bg-blue-700 dark:hover:bg-yellow-500"
+                  className="inline-flex items-center gap-2 px-8 py-3 font-semibold transition-colors duration-300 rounded-md shadow-md bg-electric-blue dark:bg-highlight-yellow text-soft-white dark:text-rich-black hover:bg-blue-700 dark:hover:bg-yellow-500 focus:outline-none focus:ring-2 focus:ring-electric-blue dark:focus:ring-highlight-yellow focus:ring-offset-2"
                 >
+                  <ArrowLeftIcon className="w-5 h-5" />
                   Back to Blog
                 </Link>
               </div>

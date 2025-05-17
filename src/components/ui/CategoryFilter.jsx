@@ -1,4 +1,5 @@
 import React, { useState, useRef, useEffect, useCallback } from 'react';
+import PropTypes from 'prop-types';
 
 const CategoryFilter = ({ categories, onCategoryChange, isFetching }) => {
   const [isFilterDropdownOpen, setIsFilterDropdownOpen] = useState(false);
@@ -106,6 +107,12 @@ const CategoryFilter = ({ categories, onCategoryChange, isFetching }) => {
       </div>
     </div>
   );
+};
+
+CategoryFilter.propTypes = {
+  categories: PropTypes.arrayOf(PropTypes.string).isRequired,
+  onCategoryChange: PropTypes.func.isRequired,
+  isFetching: PropTypes.bool,
 };
 
 export default CategoryFilter;

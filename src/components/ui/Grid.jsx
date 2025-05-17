@@ -8,6 +8,8 @@ export const Grid = ({
   gap = 'space-md',
   className,
   responsive = {}, // New prop for responsive column configurations
+  as = 'div', // New prop to define the element type
+  ...props // Collect other props to spread
 }) => {
   const gapClass = `gap-${gap}`;
 
@@ -15,8 +17,10 @@ export const Grid = ({
     .map(([breakpoint, cols]) => `${breakpoint}:grid-cols-${cols}`)
     .join(' ');
 
+  const Component = as;
+
   return (
-    <div
+    <Component
       className={clsx(
         `grid grid-cols-${columns}`,
         gapClass,
@@ -25,18 +29,22 @@ export const Grid = ({
         'transition-all duration-300 ease-in-out', // Smooth transitions for layout changes
         className
       )}
+      {...props} // Spread additional props onto the element
     >
       {children}
-    </div>
+    </Component>
   );
 };
 
 Grid.propTypes = {
   children: PropTypes.node.isRequired,
-  columns: PropTypes.number,
+  columns: PropTypes.number, // Typically 1-12 for standard Tailwind, or as configured
   gap: PropTypes.string,
   className: PropTypes.string,
   responsive: PropTypes.object, // Responsive column configurations
+  as: PropTypes.elementType,
 };
+
+Grid.displayName = 'Grid';
 
 export default Grid;

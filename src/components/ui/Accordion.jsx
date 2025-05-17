@@ -121,7 +121,7 @@ const Accordion = ({
         <AccordionItem
           key={item.id || index} // Prefer item.id if available, fallback to index
           item={item}
-          index={item.id || index} // Use the same key for generating ARIA ids
+          index={index} // Use the index for generating ARIA ids (consistent with handleKeyDown)
           isOpen={allowMultipleOpen ? openIndexes.has(item.id || index) : openIndex === (item.id || index)}
           onClick={() => toggleIndex(index)}
           // Pass down customization props

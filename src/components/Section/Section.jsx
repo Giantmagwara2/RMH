@@ -8,6 +8,9 @@ const Section = ({
   containerClassName = '',
   id,
   title,
+  visuallyHiddenTitle,
+  ariaLabel,
+  justifyContent,
   subtitle,
   titleAs = 'h2',
   fullWidth = false,
@@ -22,12 +25,15 @@ const Section = ({
   const titleId = title && id ? `${id}-title` : undefined;
 
   const content = (
-    <>
+    <> {/* Use React Fragment shorthand */}
       {(title || subtitle) && (
         <div className="mb-8 text-center md:mb-12">
+          {visuallyHiddenTitle && (
+            <h2 className="sr-only">{visuallyHiddenTitle}</h2>
+          )}
           {title && (
             <TitleComponent
-              id={titleId}
+              id={titleId} // id to be referenced by aria-labelledby
               className="mb-3 text-3xl font-bold md:text-4xl font-heading text-midnight-blue dark:text-soft-white md:mb-4"
             >
               {title}
@@ -40,7 +46,7 @@ const Section = ({
           )}
         </div>
       )}
-      {children}
+      {children} {/* Everything between the <Section> tags */}
     </>
   );
 
@@ -49,12 +55,13 @@ const Section = ({
       id={id}
       className={sectionComputedClassName}
       aria-labelledby={titleId}
+      aria-label={ariaLabel} // Descriptive label for the section
       {...props}
     >
       {fullWidth ? (
         content
       ) : (
-        <div className={`container mx-auto px-4 ${containerClassName}`.trim()}>
+        <div className={`container mx-auto px-4 ${containerClassName} ${justifyContent}`.trim()}>
           {content}
         </div>
       )}
@@ -66,12 +73,20 @@ Section.propTypes = {
   children: PropTypes.node.isRequired,
   className: PropTypes.string,
   containerClassName: PropTypes.string,
+  // Unique identifier for the section
   id: PropTypes.string,
+  // Descriptive heading for the section
   title: PropTypes.string,
+  // Title to be read by screen readers
+  visuallyHiddenTitle: PropTypes.string,
+  // String to be read by screen readers
+  ariaLabel: PropTypes.string,
+  // Modifies the justification of the container
+  justifyContent: PropTypes.string,
+  // Descriptive subheading for the section
   subtitle: PropTypes.string,
   titleAs: PropTypes.oneOf(['h1', 'h2', 'h3', 'h4', 'h5', 'h6']),
   fullWidth: PropTypes.bool,
-  background: PropTypes.string, // New prop for background color or gradient
 };
 
 export default Section;

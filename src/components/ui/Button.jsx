@@ -94,6 +94,30 @@ const Button = React.forwardRef(
     );
   }
 );
-
 Button.displayName = 'Button';
 export default Button;
+
+/**
+ * This adds a basic CSS animation.
+ * In a real app, you'd likely use a more robust solution
+ * (e.g., a CSS file, styled-components).
+ */
+if (typeof document !== 'undefined') {
+  const style = document.createElement('style');
+  style.textContent = `
+    .loader {
+      border: 2px solid rgba(255, 255, 255, 0.2);
+      border-top: 2px solid #fff;
+      border-radius: 50%;
+      width: 1em;
+      height: 1em;
+      animation: spin 1s linear infinite;
+    }
+
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+  `;
+  document.head.appendChild(style);
+}

@@ -1,8 +1,18 @@
 // src/components/Homepage/FinalCTA.jsx
 import React from 'react';
+import { Link } from 'react-router-dom';
+import PropTypes from 'prop-types';
 import HomepageSection from '../Section/Section';
+import { ROUTES } from '../../constants'; // Assuming ROUTES are defined
 
-const FinalCTA = ({ ctaHeadline, ctaSupportingText, ctaButtonText, trackCtaClick }) => {
+const FinalCTA = ({
+  ctaHeadline,
+  ctaSupportingText,
+  ctaButtonText,
+  trackCtaClick,
+  buttonPath = ROUTES.CONTACT, // Default to contact page
+  isExternal = false,
+}) => {
   return (
     <HomepageSection
       className="p-12 text-center rounded-lg shadow-lg bg-gradient-to-br from-electric-blue to-indigo-500 dark:from-midnight-blue dark:to-rich-black dark:shadow-none"
@@ -20,15 +30,38 @@ const FinalCTA = ({ ctaHeadline, ctaSupportingText, ctaButtonText, trackCtaClick
       </p>
 
       {/* CTA Button */}
-      <button
-        onClick={trackCtaClick}
-        className="px-6 py-3 text-lg font-semibold text-white transition-transform duration-300 bg-brand-primary rounded-md shadow-md hover:scale-105 hover:shadow-lg"
-        aria-label="Call to action button"
-      >
-        {ctaButtonText}
-      </button>
+      {isExternal ? (
+        <a
+          href={buttonPath}
+          target="_blank"
+          rel="noopener noreferrer"
+          onClick={trackCtaClick} // Track click even for external links
+          className="inline-block px-8 py-4 text-lg font-semibold transition-transform duration-300 rounded-md shadow-lg bg-soft-white dark:bg-highlight-yellow text-electric-blue dark:text-rich-black hover:scale-105 hover:shadow-xl focus:outline-none focus:ring-4 focus:ring-electric-blue/50 dark:focus:ring-highlight-yellow/50"
+          aria-label={ctaButtonText || "Call to action"}
+        >
+          {ctaButtonText}
+        </a>
+      ) : (
+        <Link
+          to={buttonPath}
+          onClick={trackCtaClick} // Track click for internal links
+          className="inline-block px-8 py-4 text-lg font-semibold transition-transform duration-300 rounded-md shadow-lg bg-soft-white dark:bg-highlight-yellow text-electric-blue dark:text-rich-black hover:scale-105 hover:shadow-xl focus:outline-none focus:ring-4 focus:ring-electric-blue/50 dark:focus:ring-highlight-yellow/50"
+          aria-label={ctaButtonText || "Call to action"}
+        >
+          {ctaButtonText}
+        </Link>
+      )}
     </HomepageSection>
   );
+};
+
+FinalCTA.propTypes = {
+  ctaHeadline: PropTypes.string.isRequired,
+  ctaSupportingText: PropTypes.string.isRequired,
+  ctaButtonText: PropTypes.string.isRequired,
+  trackCtaClick: PropTypes.func.isRequired,
+  buttonPath: PropTypes.string,
+  isExternal: PropTypes.bool,
 };
 
 export default FinalCTA;

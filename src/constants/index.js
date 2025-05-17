@@ -50,6 +50,12 @@ export const projectsData = [
   // …add more projects here
 ];
 
+export const skillsData = [
+  "Web Design",
+  "Branding",
+  "Digital Marketing",
+];
+
 /**
  * Define your application routes here.
  */

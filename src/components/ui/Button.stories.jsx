@@ -25,6 +25,7 @@ export const Primary = Template.bind({});
 Primary.args = {
   variant: 'primary',
   size: 'md',
+  children: 'Primary Button', // Added children prop
 };
 
 export const Secondary = Template.bind({});
@@ -60,10 +61,17 @@ export const Sizes = () => (
   </div>
 );
 
-// Added a story to demonstrate the loading state
 export const Loading = Template.bind({});
 Loading.args = {
   variant: 'primary',
   size: 'md',
   loading: true,
+  children: 'Loading Button', // Added children prop
+};
+
+export const WithIcon = Template.bind({});
+WithIcon.args = {
+  variant: 'primary',
+  size: 'md',
+  children: (<span>Button with Icon</span>), // Example with span
 };

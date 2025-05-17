@@ -16,6 +16,50 @@ const CTA_BUTTON_TEXT_VARIANTS = ["Get Started Today", "Request a Free Quote"];
 const CTA_STORAGE_KEY = 'cta_button_variant';
 const CTA_CLICK_EVENT = 'cta_button_click';
 
+const HERO_TEXT_CONFIG = {
+  'Branding & Identity': {
+    title: "Let's Craft a Brand That Defines the Future.",
+    subtitle: "Ignite your identity and connect deeply with your audience."
+  },
+  'Web Design & Development': {
+    title: "Your Vision, Beautifully Built Online.",
+    subtitle: "Creating stunning and functional websites that drive results."
+  },
+  'Digital Marketing': {
+    title: "Amplify Your Reach, Ignite Your Growth.",
+    subtitle: "Strategic online campaigns that deliver measurable success."
+  },
+  default: {
+    title: "Welcome to RocVille — Creative Power, Amplified!",
+    subtitle: "Building the Digital Empires of Tomorrow."
+  }
+};
+
+const CTA_TEXT_CONFIG = {
+  scrolledPast: {
+    'Web Design & Development': {
+      headline: "Ready to launch your new website?",
+      supportingText: "Let's make your online presence shine."
+    },
+    'Branding & Identity': {
+      headline: "Ready to define your brand's future?",
+      supportingText: "Craft a lasting impression with our expertise."
+    },
+    'Digital Marketing': {
+      headline: "Ready to grow your business online?",
+      supportingText: "Unlock your digital potential with strategic marketing."
+    },
+    default: { // Default when scrolled past but no specific service match
+      headline: "Curious about our services?",
+      supportingText: "Explore how we can help you achieve your goals."
+    }
+  },
+  notScrolledPastDefault: { // Default texts when not scrolled past
+    headline: "Ready to take your brand to the next level?",
+    supportingText: "Let’s chat and make it happen."
+  }
+};
+
 const Homepage = () => {
   const {
     pageViews,
@@ -29,56 +73,36 @@ const Homepage = () => {
   } = useAIBehavior();
 
   const [ctaButtonText, setCtaButtonText] = useState(CTA_BUTTON_TEXT_VARIANTS[0]);
-  const mostClickedService = getMostClickedService();
-  const [heroTitle, setHeroTitle] = useState("Welcome to RocVille — Creative Power, Amplified!");
-  const [heroSubtitle, setHeroSubtitle] = useState("Building the Digital Empires of Tomorrow.");
-  const [ctaHeadline, setCtaHeadline] = useState("Ready to take your brand to the next level?");
-  const [ctaSupportingText, setCtaSupportingText] = useState("Let’s chat and make it happen.");
+  const mostClickedService = getMostClickedService(); // Assuming getMostClickedService() is synchronous
+
+  const initialHeroTexts = HERO_TEXT_CONFIG[mostClickedService] || HERO_TEXT_CONFIG.default;
+  const [heroTitle, setHeroTitle] = useState(initialHeroTexts.title);
+  const [heroSubtitle, setHeroSubtitle] = useState(initialHeroTexts.subtitle);
+
+  const initialCtaTexts = CTA_TEXT_CONFIG.notScrolledPastDefault;
+  const [ctaHeadline, setCtaHeadline] = useState(initialCtaTexts.headline);
+  const [ctaSupportingText, setCtaSupportingText] = useState(initialCtaTexts.supportingText);
+
   const [scrolledPastServices, setScrolledPastServices] = useState(false);
   const servicesRef = useRef(null);
 
   const updateHeroContent = useCallback(() => {
-    switch (mostClickedService) {
-      case 'Branding & Identity':
-        setHeroTitle("Let's Craft a Brand That Defines the Future.");
-        setHeroSubtitle("Ignite your identity and connect deeply with your audience.");
-        break;
-      case 'Web Design & Development':
-        setHeroTitle("Your Vision, Beautifully Built Online.");
-        setHeroSubtitle("Creating stunning and functional websites that drive results.");
-        break;
-      case 'Digital Marketing':
-        setHeroTitle("Amplify Your Reach, Ignite Your Growth.");
-        setHeroSubtitle("Strategic online campaigns that deliver measurable success.");
-        break;
-      default:
-        setHeroTitle("Welcome to RocVille — Creative Power, Amplified!");
-        setHeroSubtitle("Building the Digital Empires of Tomorrow.");
-    }
+    const newHeroTexts = HERO_TEXT_CONFIG[mostClickedService] || HERO_TEXT_CONFIG.default;
+    setHeroTitle(newHeroTexts.title);
+    setHeroSubtitle(newHeroTexts.subtitle);
   }, [mostClickedService]);
 
   const updateCtaTextBasedOnScrollAndPreference = useCallback(() => {
-    setCtaHeadline("Ready to take your brand to the next level?");
-    setCtaSupportingText("Let’s chat and make it happen.");
+    let newCtaTexts;
     if (scrolledPastServices) {
-      switch (mostClickedService) {
-        case 'Web Design & Development':
-          setCtaHeadline("Ready to launch your new website?");
-          setCtaSupportingText("Let's make your online presence shine.");
-          break;
-        case 'Branding & Identity':
-          setCtaHeadline("Ready to define your brand's future?");
-          setCtaSupportingText("Craft a lasting impression with our expertise.");
-          break;
-        case 'Digital Marketing':
-          setCtaHeadline("Ready to grow your business online?");
-          setCtaSupportingText("Unlock your digital potential with strategic marketing.");
-          break;
-        default:
-          setCtaHeadline("Curious about our services?");
-          setCtaSupportingText("Explore how we can help you achieve your goals.");
-      }
+      newCtaTexts = CTA_TEXT_CONFIG.scrolledPast[mostClickedService] || CTA_TEXT_CONFIG.scrolledPast.default;
+    } else {
+      // If not scrolled past, or if a more specific "not scrolled past" logic is needed for services,
+      // it could be added here. For now, using the general default.
+      newCtaTexts = CTA_TEXT_CONFIG.notScrolledPastDefault;
     }
+    setCtaHeadline(newCtaTexts.headline);
+    setCtaSupportingText(newCtaTexts.supportingText);
   }, [scrolledPastServices, mostClickedService]);
 
   useEffect(() => {
@@ -112,10 +136,14 @@ const Homepage = () => {
   }, [mostClickedService]);
 
   useEffect(() => {
-    trackPageView();
+    trackPageView(); // Assuming trackPageView is stable and handles its own logic for multiple calls
+  }, [trackPageView]);
+
+  useEffect(() => {
     updateHeroContent();
     updateCtaTextBasedOnScrollAndPreference();
-  }, [trackPageView, updateHeroContent, updateCtaTextBasedOnScrollAndPreference]);
+  }, [updateHeroContent, updateCtaTextBasedOnScrollAndPreference]);
+
 
   useEffect(() => {
     const handleScroll = () => {
@@ -131,7 +159,7 @@ const Homepage = () => {
 
   return (
     <PageWrapper>
-      <div className="bg-red-500 pt-header pb-section bg-gradient-to-br from-electric-blue to-indigo-500 dark:from-midnight-blue dark:to-rich-black">
+      <div className="pt-header pb-section bg-gradient-to-br from-electric-blue to-indigo-500 dark:from-midnight-blue dark:to-rich-black">
         <div className="container px-4 mx-auto">
           {/* Hero Section */}
           <Section className="p-12 text-center bg-white rounded-lg shadow-lg dark:bg-midnight-blue bg-opacity-80 dark:bg-opacity-80 mb-section dark:shadow-none">

@@ -1,9 +1,9 @@
 // FormField.stories.jsx
 import React, { useState } from 'react';
-import { FormField } from './FormField';
-import { Input } from './Input';
-import { Select } from './Select';
-import { Textarea } from './Textarea';
+import FormField from './FormField'; // Changed to default import
+import Input from './Input'; // Assuming Input is a default export or this path is correct
+import Select from './Select'; // Assuming Select is a default export or this path is correct
+import Textarea from './Textarea'; // Assuming Textarea is a default export or this path is correct
 
 export default {
   title: 'UI/FormField',
@@ -72,7 +72,7 @@ export const CustomStyles = () => (
     id="custom"
     label="Custom Styled Field"
     helperText="This field has custom styles."
-    customStyles="bg-gray-100 p-4 rounded-md"
+    className="p-4 bg-gray-100 rounded-md" // Changed customStyles to className
   >
     <Input placeholder="Custom input" />
   </FormField>
@@ -84,7 +84,7 @@ export const CustomStyledField = () => (
     id="custom-field"
     label="Custom Field"
     helperText="This is a custom styled field."
-    customStyles="border border-blue-500 p-2 rounded"
+    className="p-2 border border-blue-500 rounded" // Changed customStyles to className
   >
     <Input placeholder="Enter something..." />
   </FormField>

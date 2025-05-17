@@ -1,14 +1,33 @@
 import { useEffect } from 'react';
 
-export const usePerformanceMonitoring = () => {
+/**
+ * @callback SendMetricsFunction
+ * @param {object} metrics - The performance metrics to send.
+ * @param {string} [metrics.name] - The name of the metric (e.g., 'largest-contentful-paint').
+ * @param {number} [metrics.value] - The value of the metric.
+ * @param {string} [metrics.metricType] - The type of metric (e.g., 'web-vital', 'page-load').
+ * @returns {void}
+ */
+
+/**
+ * Custom hook to monitor Core Web Vitals and page load performance metrics.
+ *
+ * @param {SendMetricsFunction} [onMetricsCollected] - Optional callback function to send collected metrics to an analytics service.
+ *        If not provided, metrics will be logged to the console.
+ */
+export const usePerformanceMonitoring = (onMetricsCollected) => {
+  const sendMetrics = onMetricsCollected || ((metrics) => {
+    console.log('Performance Metrics:', metrics); // Default to console logging if no callback provided
+  });
+
   useEffect(() => {
     // Core Web Vitals monitoring
     if ('PerformanceObserver' in window) {
       try {
         const observer = new PerformanceObserver((list) => {
           list.getEntries().forEach((entry) => {
-            // Example: send metrics to an analytics service
-            sendMetricsToAnalyticsService({ name: entry.name, value: entry.value });
+            // Send Core Web Vitals metrics
+            sendMetrics({ name: entry.name, value: entry.value, metricType: 'web-vital' });
           });
         });
 
@@ -24,17 +43,20 @@ export const usePerformanceMonitoring = () => {
     const handleLoad = () => {
       setTimeout(() => {
         const timing = performance.timing;
-        const interactive = timing.domInteractive - timing.navigationStart;
-        const dcl = timing.domContentLoadedEventEnd - timing.navigationStart;
-        const complete = timing.domComplete - timing.navigationStart;
+        if (!timing) return; // performance.timing might be deprecated or unavailable in some contexts
+
+        const navigationStart = timing.navigationStart;
+        const timeToInteractive = timing.domInteractive - navigationStart;
+        const domContentLoaded = timing.domContentLoadedEventEnd - navigationStart;
+        const loadComplete = timing.domComplete - navigationStart;
 
         const metrics = {
-          TimeToInteractive: interactive,
-          DCL: dcl,
-          LoadComplete: complete,
+          timeToInteractive,
+          domContentLoaded,
+          loadComplete,
+          metricType: 'page-load',
         };
-
-        sendMetricsToAnalyticsService(metrics);
+        sendMetrics(metrics);
       }, 0);
     };
 
@@ -42,6 +64,8 @@ export const usePerformanceMonitoring = () => {
 
     return () => {
       window.removeEventListener('load', handleLoad);
+      // Note: PerformanceObserver does not need to be explicitly disconnected here if it's only observing.
+      // If you were to call observer.disconnect() it would stop observing.
     };
-  }, []);
+  }, [sendMetrics]); // Add sendMetrics to dependency array as it can change if onMetricsCollected changes
 };

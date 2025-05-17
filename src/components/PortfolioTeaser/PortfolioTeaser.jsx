@@ -1,6 +1,8 @@
 // src/components/PortfolioTeaser/PortfolioTeaser.jsx
 import React from 'react';
 import { Link } from 'react-router-dom';
+import PropTypes from 'prop-types';
+import { ROUTES } from '../../constants'; // Assuming ROUTES are defined
 
 const PortfolioTeaser = ({ projects }) => {
   if (!projects || projects.length === 0) return null;
@@ -64,7 +66,7 @@ const PortfolioTeaser = ({ projects }) => {
         {/* Call-to-Action */}
         <div className="mt-12 text-center" data-aos="fade-up" data-aos-delay={projects.length * 100}>
           <Link
-            to="/portfolio"
+            to={ROUTES.PORTFOLIO} // Use constant for path
             className="inline-block px-8 py-3 font-semibold text-white transition rounded-md shadow-md bg-electric-blue dark:bg-highlight-yellow dark:text-rich-black hover:bg-blue-700 dark:hover:bg-yellow-500 focus:outline-none focus:ring-4 focus:ring-electric-blue/50"
             aria-label="View the full portfolio"
           >
@@ -74,6 +76,16 @@ const PortfolioTeaser = ({ projects }) => {
       </div>
     </section>
   );
+};
+
+PortfolioTeaser.propTypes = {
+  projects: PropTypes.arrayOf(PropTypes.shape({
+    title: PropTypes.string.isRequired,
+    image: PropTypes.string.isRequired,
+    alt: PropTypes.string,
+    description: PropTypes.string.isRequired,
+    path: PropTypes.string.isRequired, // Path for "View Case Study" link
+  })).isRequired,
 };
 
 export default PortfolioTeaser;

@@ -2,8 +2,7 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import Button from './Button'; // Corrected to default import
-
-export const FormStepper = ({ steps, onComplete, initialStep = 0, customStyles = '' }) => {
+export const FormStepper = ({ steps, onComplete, initialStep = 0, className = '' }) => {
   const [currentStep, setCurrentStep] = useState(initialStep);
   const [formValues, setFormValues] = useState({});
   const [formErrors, setFormErrors] = useState({});
@@ -43,24 +42,21 @@ export const FormStepper = ({ steps, onComplete, initialStep = 0, customStyles =
   };
 
   const handlePrevious = () => {
-    const prevStep = [...steps]
-      .reverse()
-      .findIndex((step, index) => {
-        const realIndex = steps.length - 1 - index;
-        return (
-          realIndex < currentStep &&
-          (typeof step.shouldShow !== 'function' || step.shouldShow(formValues))
-        );
-      });
-
-    if (prevStep !== -1) {
-      const realPrev = steps.length - 1 - prevStep;
-      setCurrentStep(realPrev);
+    let prevVisibleStepIndex = -1;
+    for (let i = currentStep - 1; i >= 0; i--) {
+      const step = steps[i];
+      if (typeof step.shouldShow !== 'function' || step.shouldShow(formValues)) {
+        prevVisibleStepIndex = i;
+        break;
+      }
+    }
+    if (prevVisibleStepIndex !== -1) {
+      setCurrentStep(prevVisibleStepIndex);
     }
   };
 
   return (
-    <div className={`space-y-space-lg ${customStyles}`} aria-live="polite">
+    <div className={`space-y-space-lg ${className}`} aria-live="polite">
       {/* Step Progress Indicator */}
       <div className="flex items-center justify-between text-sm text-gray-500 dark:text-gray-400 mb-space-md">
         {filteredSteps.map((step, idx) => (
@@ -69,6 +65,7 @@ export const FormStepper = ({ steps, onComplete, initialStep = 0, customStyles =
             className={`flex-1 text-center px-1 ${
               step === current ? 'font-semibold text-primary' : ''
             }`}
+            aria-current={step === current ? 'step' : undefined}
           >
             Step {idx + 1}: {step.title}
           </div>
@@ -108,6 +105,5 @@ FormStepper.propTypes = {
   ).isRequired,
   onComplete: PropTypes.func.isRequired,
   initialStep: PropTypes.number,
-  customStyles: PropTypes.string,
+  className: PropTypes.string, // Renamed from customStyles
 };
-

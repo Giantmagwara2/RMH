@@ -1,8 +1,8 @@
 // src/components/Layout/Layout.jsx
 import React from 'react';
+import PropTypes from 'prop-types';
 import Header from '../Header/Header';
 import Footer from '../Footer/Footer';
-
 // Define an ID for the main content area for the skip link
 const MAIN_CONTENT_ID = 'main-content';
 
@@ -34,6 +34,10 @@ const Layout = ({ children }) => {
       <Footer />
     </div>
   );
+};
+
+Layout.propTypes = {
+  children: PropTypes.node.isRequired,
 };
 
 export default Layout;

@@ -1,24 +1,40 @@
 import React from 'react';
 import Badge from './Badge';
 
+// Define the component's story metadata
 export default {
   title: 'UI/Badge',
   component: Badge,
+  argTypes: {
+    variant: {
+      control: 'select',
+      options: ['default', 'primary', 'success', 'warning', 'error', 'info'],
+    },
+    size: {
+      control: 'select',
+      options: ['sm', 'md', 'lg'],
+    },
+  },
 };
 
-export const Variants = () => (
-  <div className="flex flex-col gap-space-sm">
-    <Badge variant="default">Default</Badge>
-    <Badge variant="success">Success</Badge>
-    <Badge variant="warning">Warning</Badge>
-    <Badge variant="error">Error</Badge>
-    <Badge variant="info">Info</Badge>
-  </div>
-);
+// Define a template for consistent story rendering
+const Template = (args) => <Badge {...args} />;
 
-// Added a story to demonstrate custom styles and accessibility
-export const CustomStyledBadge = () => (
-  <Badge variant="success" className="border border-green-500" aria-label="Success badge">
-    Custom Styled Badge
-  </Badge>
-);
+// Create individual stories using the template
+export const Default = Template.bind({});
+Default.args = { children: 'Default', variant: 'default' };
+
+export const Primary = Template.bind({});
+Primary.args = { children: 'Primary', variant: 'primary' };
+
+export const Success = Template.bind({});
+Success.args = { children: 'Success', variant: 'success' };
+
+export const Warning = Template.bind({});
+Warning.args = { children: 'Warning', variant: 'warning' };
+
+export const Error = Template.bind({});
+Error.args = { children: 'Error', variant: 'error' };
+
+export const Info = Template.bind({});
+Info.args = { children: 'Info', variant: 'info' };

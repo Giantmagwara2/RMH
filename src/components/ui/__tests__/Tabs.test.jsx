@@ -1,4 +1,4 @@
-import React from 'react';
+import React from 'react'; 
 import { render, fireEvent } from '@testing-library/react';
 import Tabs from '../Tabs';
 
@@ -35,5 +35,11 @@ describe('Tabs', () => {
     const { getByText } = render(mockTabs);
     const firstTab = getByText('Tab 1');
     expect(firstTab).toHaveClass('text-brand-primary');
+  });
+
+  it('should have aria-selected on the active tab', () => {
+    const { getByText } = render(mockTabs);
+    const firstTab = getByText('Tab 1');
+    expect(firstTab).toHaveAttribute('aria-selected', 'true');
   });
 });

@@ -38,7 +38,7 @@ const sampleItems = [
     title: <span>What about <strong>HTML</strong> in titles?</span>,
     content: (
       <p>
-        You can use <em>rich HTML content</em> directly within the content prop.
+        You can use <em>rich HTML content</em> directly within the content prop. 
         This allows for lists, paragraphs, and other formatting.
         <ul>
           <li>Like this list item.</li>

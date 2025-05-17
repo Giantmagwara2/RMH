@@ -7,20 +7,22 @@ import { useQuery } from '@tanstack/react-query';
 import { fetchBlogPosts } from '../../api'; // Ensure this path is correct
 import { ROUTES } from '../../constants/index'; // Correct import path for ROUTES
 
+const BLOG_POSTS_QUERY_KEY = 'blogPosts';
+const POSTS_PER_PAGE = 5;
+
 const BlogPage = () => {
   const { data: posts, isLoading, isError, error } = useQuery(
-    ['blogPosts'],
+    [BLOG_POSTS_QUERY_KEY],
     fetchBlogPosts,
     { staleTime: 1000 * 60 * 5 } // Cache for 5 minutes
   );
 
   const [currentPage, setCurrentPage] = useState(1);
-  const postsPerPage = 5;
 
   // Pagination logic
-  const totalPages = posts ? Math.ceil(posts.length / postsPerPage) : 0;
+  const totalPages = posts ? Math.ceil(posts.length / POSTS_PER_PAGE) : 0;
   const paginatedPosts = posts
-    ? posts.slice((currentPage - 1) * postsPerPage, currentPage * postsPerPage)
+    ? posts.slice((currentPage - 1) * POSTS_PER_PAGE, currentPage * POSTS_PER_PAGE)
     : [];
 
   const handleNextPage = () => {
@@ -31,16 +33,24 @@ const BlogPage = () => {
     if (currentPage > 1) setCurrentPage(currentPage - 1);
   };
 
-  if (isLoading) {
-    return <p className="py-12 text-center">Loading articles…</p>;
-  }
+  // Enhanced Loading and Error States
+  const renderStatusMessage = (message, isErrorMsg = false) => (
+    <PageWrapper>
+      <div className="flex items-center justify-center min-h-[calc(100vh-200px)] text-center">
+        <Section className="p-8 bg-white rounded-lg shadow-lg dark:bg-dark-bg">
+          <p className={`text-xl ${isErrorMsg ? 'text-red-500 dark:text-red-400' : 'text-gray-700 dark:text-gray-300'}`}>
+            {message}
+          </p>
+        </Section>
+      </div>
+    </PageWrapper>
+  );
 
-  if (isError) {
-    return (
-      <p className="py-12 text-center text-red-500">
-        Error loading posts: {error?.message || 'Failed to load blog posts'}
-      </p>
-    );
+  if (isLoading) return renderStatusMessage("Loading articles…");
+  if (isError) return renderStatusMessage(`Error: ${error?.message || 'Failed to load blog posts'}`, true);
+
+  if (!posts || posts.length === 0) {
+    return renderStatusMessage("No blog posts found. Check back soon!");
   }
 
   return (

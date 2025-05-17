@@ -8,6 +8,9 @@ const CallToAction = ({
   supportingText = "Let’s chat and make it happen.",
   buttonText = "Get Started Today",
   buttonPath = "/contact",
+  isExternal = false, // New prop for external links
+  icon = null, // New prop for an optional icon
+  iconPosition = 'left', // New prop for icon position ('left' or 'right')
   aosDelay = 0,
   gradientFrom = "from-electric-blue",
   gradientTo = "to-indigo-500",
@@ -40,27 +43,57 @@ const CallToAction = ({
       </p>
 
       {/* Call-to-Action Button */}
-      <Link
-        to={buttonPath}
-        className={`
-          inline-block
-          bg-soft-white dark:bg-highlight-yellow
-          text-electric-blue dark:text-rich-black
-          font-semibold
-          py-4 px-8
-          rounded-md
-          shadow-lg
-          hover:bg-white dark:hover:bg-yellow-400
-          focus:outline-none focus:ring-4 focus:ring-electric-blue/50 dark:focus:ring-highlight-yellow/50
-          transition-transform duration-300
-          hover:scale-105 hover:shadow-xl
-        `}
-        aria-label={buttonText}
-        data-aos="zoom-in"
-        data-aos-delay={aosDelay + 100}
-      >
-        {buttonText}
-      </Link>
+      {isExternal ? (
+        <a
+          href={buttonPath}
+          target="_blank"
+          rel="noopener noreferrer"
+          className={`
+            inline-flex items-center justify-center
+            bg-soft-white dark:bg-highlight-yellow
+            text-electric-blue dark:text-rich-black
+            font-semibold
+            py-4 px-8
+            rounded-md
+            shadow-lg
+            hover:bg-white dark:hover:bg-yellow-400
+            focus:outline-none focus:ring-4 focus:ring-electric-blue/50 dark:focus:ring-highlight-yellow/50
+            transition-transform duration-300
+            hover:scale-105 hover:shadow-xl
+          `}
+          aria-label={buttonText}
+          data-aos="zoom-in"
+          data-aos-delay={aosDelay + 100}
+        >
+          {icon && iconPosition === 'left' && <span className="mr-2">{icon}</span>}
+          {buttonText}
+          {icon && iconPosition === 'right' && <span className="ml-2">{icon}</span>}
+        </a>
+      ) : (
+        <Link
+          to={buttonPath}
+          className={`
+            inline-flex items-center justify-center
+            bg-soft-white dark:bg-highlight-yellow
+            text-electric-blue dark:text-rich-black
+            font-semibold
+            py-4 px-8
+            rounded-md
+            shadow-lg
+            hover:bg-white dark:hover:bg-yellow-400
+            focus:outline-none focus:ring-4 focus:ring-electric-blue/50 dark:focus:ring-highlight-yellow/50
+            transition-transform duration-300
+            hover:scale-105 hover:shadow-xl
+          `}
+          aria-label={buttonText}
+          data-aos="zoom-in"
+          data-aos-delay={aosDelay + 100}
+        >
+          {icon && iconPosition === 'left' && <span className="mr-2">{icon}</span>}
+          {buttonText}
+          {icon && iconPosition === 'right' && <span className="ml-2">{icon}</span>}
+        </Link>
+      )}
     </div>
   </section>
 );
@@ -70,11 +103,13 @@ CallToAction.propTypes = {
   supportingText: PropTypes.string,
   buttonText: PropTypes.string,
   buttonPath: PropTypes.string,
+  isExternal: PropTypes.bool,
+  icon: PropTypes.node,
+  iconPosition: PropTypes.oneOf(['left', 'right']),
   aosDelay: PropTypes.number,
   gradientFrom: PropTypes.string,
   gradientTo: PropTypes.string,
   darkGradientFrom: PropTypes.string,
   darkGradientTo: PropTypes.string,
 };
-
 export default CallToAction;

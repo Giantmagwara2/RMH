@@ -1,4 +1,4 @@
-import React from 'react';
+import React from 'react'; 
 import { render, fireEvent } from '@testing-library/react';
 import Input from '../Input';
 
@@ -16,9 +16,9 @@ describe('Input', () => {
     expect(handleChange).toHaveBeenCalled();
   });
 
-  it('shows error state', () => {
+  it('shows error state', () => { 
     const { getByRole } = render(<Input error="Required field" />);
     const input = getByRole('textbox');
-    expect(input).toHaveAttribute('aria-invalid', 'true');
+    expect(input).toHaveAttribute('aria-invalid', 'true'); 
   });
 });

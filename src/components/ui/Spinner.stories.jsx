@@ -6,7 +6,14 @@ export default {
   component: Spinner,
   argTypes: {
     size: { control: 'select', options: ['sm', 'md', 'lg'] },
-    color: { control: 'color' },
+    color: {
+      control: 'text',
+      description: "Tailwind CSS text color class (e.g., 'text-blue-500', 'text-red-600').",
+    },
+    className: {
+      control: 'text',
+      description: 'Additional CSS classes for custom styling.',
+    },
   },
 };
 

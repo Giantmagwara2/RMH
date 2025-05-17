@@ -1,5 +1,8 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
+import PropTypes from 'prop-types';
 import { testimonialsData } from '../../constants/testimonialsData';
+import { ROUTES } from '../../constants'; // Assuming ROUTES are defined
 
 const TestimonialsSection = ({ testimonials = testimonialsData }) => {
   if (!testimonials || testimonials.length === 0) return null;
@@ -48,17 +51,27 @@ const TestimonialsSection = ({ testimonials = testimonialsData }) => {
 
         {/* Call-to-Action */}
         <div className="mt-12 text-center" data-aos="fade-up" data-aos-delay={testimonials.length * 100}>
-          <a
-            href="/contact"
+          <Link
+            to={ROUTES.CONTACT} // Use constant for path
             className="inline-block px-8 py-3 font-semibold text-white transition-colors duration-300 rounded-md shadow-md bg-electric-blue dark:bg-highlight-yellow dark:text-rich-black hover:bg-blue-700 dark:hover:bg-yellow-500 focus:outline-none focus:ring-4 focus:ring-electric-blue/50 dark:focus:ring-highlight-yellow/50"
             aria-label="Contact us to share your experience"
           >
             Share Your Experience
-          </a>
+          </Link>
         </div>
       </div>
     </section>
   );
+};
+
+TestimonialsSection.propTypes = {
+  testimonials: PropTypes.arrayOf(PropTypes.shape({
+    id: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+    text: PropTypes.string.isRequired,
+    author: PropTypes.string.isRequired,
+    role: PropTypes.string,
+    company: PropTypes.string,
+  })),
 };
 
 export default TestimonialsSection;

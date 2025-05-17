@@ -6,11 +6,17 @@ import { faFacebook, faTwitter, faInstagram } from '@fortawesome/free-brands-svg
 import Section from '../Section/Section';
 import PageWrapper from '../Layout/PageWrapper';
 
+const FORM_FIELDS = {
+  NAME: 'name',
+  EMAIL: 'email',
+  MESSAGE: 'message',
+};
+
 const ContactUsPage = () => {
   const [formData, setFormData] = useState({
-    name: '',
-    email: '',
-    message: '',
+    [FORM_FIELDS.NAME]: '',
+    [FORM_FIELDS.EMAIL]: '',
+    [FORM_FIELDS.MESSAGE]: '',
   });
   const [errors, setErrors] = useState({});
   const [submissionStatus, setSubmissionStatus] = useState(null); // 'success' or 'error'
@@ -25,18 +31,18 @@ const ContactUsPage = () => {
     let isValid = true;
     const newErrors = {};
 
-    if (!formData.name.trim() || formData.name.length > 100) {
-      newErrors.name = 'Name is required and must be less than 100 characters.';
+    if (!formData[FORM_FIELDS.NAME].trim() || formData[FORM_FIELDS.NAME].length > 100) {
+      newErrors[FORM_FIELDS.NAME] = 'Name is required and must be less than 100 characters.';
       isValid = false;
     }
 
-    if (!formData.email.trim() || !/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(formData.email)) {
-      newErrors.email = 'Please enter a valid email address.';
+    if (!formData[FORM_FIELDS.EMAIL].trim() || !/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(formData[FORM_FIELDS.EMAIL])) {
+      newErrors[FORM_FIELDS.EMAIL] = 'Please enter a valid email address.';
       isValid = false;
     }
 
-    if (!formData.message.trim() || formData.message.length > 1000 || /[<>]/.test(formData.message)) {
-      newErrors.message = 'Message is required, must be less than 1000 characters, and cannot contain HTML tags.';
+    if (!formData[FORM_FIELDS.MESSAGE].trim() || formData[FORM_FIELDS.MESSAGE].length > 1000 || /[<>]/.test(formData[FORM_FIELDS.MESSAGE])) {
+      newErrors[FORM_FIELDS.MESSAGE] = 'Message is required, must be less than 1000 characters, and cannot contain HTML tags.';
       isValid = false;
     }
 
@@ -49,12 +55,26 @@ const ContactUsPage = () => {
     if (validateForm()) {
       setSubmissionStatus('pending');
       try {
+        // Simulate API call
+        // In a real application, you would replace this with:
+        // const response = await fetch('/api/contact', {
+        //   method: 'POST',
+        //   headers: { 'Content-Type': 'application/json' },
+        //   body: JSON.stringify(formData),
+        // });
+        // if (!response.ok) {
+        //   const errorData = await response.json();
+        //   throw new Error(errorData.message || 'Failed to send message');
+        // }
         await new Promise(resolve => setTimeout(resolve, 1500)); // Simulate delay
         setSubmissionStatus('success');
-        setFormData({ name: '', email: '', message: '' }); // Reset form
+        setFormData({ 
+          [FORM_FIELDS.NAME]: '', 
+          [FORM_FIELDS.EMAIL]: '', 
+          [FORM_FIELDS.MESSAGE]: '' 
+        }); // Reset form
         setErrors({});
       } catch (error) {
-        console.error('Form submission error:', error);
         setSubmissionStatus('error');
       }
     }
@@ -98,13 +118,13 @@ const ContactUsPage = () => {
                 <div className="mt-8">
                   <h3 className="mb-4 text-xl font-semibold text-electric-blue dark:text-highlight-yellow">Follow Us</h3>
                   <div className="flex space-x-4">
-                    <a href="#" className="text-gray-700 transition-colors duration-300 dark:text-gray-300 hover:text-electric-blue dark:hover:text-highlight-yellow" aria-label="Follow us on Facebook">
+                    <a href="https://facebook.com/rocvillemedia" target="_blank" rel="noopener noreferrer" className="text-gray-700 transition-colors duration-300 dark:text-gray-300 hover:text-electric-blue dark:hover:text-highlight-yellow" aria-label="Follow us on Facebook">
                       <FontAwesomeIcon icon={faFacebook} size="lg" />
                     </a>
-                    <a href="#" className="text-gray-700 transition-colors duration-300 dark:text-gray-300 hover:text-electric-blue dark:hover:text-highlight-yellow" aria-label="Follow us on Twitter">
+                    <a href="https://twitter.com/rocvillemedia" target="_blank" rel="noopener noreferrer" className="text-gray-700 transition-colors duration-300 dark:text-gray-300 hover:text-electric-blue dark:hover:text-highlight-yellow" aria-label="Follow us on Twitter">
                       <FontAwesomeIcon icon={faTwitter} size="lg" />
                     </a>
-                    <a href="#" className="text-gray-700 transition-colors duration-300 dark:text-gray-300 hover:text-electric-blue dark:hover:text-highlight-yellow" aria-label="Follow us on Instagram">
+                    <a href="https://instagram.com/rocvillemedia" target="_blank" rel="noopener noreferrer" className="text-gray-700 transition-colors duration-300 dark:text-gray-300 hover:text-electric-blue dark:hover:text-highlight-yellow" aria-label="Follow us on Instagram">
                       <FontAwesomeIcon icon={faInstagram} size="lg" />
                     </a>
                   </div>
@@ -119,60 +139,66 @@ const ContactUsPage = () => {
                     <label htmlFor="name" className="block mb-2 font-medium text-gray-700 dark:text-gray-300">Name</label>
                     <input
                       type="text"
-                      id="name"
-                      name="name"
-                      className={`w-full border-gray-300 dark:bg-dark-input dark:border-gray-600 rounded-md p-3 shadow-sm dark:shadow-none focus:ring-electric-blue dark:focus:ring-highlight-yellow focus:border-electric-blue dark:focus:border-highlight-yellow transition-shadow duration-300 ${errors.name ? 'border-red-500' : ''}`}
+                      id={FORM_FIELDS.NAME}
+                      name={FORM_FIELDS.NAME}
+                      className={`w-full border-gray-300 dark:bg-dark-input dark:border-gray-600 rounded-md p-3 shadow-sm dark:shadow-none focus:ring-electric-blue dark:focus:ring-highlight-yellow focus:border-electric-blue dark:focus:border-highlight-yellow transition-shadow duration-300 ${errors[FORM_FIELDS.NAME] ? 'border-red-500 focus:ring-red-500 focus:border-red-500' : ''}`}
                       placeholder="Your Name"
-                      value={formData.name}
+                      value={formData[FORM_FIELDS.NAME]}
                       onChange={handleChange}
-                      aria-invalid={!!errors.name}
-                      aria-describedby={errors.name ? 'name-error' : null}
+                      aria-invalid={!!errors[FORM_FIELDS.NAME]}
+                      aria-describedby={errors[FORM_FIELDS.NAME] ? 'name-error' : null}
                     />
-                    {errors.name && <p className="mt-1 text-sm text-red-500" id="name-error">{errors.name}</p>}
+                    {errors[FORM_FIELDS.NAME] && <p className="mt-1 text-sm text-red-500" id="name-error">{errors[FORM_FIELDS.NAME]}</p>}
                   </div>
                   <div>
                     <label htmlFor="email" className="block mb-2 font-medium text-gray-700 dark:text-gray-300">Email</label>
                     <input
                       type="email"
-                      id="email"
-                      name="email"
-                      className={`w-full border-gray-300 dark:bg-dark-input dark:border-gray-600 rounded-md p-3 shadow-sm dark:shadow-none focus:ring-electric-blue dark:focus:ring-highlight-yellow focus:border-electric-blue dark:focus:border-highlight-yellow transition-shadow duration-300 ${errors.email ? 'border-red-500' : ''}`}
+                      id={FORM_FIELDS.EMAIL}
+                      name={FORM_FIELDS.EMAIL}
+                      className={`w-full border-gray-300 dark:bg-dark-input dark:border-gray-600 rounded-md p-3 shadow-sm dark:shadow-none focus:ring-electric-blue dark:focus:ring-highlight-yellow focus:border-electric-blue dark:focus:border-highlight-yellow transition-shadow duration-300 ${errors[FORM_FIELDS.EMAIL] ? 'border-red-500 focus:ring-red-500 focus:border-red-500' : ''}`}
                       placeholder="you@example.com"
-                      value={formData.email}
+                      value={formData[FORM_FIELDS.EMAIL]}
                       onChange={handleChange}
-                      aria-invalid={!!errors.email}
-                      aria-describedby={errors.email ? 'email-error' : null}
+                      aria-invalid={!!errors[FORM_FIELDS.EMAIL]}
+                      aria-describedby={errors[FORM_FIELDS.EMAIL] ? 'email-error' : null}
                     />
-                    {errors.email && <p className="mt-1 text-sm text-red-500" id="email-error">{errors.email}</p>}
+                    {errors[FORM_FIELDS.EMAIL] && <p className="mt-1 text-sm text-red-500" id="email-error">{errors[FORM_FIELDS.EMAIL]}</p>}
                   </div>
                   <div>
                     <label htmlFor="message" className="block mb-2 font-medium text-gray-700 dark:text-gray-300">Message</label>
                     <textarea
-                      id="message"
-                      name="message"
-                      className={`w-full border-gray-300 dark:bg-dark-input dark:border-gray-600 rounded-md p-3 shadow-sm dark:shadow-none focus:ring-electric-blue dark:focus:ring-highlight-yellow focus:border-electric-blue dark:focus:border-highlight-yellow transition-shadow duration-300 ${errors.message ? 'border-red-500' : ''}`}
+                      id={FORM_FIELDS.MESSAGE}
+                      name={FORM_FIELDS.MESSAGE}
+                      className={`w-full border-gray-300 dark:bg-dark-input dark:border-gray-600 rounded-md p-3 shadow-sm dark:shadow-none focus:ring-electric-blue dark:focus:ring-highlight-yellow focus:border-electric-blue dark:focus:border-highlight-yellow transition-shadow duration-300 ${errors[FORM_FIELDS.MESSAGE] ? 'border-red-500 focus:ring-red-500 focus:border-red-500' : ''}`}
                       rows="5"
                       placeholder="Tell us about your project..."
-                      value={formData.message}
+                      value={formData[FORM_FIELDS.MESSAGE]}
                       onChange={handleChange}
-                      aria-invalid={!!errors.message}
-                      aria-describedby={errors.message ? 'message-error' : null}
+                      aria-invalid={!!errors[FORM_FIELDS.MESSAGE]}
+                      aria-describedby={errors[FORM_FIELDS.MESSAGE] ? 'message-error' : null}
                     ></textarea>
-                    {errors.message && <p className="mt-1 text-sm text-red-500" id="message-error">{errors.message}</p>}
+                    {errors[FORM_FIELDS.MESSAGE] && <p className="mt-1 text-sm text-red-500" id="message-error">{errors[FORM_FIELDS.MESSAGE]}</p>}
                   </div>
                   <button
                     type="submit"
-                    className="w-full px-6 py-3 font-semibold transition-colors duration-300 rounded-md shadow-md bg-electric-blue dark:bg-highlight-yellow text-soft-white dark:text-rich-black hover:bg-blue-700 dark:hover:bg-yellow-500 dark:shadow-none"
+                    className="w-full px-6 py-3 font-semibold transition-all duration-300 rounded-md shadow-md bg-electric-blue dark:bg-highlight-yellow text-soft-white dark:text-rich-black hover:bg-blue-700 dark:hover:bg-yellow-500 dark:shadow-none focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-electric-blue dark:focus:ring-highlight-yellow disabled:opacity-70 disabled:cursor-not-allowed"
                     disabled={submissionStatus === 'pending'}
                   >
                     {submissionStatus === 'pending' ? 'Sending...' : 'Send Message'}
                   </button>
-                  {submissionStatus === 'success' && (
-                    <p className="mt-2 text-sm text-green-500">Message sent successfully!</p>
-                  )}
-                  {submissionStatus === 'error' && (
-                    <p className="mt-2 text-sm text-red-500">There was an error sending your message. Please try again later.</p>
-                  )}
+                  <div aria-live="polite" className="mt-4 text-center">
+                    {submissionStatus === 'success' && (
+                      <p className="p-3 text-sm text-green-700 bg-green-100 border border-green-300 rounded-md dark:bg-green-900 dark:text-green-200 dark:border-green-700">
+                        Message sent successfully! We'll get back to you soon.
+                      </p>
+                    )}
+                    {submissionStatus === 'error' && (
+                      <p className="p-3 text-sm text-red-700 bg-red-100 border border-red-300 rounded-md dark:bg-red-900 dark:text-red-200 dark:border-red-700">
+                        There was an error sending your message. Please try again later or contact us directly.
+                      </p>
+                    )}
+                  </div>
                 </form>
               </div>
             </div>

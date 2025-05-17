@@ -1,5 +1,5 @@
 // Tooltip.jsx
-import React, { useState } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import clsx from 'clsx';
 
@@ -10,29 +10,47 @@ const positions = {
   right: 'left-full top-1/2 -translate-y-1/2 ml-2',
 };
 
-export const Tooltip = ({
+let tooltipCounter = 0; // Simple counter for unique IDs if no id prop is provided
+
+const TooltipComponent = ({
   children,
   content,
   position = 'top',
   className = '',
+  tooltipClassName = '', // Specific class for the tooltip bubble itself
   delay = 150,
   backgroundColor = 'bg-black',
   textColor = 'text-white',
+  id, // Allow passing a specific ID
+  ...rest // Spread additional props to the wrapper
 }) => {
   const [visible, setVisible] = useState(false);
-  let timeout;
+  const timeoutRef = useRef(null);
+  const [generatedId, setGeneratedId] = useState('');
+
+  useEffect(() => {
+    if (!id) {
+      tooltipCounter += 1;
+      setGeneratedId(`tooltip-generated-${tooltipCounter}`);
+    }
+  }, [id]);
+
+  const tooltipId = id || generatedId;
 
   const show = () => {
-    timeout = setTimeout(() => setVisible(true), delay);
+    clearTimeout(timeoutRef.current); // Clear any existing hide timeout
+    timeoutRef.current = setTimeout(() => setVisible(true), delay);
   };
 
   const hide = () => {
-    clearTimeout(timeout);
+    clearTimeout(timeoutRef.current);
     setVisible(false);
   };
 
   const handleKeyDown = (event) => {
-    if (event.key === 'Enter' || event.key === ' ') {
+    if (event.key === 'Escape') {
+      hide();
+    } else if (event.key === 'Enter' || event.key === ' ') {
       event.preventDefault();
       setVisible((prev) => !prev);
     }
@@ -46,21 +64,23 @@ export const Tooltip = ({
       onFocus={show}
       onBlur={hide}
       onKeyDown={handleKeyDown}
-      tabIndex={0}
-      aria-describedby="tooltip"
+      tabIndex={0} // Make it focusable
+      aria-describedby={visible ? tooltipId : undefined}
+      {...rest}
     >
       {children}
       {visible && (
         <div
-          id="tooltip"
+          id={tooltipId}
           className={clsx(
             'absolute z-10 px-space-sm py-space-xs text-sm rounded shadow-md whitespace-nowrap transition-opacity duration-300',
             positions[position],
             backgroundColor,
             textColor,
-            className
+            tooltipClassName // Use tooltipClassName for the bubble
           )}
           role="tooltip"
+          // aria-hidden={!visible} // Not strictly necessary as it's conditionally rendered
         >
           {content}
         </div>
@@ -68,7 +88,6 @@ export const Tooltip = ({
     </div>
   );
 };
-
 Tooltip.propTypes = {
   children: PropTypes.node.isRequired,
   content: PropTypes.string.isRequired,
@@ -77,4 +96,23 @@ Tooltip.propTypes = {
   delay: PropTypes.number,
   backgroundColor: PropTypes.string,
   textColor: PropTypes.string,
+  id: PropTypes.string,
+  tooltipClassName: PropTypes.string,
 };
+
+TooltipComponent.defaultProps = {
+  position: 'top',
+  className: '', // className is for the wrapper, kept for backward compatibility if used
+  tooltipClassName: '',
+  delay: 150,
+  backgroundColor: 'bg-black',
+  textColor: 'text-white',
+  id: undefined,
+};
+
+TooltipComponent.displayName = 'Tooltip';
+
+// The `className` prop on TooltipComponent applies to the wrapper.
+// `tooltipClassName` is introduced for styling the tooltip bubble itself.
+
+export const Tooltip = React.memo(TooltipComponent);

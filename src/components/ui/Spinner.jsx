@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 const Spinner = ({ size = 'md', color = 'text-brand-primary', className = '' }) => {
   const sizeClasses = {
@@ -33,5 +34,19 @@ const Spinner = ({ size = 'md', color = 'text-brand-primary', className = '' }) 
     </svg>
   );
 };
+
+Spinner.propTypes = {
+  size: PropTypes.oneOf(['sm', 'md', 'lg']),
+  color: PropTypes.string, // Expects a Tailwind text color class e.g., 'text-blue-500'
+  className: PropTypes.string,
+};
+
+Spinner.defaultProps = {
+  size: 'md',
+  color: 'text-brand-primary', // Ensure this color is defined in your Tailwind config or is a standard color
+  className: '',
+};
+
+Spinner.displayName = 'Spinner';
 
 export default Spinner;

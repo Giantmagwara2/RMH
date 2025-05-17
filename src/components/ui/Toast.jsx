@@ -3,21 +3,25 @@ import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import clsx from 'clsx';
 
-export const Toast = ({
+const ToastComponent = ({
   type = 'info',
   message,
   onClose,
   duration = 3000,
   icon: CustomIcon,
+  className = '',
+  ...rest
 }) => {
   useEffect(() => {
-    const timer = setTimeout(() => {
-      onClose?.();
-    }, duration);
-    return () => clearTimeout(timer);
+    if (Number.isFinite(duration) && duration > 0 && duration !== Infinity) {
+      const timer = setTimeout(() => {
+        onClose?.();
+      }, duration);
+      return () => clearTimeout(timer);
+    }
   }, [duration, onClose]);
 
-  const baseStyles = 'flex items-center px-space-md py-space-sm rounded shadow-lg text-white w-full max-w-xs';
+  const baseStyles = 'flex items-center px-space-md py-space-sm rounded-md shadow-lg text-white w-full max-w-xs'; // Added rounded-md for consistency
   const variants = {
     info: 'bg-blue-600',
     success: 'bg-green-600',
@@ -25,6 +29,7 @@ export const Toast = ({
     error: 'bg-red-600',
   };
 
+  // Default icons (emojis)
   const icons = {
     info: 'ℹ️',
     success: '✔️',
@@ -32,29 +37,47 @@ export const Toast = ({
     error: '❌',
   };
 
+  const closeButtonTextColor = type === 'warning' ? 'text-black' : 'text-white';
+
   return (
-    <div className={clsx(baseStyles, variants[type])} role="alert" aria-live="assertive">
+    <div
+      className={clsx(baseStyles, variants[type], className)}
+      role="alert"
+      aria-live="assertive"
+      {...rest}
+    >
       {CustomIcon ? (
-        <CustomIcon className="mr-space-sm" />
+        // If CustomIcon is an SVG, it should ideally have aria-hidden="true" if purely decorative
+        <CustomIcon className="flex-shrink-0 mr-space-sm" />
       ) : (
-        <span className="mr-space-sm">{icons[type]}</span>
+        <span className="flex-shrink-0 mr-space-sm" aria-hidden="true">{icons[type]}</span>
       )}
       <span className="flex-1">{message}</span>
-      <button
-        onClick={onClose}
-        className="text-sm font-bold text-white ml-space-sm focus:outline-none"
-        aria-label="Close"
-      >
-        ×
-      </button>
+      {onClose && ( // Only render close button if onClose is provided
+        <button
+          onClick={onClose}
+          className={clsx("ml-space-sm p-1 rounded-full focus:outline-none focus:ring-2 focus:ring-opacity-50", closeButtonTextColor, type === 'warning' ? 'hover:bg-black/10 focus:ring-black' : 'hover:bg-white/20 focus:ring-white')}
+          aria-label="Close"
+        >
+          <span className="text-xl leading-none" aria-hidden="true">&times;</span>
+        </button>
+      )}
     </div>
   );
 };
 
-Toast.propTypes = {
+ToastComponent.propTypes = {
   type: PropTypes.oneOf(['info', 'success', 'warning', 'error']),
   message: PropTypes.string.isRequired,
   onClose: PropTypes.func,
   duration: PropTypes.number,
   icon: PropTypes.elementType,
+  className: PropTypes.string,
 };
+
+ToastComponent.displayName = 'Toast';
+
+export const Toast = React.memo(ToastComponent);
+
+// Note: For a full toast system, you'd typically have a ToastProvider
+// and a way to imperatively add/remove toasts. This component is the visual Toast item.

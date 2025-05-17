@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link as RouterLink } from 'react-router-dom';
+import PropTypes from 'prop-types';
 
 const Link = ({ to, children, className = '', isActive = false, ...props }) => (
   <RouterLink
@@ -14,5 +15,14 @@ const Link = ({ to, children, className = '', isActive = false, ...props }) => (
     {children}
   </RouterLink>
 );
+
+Link.propTypes = {
+  to: PropTypes.string.isRequired,
+  children: PropTypes.node.isRequired,
+  className: PropTypes.string,
+  isActive: PropTypes.bool,
+};
+
+Link.displayName = 'Link'; // For better debugging in React DevTools
 
 export default Link;

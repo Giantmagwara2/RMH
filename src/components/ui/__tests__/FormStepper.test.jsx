@@ -1,6 +1,6 @@
 import React from 'react';
 import { render, fireEvent } from '@testing-library/react';
-import { act } from 'react-dom/test-utils';
+import { act } from 'react'; // Use act from react
 import { FormStepper } from '../FormStepper';
 
 describe('FormStepper', () => {
@@ -48,7 +48,7 @@ describe('FormStepper', () => {
       fireEvent.click(nextButton);
       fireEvent.click(nextButton);
     });
-
+    
     expect(getByText('Step 3 content')).toBeInTheDocument();
     expect(mockOnComplete).toHaveBeenCalled();
   });

@@ -1,6 +1,7 @@
 // src/components/HeroSection/HeroSection.jsx
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { ROUTES } from '../../constants'; // Assuming ROUTES are defined in your constants
 
 const HeroSection = () => {
   return (
@@ -30,14 +31,14 @@ const HeroSection = () => {
           </p>
           <div className="flex flex-col justify-center gap-4 sm:flex-row md:justify-start">
             <Link
-              to="/contact"
+              to={ROUTES.CONTACT} // Use constant for path
               aria-label="Get in touch with RocVille Media House"
               className="inline-block px-6 py-3 font-semibold text-white transition rounded-md  bg-electric-blue dark:bg-highlight-yellow dark:text-rich-black shadow-card hover:bg-blue-700 dark:hover:bg-yellow-500 focus:outline-none focus:ring-4 focus:ring-electric-blue/50"
             >
               Get in Touch
             </Link>
             <Link
-              to="/portfolio"
+              to={ROUTES.PORTFOLIO} // Use constant for path
               aria-label="View our portfolio"
               className="inline-block px-6 py-3 font-semibold text-white transition border border-white rounded-md  dark:border-soft-white dark:text-soft-white hover:bg-white hover:text-electric-blue dark:hover:bg-gray-800 dark:hover:text-highlight-yellow focus:outline-none focus:ring-4 focus:ring-electric-blue/50"
             >
@@ -53,7 +54,14 @@ const HeroSection = () => {
           data-aos-delay="200"
         >
           <picture>
-            {/* Future: add <source> elements for WebP or art-directed crops */}
+            {/* 
+              Future Enhancements for <picture> element:
+              - Replace placeholder with actual hero image.
+              - Add <source> elements for different image formats (e.g., WebP for better compression).
+                <source srcSet="path/to/hero-image.webp" type="image/webp" />
+              - Add <source> elements for different image sizes or art-directed crops for various screen sizes.
+                <source media="(min-width: 768px)" srcSet="path/to/hero-image-large.jpg" /> 
+            */}
             <img
               src="https://via.placeholder.com/600x400/ffffff/007bff?Text=Hero+Image"
               alt="Illustration of digital creativity and collaboration"

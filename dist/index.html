@@ -8,9 +8,11 @@
     <meta name="keywords" content="RocVille Media House, digital agency, web design, branding, marketing, portfolio" />
     <meta name="author" content="RocVille Media House" />
     <meta name="theme-color" content="#007bff" />
-
+    <meta name="theme-color" content="#1a202c" media="(prefers-color-scheme: dark)" /> <!-- Dark mode theme color -->
+    
     <!-- Open Graph Metadata -->
     <meta property="og:title" content="RocVille Media House" />
+    <meta property="og:site_name" content="RocVille Media House" />
     <meta property="og:description" content="Crafting digital experiences that inspire and convert. Explore our services, portfolio, and more." />
     <meta property="og:image" content="/assets/og-image.png" />
     <meta property="og:url" content="https://rocvillemedia.com" />
@@ -18,16 +20,33 @@
 
     <!-- Twitter Card Metadata -->
     <meta name="twitter:card" content="summary_large_image" />
+    <!-- <meta name="twitter:site" content="@YourTwitterHandle" /> -->
+    <!-- <meta name="twitter:creator" content="@CreatorTwitterHandle" /> -->
     <meta name="twitter:title" content="RocVille Media House" />
     <meta name="twitter:description" content="Crafting digital experiences that inspire and convert. Explore our services, portfolio, and more." />
     <meta name="twitter:image" content="/assets/twitter-image.png" />
 
-    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <link rel="canonical" href="https://rocvillemedia.com" /> <!-- Canonical URL -->
+
+    <link rel="icon" type="image/svg+xml" href="/vite.svg" /> <!-- Assuming vite.svg is your primary favicon -->
+    <link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon-32x32.png" />
+    <link rel="icon" type="image/png" sizes="16x16" href="/assets/favicon-16x16.png" />
     <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png" />
-    <link rel="stylesheet" href="/styles/global.css" />
     <link rel="manifest" href="/manifest.json" /> <!-- PWA support -->
-    <link rel="preload" href="/styles/global.css" as="style" /> <!-- Preload critical CSS -->
+
+    <!--
+      Removed direct link to /styles/global.css.
+      Global styles are imported and processed by Vite via src/index.css.
+    -->
+    <!-- <link rel="stylesheet" href="/styles/global.css" /> -->
+    <!-- <link rel="preload" href="/styles/global.css" as="style" /> -->
+
     <link rel="preload" href="/vite.svg" as="image" /> <!-- Preload logo -->
+    <!-- Consider preloading critical fonts if you load them via @font-face -->
+    <!-- Example for Google Fonts:
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin> -->
+    <!-- Example: <link rel="preload" href="/fonts/inter-v12-latin-regular.woff2" as="font" type="font/woff2" crossorigin> -->
 
     <script type="application/ld+json">
       {
@@ -46,10 +65,24 @@
     </script>
 
     <title>RocVille Media House</title>
-    <script type="module" crossorigin src="/assets/index-BUhm5c5W.js"></script>
-    <link rel="modulepreload" crossorigin href="/assets/react-vendor-300vIUmN.js">
-    <link rel="modulepreload" crossorigin href="/assets/ui-vendor-DbWV7SJZ.js">
-    <link rel="stylesheet" crossorigin href="/assets/index-BcyOC_DW.css">
+
+    <!-- Script to prevent FOUC for dark mode -->
+    <script>
+      (function() {
+        try {
+          const preference = localStorage.getItem('darkMode');
+          if (preference === 'true' || (!preference && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+            document.documentElement.classList.add('dark');
+          }
+        } catch (e) {
+          // If localStorage or matchMedia is not available, do nothing
+        }
+      })();
+    </script>
+    <script type="module" crossorigin src="/assets/index-KDEhtU9F.js"></script>
+    <link rel="modulepreload" crossorigin href="/assets/react-vendor-CI6HElbz.js">
+    <link rel="modulepreload" crossorigin href="/assets/ui-vendor-CQGzPhTq.js">
+    <link rel="stylesheet" crossorigin href="/assets/index-C3VgoupQ.css">
   </head>
   <body>
     <div id="root"></div>

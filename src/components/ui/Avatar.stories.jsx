@@ -26,7 +26,14 @@ export const Sizes = () => (
   </div>
 );
 
-// Added a story to demonstrate fallback initials and accessibility
-export const FallbackInitials = () => (
-  <Avatar name="Unknown" size="md" />
+export const WithClassName = () => (
+  <Avatar name="Custom Style" className="border-2 border-blue-500" size="md" />
+);
+
+export const DifferentSizes = () => (
+  <div className="flex space-x-4">
+    <Avatar name="XS" size="sm" />
+    <Avatar name="SM" size="md" />
+    <Avatar name="LG" size="lg" />
+  </div>
 );

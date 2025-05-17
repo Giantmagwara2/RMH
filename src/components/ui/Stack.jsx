@@ -3,14 +3,22 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import clsx from 'clsx';
 
-export const Stack = ({ children, gap = 'space-md', direction = 'vertical', className }) => {
+export const Stack = ({
+  children,
+  gap = 'space-md', // Assumes 'space-md' translates to a valid Tailwind spacing class part
+  direction = 'vertical',
+  className,
+  as = 'div', // New prop to define the element type
+  ...props      // Collect other props to spread
+}) => {
   const gapClass = direction === 'vertical' ? `space-y-${gap}` : `space-x-${gap}`;
   const flexDirection = direction === 'vertical' ? 'flex-col' : 'flex-row';
+  const Component = as;
 
   return (
-    <div className={clsx('flex', flexDirection, gapClass, className)} role="group">
+    <Component className={clsx('flex', flexDirection, gapClass, className)} role="group" {...props}>
       {children}
-    </div>
+    </Component>
   );
 };
 
@@ -19,4 +27,13 @@ Stack.propTypes = {
   gap: PropTypes.string,
   direction: PropTypes.oneOf(['vertical', 'horizontal']),
   className: PropTypes.string,
+  as: PropTypes.elementType,
 };
+
+Stack.defaultProps = {
+  gap: 'space-md',
+  direction: 'vertical',
+  as: 'div',
+};
+
+Stack.displayName = 'Stack';

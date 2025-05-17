@@ -1,7 +1,8 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { ChevronDownIcon } from '@heroicons/react/24/solid'; // Or your preferred icon
+import PropTypes from 'prop-types';
+import { ChevronDown } from 'lucide-react'; // Using lucide-react for consistency
 
-const Dropdown = ({ label, options = [], onSelect, className = '' }) => {
+const Dropdown = ({ label, options = [], onSelect, className = '', placeholder = 'Select an option' }) => {
   const [isOpen, setIsOpen] = useState(false);
   const dropdownRef = useRef(null);
   const buttonRef = useRef(null);
@@ -21,12 +22,15 @@ const Dropdown = ({ label, options = [], onSelect, className = '' }) => {
   // Keyboard navigation
   useEffect(() => {
     if (isOpen && options.length > 0) {
-      const items = dropdownRef.current.querySelectorAll('[role="option"]');
-      if (focusedIndex >= 0 && items[focusedIndex]) {
-        items[focusedIndex].focus();
+      const listbox = dropdownRef.current.querySelector('[role="listbox"]');
+      if (listbox) {
+        const items = listbox.querySelectorAll('[role="option"]');
+        if (focusedIndex >= 0 && items[focusedIndex]) {
+          items[focusedIndex].focus();
+        }
       }
     }
-  }, [isOpen, focusedIndex, options.length]);
+  }, [isOpen, focusedIndex, options]);
 
   const handleSelect = (option) => {
     onSelect(option);
@@ -35,7 +39,7 @@ const Dropdown = ({ label, options = [], onSelect, className = '' }) => {
   };
 
   const handleKeyDown = (e) => {
-    if (!isOpen) {
+    if (!isOpen && options.length > 0) {
       if (e.key === 'Enter' || e.key === ' ' || e.key === 'ArrowDown') {
         e.preventDefault();
         setIsOpen(true);
@@ -73,35 +77,67 @@ const Dropdown = ({ label, options = [], onSelect, className = '' }) => {
 
   return (
     <div className={`relative ${className}`} ref={dropdownRef}>
-      <button
-        ref={buttonRef}
-        className="inline-flex items-center justify-between w-full px-space-sm py-space-xs text-left rounded-md border border-neutrals-border bg-neutrals-surface text-text-primary hover:border-brand-primary focus:outline-none focus:ring-2 focus:ring-brand-primary"
-        onClick={() => setIsOpen(!isOpen)}
-        onKeyDown={handleKeyDown}
-        aria-expanded={isOpen}
-        aria-haspopup="listbox"
-      >
-        {label}
-        <ChevronDownIcon className={`w-5 h-5 ml-2 transform transition-transform duration-200 ${isOpen ? 'rotate-180' : ''}`} />
-      </button>
-      {isOpen && (
-        <div className="absolute z-10 w-full mt-1 overflow-auto bg-neutrals-surface border rounded-md shadow-lg max-h-60 border-neutrals-border" role="listbox" tabIndex={-1}>
+      <div className="relative">
+        <button
+          ref={buttonRef}
+          type="button"
+          className="flex items-center justify-between w-full py-2 pl-3 pr-1 text-sm text-gray-700 bg-white border border-gray-300 rounded-md shadow-sm hover:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-800 dark:border-gray-600 dark:text-gray-300 dark:hover:border-blue-500"
+          onClick={() => setIsOpen(!isOpen)}
+          onKeyDown={handleKeyDown}
+          aria-haspopup="listbox"
+          aria-expanded={isOpen}
+        >
+          <span className="truncate">{label || placeholder}</span>
+          <span className="absolute inset-y-0 right-0 flex items-center pr-2 pointer-events-none">
+            <ChevronDown className="w-5 h-5 text-gray-400" aria-hidden="true" />
+          </span>
+        </button>
+      </div>
+
+      {isOpen && options.length > 0 && (
+        <ul
+          className="absolute z-10 w-full mt-1 bg-white rounded-md shadow-lg max-h-56 ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm dark:bg-gray-800 dark:ring-gray-700"
+          tabIndex={-1}
+          role="listbox"
+          aria-activedescendant={focusedIndex >= 0 ? `option-${focusedIndex}` : undefined}
+        >
           {options.map((option, index) => (
-            <button
+            <li
               key={option.value}
-              className={`block w-full px-space-sm py-space-xs text-left text-text-primary hover:bg-brand-primary/10 focus:bg-brand-primary/10 focus:outline-none ${focusedIndex === index ? 'bg-brand-primary/10' : ''}`}
-              onClick={() => handleSelect(option)}
+              id={`option-${index}`}
+              className={`relative cursor-default select-none py-2 pl-3 pr-9 text-gray-900 hover:bg-blue-50 focus:outline-none focus:bg-blue-50 dark:text-gray-100 dark:hover:bg-gray-700 ${focusedIndex === index ? 'bg-blue-50 text-blue-600 dark:bg-gray-700 dark:text-blue-400' : ''}`}
               role="option"
-              aria-selected={focusedIndex === index} // Or based on actual selected value if dropdown shows current selection
-              tabIndex={-1} // Individual items are not tabbable, navigation is via arrow keys
+              tabIndex={-1} // Ensure items are not tabbable
+              onClick={() => handleSelect(option)}
             >
-              {option.label}
-            </button>
+              <div className="flex items-center">
+                <span className="font-normal truncate">{option.label}</span>
+              </div>
+              {/* Add a visual indicator for selected option if needed */}
+              {/* {option.selected && (
+                <span className="absolute inset-y-0 right-0 flex items-center pr-4 text-blue-600">
+                  <CheckIcon className="w-5 h-5" aria-hidden="true" />
+                </span>
+              )} */}
+            </li>
           ))}
-        </div>
+          {options.length === 0 && (
+            <li className="relative py-2 pl-3 text-gray-500 cursor-default select-none pr-9 dark:text-gray-400">
+              No options available
+            </li>
+          )}
+        </ul>
       )}
-    </div>
+    </div >
   );
+};
+
+Dropdown.propTypes = {
+  label: PropTypes.string,
+  options: PropTypes.arrayOf(PropTypes.shape({ value: PropTypes.any.isRequired, label: PropTypes.string.isRequired })).isRequired,
+  onSelect: PropTypes.func.isRequired,
+  className: PropTypes.string,
+  placeholder: PropTypes.string,
 };
 
 export default Dropdown;

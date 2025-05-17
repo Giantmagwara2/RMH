@@ -4,6 +4,12 @@ import Table from './Table';
 export default {
   title: 'UI/Table',
   component: Table,
+  argTypes: {
+    columns: { control: 'object' },
+    data: { control: 'object' },
+    striped: { control: 'boolean' },
+    className: { control: 'text' },
+  },
 };
 
 const columns = [
@@ -18,8 +24,25 @@ const sampleData = [
   { name: 'Carol Lee', email: 'carol@example.com', role: 'Product Manager' },
 ];
 
-export const Default = () => <Table columns={columns} data={sampleData} />;
+const Template = (args) => <Table {...args} />;
 
-export const StripedRows = () => (
-  <Table columns={columns} data={sampleData} striped />
-);
+export const Default = Template.bind({});
+Default.args = {
+  columns: columns,
+  data: sampleData,
+  striped: false,
+  className: '',
+};
+
+export const StripedRows = Template.bind({});
+StripedRows.args = {
+  ...Default.args, // Inherit default args
+  striped: true,
+};
+
+export const EmptyData = Template.bind({});
+EmptyData.args = {
+  ...Default.args,
+  data: [],
+  striped: false,
+};

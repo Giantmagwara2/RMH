@@ -8,7 +8,7 @@ describe('Card', () => {
       <Card title="Test Card">
         <p>Card content</p>
       </Card>
-    );
+    ); 
     expect(getByText('Test Card')).toBeInTheDocument();
     expect(getByText('Card content')).toBeInTheDocument();
   });

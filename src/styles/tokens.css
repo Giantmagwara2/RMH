@@ -43,33 +43,61 @@
   --space-6xl: clamp(6rem, 12vw, 7rem);
 
   /* Brand Colors */
-  --color-brand-primary: #3B82F6;
-  --color-brand-secondary: #1D4ED8;
-  --color-brand-accent: #F59E0B;
+  --color-brand-primary: #3B82F6; /* Blue-500 */
+  --color-brand-primary-hover: #2563EB; /* Blue-600 */
+  --color-brand-primary-dark: #1E40AF; /* Blue-800 - For text on light backgrounds or darker elements */
+  --color-brand-secondary: #1D4ED8;    /* Blue-700 */
+  --color-brand-secondary-hover: #1E40AF; /* Blue-800 */
+  --color-brand-accent: #F59E0B;       /* Amber-500 */
+  --color-brand-accent-hover: #D97706;  /* Amber-600 */
+  --color-brand-light: #EFF6FF; /* Blue-50 - For light backgrounds or accents */
 
   /* Neutrals */
-  --color-bg: #FAFAFA;
-  --color-surface: #FFFFFF;
-  --color-border: #E2E8F0;
-  --color-text-primary: #1A202C;
-  --color-text-secondary: #4A5568;
-  --color-muted: #718096;
+  --color-bg: #FAFAFA; /* Tailwind gray-50 */
+  --color-surface: #FFFFFF; /* White */
+  --color-border: #E2E8F0; /* Slate-200 */
+  --color-text-primary: #1A202C; /* Slate-900 */
+  --color-text-secondary: #4A5568; /* Slate-600 */
+  --color-text-disabled: #94A3B8; /* Slate-400 */
+  --color-muted: #718096; /* Slate-500 */
 
-  /* Semantic Colors */
-  --color-success: #10b981;
-  --color-error: #ef4444;
-  --color-warning: #f59e0b;
-  --color-info: #3b82f6;
-  --color-neutral-light: #f5f5f5;
-  --color-neutral-dark: #2d2d2d;
+  /* UI Neutrals (for components like Table, Card backgrounds etc.) */
+  --color-neutrals-surface: #FFFFFF; /* Often same as --color-surface */
+  --color-neutrals-surface-accent: #F1F5F9; /* Slate-100 */
+  --color-neutrals-border: #CBD5E1; /* Slate-300 */
+
+  /* Feedback Colors (Success, Error, Warning, Info) */
+  /* Success */
+  --color-feedback-success: #10B981; /* Emerald-500 (background) */
+  --color-feedback-success-text: #047857; /* Emerald-700 */
+  --color-feedback-success-hover: #059669; /* Emerald-600 (for text hover or darker bg) */
+  --color-feedback-success-border: #6EE7B7; /* Emerald-300 */
+  /* Error */
+  --color-feedback-error: #EF4444; /* Red-500 (background) */
+  --color-feedback-error-text: #B91C1C; /* Red-700 */
+  --color-feedback-error-border: #DC2626; /* Red-600 */
+  /* Warning */
+  --color-feedback-warning: #F59E0B; /* Amber-500 (background) */
+  --color-feedback-warning-text: #B45309; /* Amber-700 */
+  --color-feedback-warning-border: #D97706; /* Amber-600 */
+  /* Info */
+  --color-feedback-info: #3B82F6; /* Blue-500 (background) */
+  --color-feedback-info-text: #1D4ED8; /* Blue-700 */
+  --color-feedback-info-bg: #DBEAFE; /* Blue-100 (for lighter backgrounds like in Tooltip.stories) */
+  --color-feedback-info-border: #93C5FD; /* Blue-300 */
+
+  /* Other Semantic Colors */
   --color-highlight: #ffeb3b; /* Highlight color for emphasis */
   --color-overlay: rgba(0, 0, 0, 0.5); /* Overlay for modals */
 
   /* Shadows */
-  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
-  --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.1);
-  --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.1);
-  --shadow-xl: 0 20px 25px rgba(0, 0, 0, 0.15);
+  --shadow-color: rgba(0, 0, 0, 0.1);
+  --shadow-sm: 0 1px 2px 0 var(--shadow-color);
+  --shadow-md: 0 4px 6px -1px var(--shadow-color), 0 2px 4px -2px var(--shadow-color);
+  --shadow-lg: 0 10px 15px -3px var(--shadow-color), 0 4px 6px -4px var(--shadow-color);
+  --shadow-xl: 0 20px 25px -5px var(--shadow-color), 0 8px 10px -6px var(--shadow-color);
+  --shadow-2xl: 0 25px 50px -12px var(--shadow-color);
+  --shadow-inner: inset 0 2px 4px 0 var(--shadow-color);
 
   /* Animation Curves */
   --ease-in-out: cubic-bezier(0.4, 0, 0.2, 1);
@@ -100,27 +128,54 @@
 
 /* Dark Mode Overrides */
 .dark {
-  --color-bg: #111827;
-  --color-surface: #1f2937;
-  --color-border: #374151;
-  --color-text-primary: #f9fafb;
-  --color-text-secondary: #d1d5db;
-  --color-muted: #6b7280;
+  /* Brand Colors - Dark Mode (adjust if needed, often primary/secondary can remain same or slightly adjusted) */
+  --color-brand-primary: #60A5FA; /* Blue-400 */
+  --color-brand-primary-hover: #3B82F6; /* Blue-500 */
+  --color-brand-primary-dark: #93C5FD; /* Blue-300 - For text on dark backgrounds */
+  --color-brand-secondary: #3B82F6;    /* Blue-500 */
+  --color-brand-secondary-hover: #2563EB; /* Blue-600 */
+  --color-brand-accent: #FBBF24;       /* Amber-400 */
+  --color-brand-accent-hover: #F59E0B;  /* Amber-500 */
+  --color-brand-light: #1E3A8A; /* Blue-800 - Darker for dark mode "light" accents */
 
-  /* Dark mode semantic colors (adjust as needed for contrast and aesthetics) */
-  --color-success: #34D399; /* Lighter green (e.g., Tailwind green-400) */
-  --color-error: #F87171;   /* Lighter red (e.g., Tailwind red-400) */
-  --color-warning: #FBBF24; /* Lighter amber (e.g., Tailwind amber-400) */
-  --color-info: #60A5FA;    /* Lighter blue (e.g., Tailwind blue-400) */
-  --color-neutral-light: #3a3a3a;
-  --color-neutral-dark: #1a1a1a;
+  /* Neutrals - Dark Mode */
+  --color-bg: #111827; /* Gray-900 */
+  --color-surface: #1F2937; /* Gray-800 */
+  --color-border: #374151; /* Gray-700 */
+  --color-text-primary: #F9FAFB; /* Gray-50 */
+  --color-text-secondary: #D1D5DB; /* Gray-300 */
+  --color-text-disabled: #6B7280; /* Gray-500 */
+  --color-muted: #9CA3AF; /* Gray-400 */
+
+  /* UI Neutrals - Dark Mode */
+  --color-neutrals-surface: #1F2937; /* Gray-800 */
+  --color-neutrals-surface-accent: #374151; /* Gray-700 */
+  --color-neutrals-border: #4B5563; /* Gray-600 */
+
+  /* Feedback Colors - Dark Mode (adjust for contrast) */
+  --color-feedback-success: #34D399;        /* Green-400 (background) */
+  --color-feedback-success-text: #ECFDF5;   /* Green-50 */
+  --color-feedback-success-hover: #6EE7B7;  /* Green-300 */
+  --color-feedback-success-border: #A7F3D0; /* Green-200 */
+
+  --color-feedback-error: #F87171;          /* Red-400 (background) */
+  --color-feedback-error-text: #FEF2F2;     /* Red-50 */
+  --color-feedback-error-border: #FCA5A5;   /* Red-300 */
+
+  --color-feedback-warning: #FBBF24;        /* Amber-400 (background) */
+  --color-feedback-warning-text: #000000;   /* Black for contrast on yellow */
+  --color-feedback-warning-border: #FCD34D; /* Amber-300 */
+
+  --color-feedback-info: #60A5FA;           /* Blue-400 (background) */
+  --color-feedback-info-text: #EFF6FF;      /* Blue-50 */
+  --color-feedback-info-bg: #1E40AF;        /* Blue-800 (for lighter backgrounds in dark mode) */
+  --color-feedback-info-border: #93C5FD;    /* Blue-300 */
+
+  /* Other Semantic Colors - Dark Mode */
   --color-highlight: #ffcc00; /* Adjusted highlight for dark mode */
   --color-overlay: rgba(255, 255, 255, 0.1); /* Lighter overlay for dark mode */
 
-  --shadow-sm: 0 1px 2px rgba(255, 255, 255, 0.05);
-  --shadow-md: 0 4px 6px rgba(255, 255, 255, 0.1);
-  --shadow-lg: 0 10px 15px rgba(255, 255, 255, 0.1);
-  --shadow-xl: 0 20px 25px rgba(255, 255, 255, 0.15);
+  --shadow-color: rgba(0, 0, 0, 0.5); /* Darker shadow base for dark mode */
 
   --color-focus-ring: var(--color-brand-accent); /* Example: Use accent color for focus in dark mode */
 }

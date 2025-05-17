@@ -1,29 +1,60 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
+import PropTypes from 'prop-types';
 
-const Breadcrumb = ({ items, separator = '/' }) => (
-  <nav aria-label="breadcrumb">
-    <ol className="flex space-x-space-md text-text-secondary">
-      {items.map((item, index) => (
-        <li key={index} className="flex items-center">
+const Breadcrumb = ({ items, separator = '›', className = '' }) => {
+  const location = useLocation();
+
+  const renderItems = () => {
+    if (!items || items.length === 0) {
+      return null;
+    }
+
+    return items.map((item, index) => {
+      const isCurrent = item.link === location.pathname || index === items.length - 1;
+      return (
+        <li key={index} className="inline-block">
           {item.link ? (
             <Link
               to={item.link}
-              className="text-brand-primary hover:text-brand-secondary"
-              aria-current={index === items.length - 1 ? 'page' : undefined}
+              className={`text-blue-500 hover:text-blue-700 ${isCurrent ? 'font-bold' : ''}`}
+              aria-current={isCurrent ? 'page' : undefined}
             >
               {item.label}
             </Link>
           ) : (
-            <span aria-current="page">{item.label}</span>
+            <span className="font-bold" aria-current="page">{item.label}</span>
           )}
-          {index < items.length - 1 && (
-            <span className="mx-space-sm" aria-hidden="true">{separator}</span>
+          {!isCurrent && index < items.length - 1 && (
+            <span className="mx-2 text-gray-400">{separator}</span>
           )}
         </li>
-      ))}
-    </ol>
-  </nav>
-);
+      );
+    });
+  };
+
+  return (
+    <nav aria-label="Breadcrumb" className={`text-sm text-gray-500 ${className}`}>
+      <ol>
+        {renderItems()}
+      </ol>
+    </nav>
+  );
+};
+
+Breadcrumb.propTypes = {
+  items: PropTypes.arrayOf(
+    PropTypes.shape({
+      label: PropTypes.string.isRequired,
+      link: PropTypes.string, // Optional link
+    })
+  ),
+  separator: PropTypes.string,
+  className: PropTypes.string,
+};
+
+Breadcrumb.defaultProps = {
+  separator: '›',
+};
 
 export default Breadcrumb;
